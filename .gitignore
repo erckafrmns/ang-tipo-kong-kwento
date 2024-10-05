@@ -1,0 +1,12 @@
+# General ignores for the whole project
+venv/
+
+node_modules/
+
+npm-debug.log
+
+/build
+
+.env
+
+.DS_Store
