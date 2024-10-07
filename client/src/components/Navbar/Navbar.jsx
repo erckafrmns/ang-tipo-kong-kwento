@@ -1,9 +1,9 @@
 import { useRef } from "react";
-import logo from '../assets/logo.png';
-import rightVine from '../assets/right-vine.png';
-import leftVine from '../assets/left-vine.png';
+import logo from '../../assets/logo.png';
+import rightVine from '../../assets/right-vine.png';
+import leftVine from '../../assets/left-vine.png';
 import { FaBars, FaTimes } from "react-icons/fa";
-import "./css/Navbar.css";
+import './Navbar.css';
 
 
 const Navbar = () => {
