@@ -1,0 +1,120 @@
+:root {
+    --brown: #534014;         
+    --white: #FFFFFF;           
+    --max-width: 600px;
+    --min-width: 250px; 
+    --hoverColor: rgba(53, 40, 14, 0.2); /* Hover color for buttons */  
+    --mediumbrown: #7A6C4C;
+    --lightbrown: #D4D0C5; 
+    --fontweight: 450;
+}
+
+/* Main Page */
+.inline-text-container { 
+    position: fixed; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    top: 55%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    margin-top: 0; 
+    flex-direction: row; 
+}
+
+@media (max-width: 600px) {
+    .inline-text-container { 
+        margin-top: 10%;
+        flex-direction: column; 
+        gap: 10px; 
+    }
+}
+
+.inline-text, .inline-text1 {
+    margin: 0 20px; 
+    font-size: 20px; 
+    color: var(--white); 
+    background-color: var(--brown); 
+    padding: 31.5% 5%; 
+    border-radius: 10px; 
+    text-align: center; 
+    width: 80%;  
+    max-width: var(--max-width); 
+    min-width: var(--min-width);  
+    text-decoration: none; 
+    font-weight: var(--fontweight); 
+    transition: background-color 0.3s ease;
+}
+ 
+.inline-text1 {
+    padding: 30% 5%; 
+} 
+ 
+.inline-text:hover, .inline-text1:hover{ 
+    background-color: var(--hoverColor); 
+    color: var(--brown);  
+}
+
+ /* Custom Page */
+.custom-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--brown);
+    width: 30%;
+    height: 50%;
+    border-radius: 10px;
+    color: var(--brown);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+} 
+
+.custom-container .title-input::placeholder {
+    color: var(--mediumbrown);
+}
+
+.title-label {
+    align-self: flex-start;
+    margin-top: 8%;
+    margin-left: 18%;
+    margin-bottom: -5px;
+    font-size: 12px;
+    color: var(--brown);
+}
+
+.title-input {
+    width: 65%;
+    padding: 15px;
+    margin: 10px 0;
+    border: 2px solid var(--brown);
+    border-radius: 10px;
+    background-color: var(--lightbrown);
+    transition: background-color 0.3s ease;
+    color: var(--brown);
+}
+
+.title-input:hover {
+    background-color: var(--hoverColor);
+}
+
+.generate-button {
+    padding: 15px;
+    background-color: var(--brown);
+    color: var(--white);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 65%;
+    transition: background-color 0.3s ease;
+    font-weight: var(--fontweight);
+}
+
+.generate-button:hover {
+    background-color: var(--hoverColor);
+    color: var(--brown);
+}
+

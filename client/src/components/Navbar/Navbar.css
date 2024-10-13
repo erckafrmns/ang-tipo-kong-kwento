@@ -24,7 +24,8 @@ header {
 	background-color: var(--white);
 	color: var(--brown);
     padding: 0 90px 0 120px;
-	z-index: 999;
+	z-index: 999; 
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .leftVine, .rightVine {
@@ -132,4 +133,4 @@ nav {
 		font-size: 1.5rem;
         font-weight: 600;
 	}
-}
+} 
