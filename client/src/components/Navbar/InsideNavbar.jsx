@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 import logo from '../../assets/logo.png';
 import rightVine from '../../assets/right-vine.png';
 import leftVine from '../../assets/left-vine.png';
-import Sidebar from '../Navbar/Sidebar/Sidebar';  
+import Sidebar from '../Sidebar/Sidebar';  
 import { TbLayoutSidebarInactive } from "react-icons/tb";  
 import { FaBars } from "react-icons/fa";
 import { MdOutlineHistoryEdu } from "react-icons/md";
 import './Navbar.css';  
-import '../Navbar/Sidebar/Sidebar.css';
+import '../Sidebar/Sidebar.css';
 
 const InsideNavbar = () => {
 	const navRef = useRef();

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; 
 import InsideNavbar from '../../components/Navbar/InsideNavbar';
-import './Main-Custom.css';  
+import '../CustomGenerate/Main-Custom.css';  
 
 const Main = () => {
     return (

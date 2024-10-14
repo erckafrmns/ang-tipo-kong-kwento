@@ -1,8 +1,8 @@
 import React from 'react';
 import Home from './pages/Home/Home';
 import Navbar from './components/Navbar/Navbar';
-import Main from './pages/Home/Main'; 
-import Custom from './pages/Home/Custom';
+import Main from './pages/Main/Main'; 
+import Custom from './pages/CustomGenerate/Custom';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'; 
 
 const AppContent = () => {

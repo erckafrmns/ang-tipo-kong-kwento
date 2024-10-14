@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from "react-router-dom";
 import { TbLayoutSidebarInactive } from "react-icons/tb";
 import { MdOutlineHistoryEdu } from "react-icons/md";  
-import logo from '../../../assets/logo.png';
+import logo from '../../assets/logo.png';
 import './Sidebar.css';  
 
 const Sidebar = ({ isOpen, toggleSidebar }) => { 
