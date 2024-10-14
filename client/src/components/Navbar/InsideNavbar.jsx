@@ -1,8 +1,6 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from '../../assets/logo.png';
-import rightVine from '../../assets/right-vine.png';
-import leftVine from '../../assets/left-vine.png';
 import Sidebar from '../Sidebar/Sidebar';  
 import { TbLayoutSidebarInactive } from "react-icons/tb";  
 import { FaBars } from "react-icons/fa";
@@ -13,7 +11,7 @@ import '../Sidebar/Sidebar.css';
 const InsideNavbar = () => {
 	const navRef = useRef();
 	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-	const navigate = useNavigate(); // Create a navigate function
+	const navigate = useNavigate();
 
 	const showNavbar = () => {
 	  navRef.current.classList.toggle("responsive_nav");
@@ -30,11 +28,10 @@ const InsideNavbar = () => {
 	return (
         <>
             <header>
-                <img src={leftVine} className="leftVine" alt="" />
                 <img src={logo} className="logo" alt="Logo" />
                 <nav ref={navRef}><a href="/#">Logout</a></nav> 
                 <button className="nav-btn" onClick={showNavbar}><FaBars /></button>
-                <img src={rightVine} className="rightVine" alt="" /> 
+                {/* whats this for? i removed the vines */}
             </header> 
 
             {/* Sidebar Component */}

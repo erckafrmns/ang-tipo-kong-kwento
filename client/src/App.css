@@ -1,15 +1,22 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
+
+@font-face {
+	font-family: 'EfcoBrookshire'; 
+	src: url('/assets/fonts/EFCOBrookshire.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
 
 * {
 	padding: 0;
 	margin: 0;
 	box-sizing: border-box;
-	font-family: "Montserrat", sans-serif;
 }
 
 :root {
-	--brown: #534014;
 	--white: #FFFFFF;
-    --hoverColor: #902f02;
+	--beige: #FFEACF;
+	--green: #294122;
+	--yellow: #E1A10B;
     --bgColor: #8e8a81;
 }
