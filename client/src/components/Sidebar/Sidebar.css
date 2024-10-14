@@ -1,0 +1,153 @@
+:root {
+  --brown: #534014;            /* Primary brown color */
+  --white: #FFFFFF;           /* White color */
+  --hoverColor: rgba(53, 40, 14, 0.2); /* Hover color for buttons */
+  --bgColor: #9A9280;         /* Sidebar background color */
+  --light-bg: #D4D0C5;        /* Light background color for search bar */
+  --placeholderColor: #7A6C4C; /* Placeholder color */
+  --chat-btn-bg: #534014;     /* Background for the new chat button */ 
+  --fontweight: 450;
+}
+ 
+
+.sidebar {
+  position: fixed;
+  left: -300px;
+  top: 60px;
+  width: 300px;
+  height: 100%;
+  background-color: var(--bgColor);
+  transition: left 0.3s ease;
+  padding: 5px;
+  z-index: 1000;   
+  display: flex; 
+  flex-direction: column; 
+}
+
+.sidebar.open {
+  left: 0; /* Slide in */
+}   
+
+.top-buttons-container {
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center;
+  gap: 5px;
+}
+
+.close-btn, .new-btn {
+  background-color: transparent; 
+  color: var(--brown); 
+  font-size: 25px; 
+  border: none;  
+  padding: 10px 10px 5px 10px; 
+  cursor: pointer; 
+  border-radius: 10px; 
+  transition: background-color 0.3s; 
+  margin-top: 5px;
+}
+
+.close-btn:hover, .new-btn:hover, .new-chat-container:hover { 
+  background-color: var(--hoverColor); 
+  border-radius: 10px;  
+}   
+
+.search-bar {
+  width: 95%; 
+  padding: 15px;
+  margin: 5px; 
+  border: none;
+  border-radius: 10px; 
+  outline: none; 
+  color: var(--brown); 
+  background-color: var(--light-bg); 
+  cursor: text;  
+  transition: background-color 0.3s ease;  
+}
+ 
+.search-bar:hover {
+  background-color: rgba(212, 208, 197, 0.8); 
+} 
+
+.search-bar::placeholder {
+  color: var(--placeholderColor); 
+}   
+
+.new-chat-btn {
+  color: #ffffff;  
+  font-size: 13px; 
+  border: none;  
+  padding: 15px; 
+  cursor: pointer; 
+  transition: background-color 0.3s; 
+  text-align: left; 
+  margin-top: auto; 
+  border-radius: 10px;  
+  background-color: transparent;  
+  flex-grow: 1;
+}
+
+.new-chat-container {
+  width: 100%;  
+  background-color: var(--chat-btn-bg); 
+  border-radius: 10px;   
+  margin-top: 10px;   
+  display: flex; 
+  align-items: center;  
+  transition: background-color 0.3s ease;  
+}   
+
+.logo_small {
+  width: 20px;
+  height: 20px; 
+  margin-left: 10px; 
+  border-radius: 50%;
+}  
+
+/*This Sidebar is placed inside the InsideNavbar*/
+.button-container {
+  text-align: center;
+  display: flex;  
+  border: 2px solid var(--brown);   
+  margin-left: 10px;  
+  position: fixed; 
+  margin-top: 67px; 
+  border-radius: 10px; 
+  padding: 3px; 
+  transition: opacity 0.5s ease, transform 0.5s ease;  
+}  
+
+.button-container.hidden {
+  opacity: 0;
+  pointer-events: none;
+} 
+
+.button-container:not(.hidden) {
+  opacity: 1;
+}
+
+.open-btn, .outside-new-btn {
+  background-color: transparent;
+  color: var(--brown); 
+  padding: 10px 10px 5px 10px; 
+  border: none; 
+  border-radius: 10px; 
+  cursor: pointer;  
+  font-size: 25px; 
+  transition: background-color 0.3s ease;  
+}   
+
+
+.open-btn:hover, .outside-new-btn:hover {
+  background-color: var(--hoverColor); 
+  border-radius: 10px;  
+} 
+
+.between-text {
+  font-size: 13px;
+  color: var(--brown); 
+  margin: 0 5px; 
+  align-self: center;  
+  font-weight:var(--fontweight);
+}
+

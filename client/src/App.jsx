@@ -1,17 +1,36 @@
 import React from 'react';
 import Home from './pages/Home/Home';
+import Navbar from './components/Navbar/Navbar';
+import LoSi from './pages/Login&SignUp/LoSi'; 
+import Main from './pages/Main/Main'; 
+import Custom from './pages/CustomGenerate/Custom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'; 
 
-const App = () => {
+const AppContent = () => {
+  const location = useLocation();
 
   return (
     <>
-		  <Home/>
-		</>
-  )
+      {/* Render Navbar only if not on the /signup route */}
+      {/* {location.pathname !== '/signup' && <Navbar />} */}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/LoSi" element={<LoSi />} /> 
+        <Route path="/main" element={<Main />} /> 
+        <Route path="/custom" element={<Custom />} /> 
+      </Routes>
+    </>
+  );
+};
 
-}
+const App = () => (
+  <Router>
+    <AppContent />
+  </Router>
+);
 
 export default App;
+
 
  // GET DATA FROM BACKEND
   // const[data, setData] = useState([{}])

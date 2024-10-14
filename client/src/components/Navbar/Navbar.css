@@ -1,80 +1,70 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
 
 * {
 	padding: 0;
 	margin: 0;
 	box-sizing: border-box;
-	font-family: "Montserrat", sans-serif;
+	font-family: "Lora", sans-serif;
 }
 
 :root {
-	--brown: #534014;
 	--white: #FFFFFF;
-    --hoverColor: #902f02;
+	--beige: #FFEACF;
+	--green: #294122;
+	--yellow: #E1A10B;
     --bgColor: #8e8a81;
 }
 
 header {
 	display: flex;
-	align-items: center;
-    justify-content: space-between;
-    position: fixed;
+	justify-content: space-evenly;
+    position: absolute;
 	width: 100%;
-	height: 60px;
-	background-color: var(--white);
-	color: var(--brown);
-    padding: 0 90px 0 120px;
-	z-index: 999;
+	height: 110px;
+	z-index: 999; 
+	padding: 0 30rem 0 30rem;
 }
 
-.leftVine, .rightVine {
+.banner {
 	position: absolute;
 	top: 0;
+	left: 0;
 	z-index: 1; 
-    opacity: 0.9;
 	pointer-events: none; 
-}
-
-.leftVine{
-    left: 0;
-    width: 120px;
-    height: 60px;
-}
-
-.rightVine{
-    right: 0;
-    width: 180px;
-    height: 60px;
+	width: 100%;
+	height: 100px;
 }
 
 .logo{
-    position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
 	z-index: 2;
-    width: 45px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: auto;
+	width: 110px;
+    height: 100px;
+	margin-top: 25px;
 }
 
-nav{
-    position: relative;
+.nav-left, .nav-right{
+	position: relative;
 	z-index: 2;
-    margin-left: auto;
+	padding-top: 25px;
 }
 
-nav a {
-	margin: 0 16px;
-	color: var(--brown);
-    font-size: 14px;
+header a{
+	color: var(--beige);
+	font-size: 14px;
 	text-decoration: none;
-    font-weight: 500;
+	font-weight: 500;
+	transition: all 0.3s ease;
 }
 
-nav a:hover {
-	color: var(--hoverColor);
+header a:hover{
+	color: var(--yellow);
 }
 
-header .nav-btn {
+/* header .nav-btn {
 	padding: 5px;
 	cursor: pointer;
 	background: transparent;
@@ -84,14 +74,16 @@ header .nav-btn {
 	visibility: hidden;
 	opacity: 0;
 	font-size: 1.8rem;
-}
+} */
 
-header div,
+/* header div,
 nav {
 	display: flex;
 	align-items: center;
-}
+} */
 
+
+/* NOT UPDATED */
 @media only screen and (max-width: 1024px) {
 
 	header .nav-btn {
@@ -132,4 +124,4 @@ nav {
 		font-size: 1.5rem;
         font-weight: 600;
 	}
-}
+} 
