@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
+
+@font-face {
+	font-family: 'EfcoBrookshire'; 
+	src: url('../../assets/fonts/EFCOBrookshire.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+h1, h2, p{
+    cursor: default;
+}
+
+.contactUs{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: var(--green);
+    padding: 50px;
+    width: 100%;
+}
+
+.contactUs h1{
+    color: var(--beige);
+    font-family: "EfcoBrookshire", sans-serif;
+    font-size: 50px;
+    letter-spacing: 1px;
+    padding: 10px;
+    margin-top: 50px;
+
+}
+
+.contactUs p{
+    color: var(--beige);
+    font-family: "Lora", sans-serif;
+    font-size: 16px;
+}
+
+.contactUs-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 30px 50px;
+    width: 100%;
+    height: 80%;
+}
+
+.vertical-line{
+    width: 1px; 
+    height: 90%; 
+    background-color: var(--beige); 
+    margin: 0 auto; 
+}
+
+.contacts{
+    width: 49%;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    padding-right: 80px;
+    padding-top: 10px;
+}
+
+.contact-items{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #202f1b;
+    margin: 10px;
+    padding: 20px;
+    width: 80%;
+    border-radius: 5px;
+}
+
+.contact-items p{
+    padding-left: 10px;
+    font-size: 14px;
+}
+
+.contact-icons{
+    color: var(--beige);
+}
+
+.contactForm{
+    width: 49%;
+    padding-left: 80px;
+    padding-top: 10px;
+}
+
+.contactForm input, .contactForm textarea{
+    width: 80%;
+    border-radius: 5px;
+    padding: 15px 10px;
+    color: var(--beige);
+    background-color: #202f1b;
+    margin: 10px;
+    border: none;
+    outline: none;
+    font-size: 14;
+}
+
+.contactForm textarea{
+    resize: none;
+}
+
+.contactForm input::placeholder,
+.contactForm textarea::placeholder{
+    color: #8e8e8e;
+    letter-spacing: 0;
+}
+
+.contactForm button{
+    margin: 10px;
+    border-radius: 5px;
+    width: 18%;
+    padding: 10px 0;
+    background-color: var(--beige);
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    color: var(--green);
+    font-weight: 600;
+    transition: all 0.3s ease-in-out;
+}
+
+.contactForm button:hover{
+    background-color: var(--green);
+    border: 1px solid var(--beige);
+    color: var(--beige);
+    transform: scale(0.96);
+}

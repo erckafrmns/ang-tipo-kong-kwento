@@ -7,7 +7,7 @@
 	font-style: normal;
 }
 
-h1{
+h1, h2, p{
     cursor: default;
 }
 
@@ -39,7 +39,8 @@ h1{
     bottom: 0;
     z-index: 1; 
     width: 100%;
-    height: 23.5rem;
+    height: 54%;
+    color: aqua;
 }
 
 .container {
@@ -84,16 +85,16 @@ h1{
     color: var(--yellow);
 }
 
-/* SERVICES SECTION */
-.services{
+/* FEATURES SECTION */
+.features{
     height: auto;
     background-color: var(--beige);
     display: flex;
     flex-direction: column;
-    padding-top: 100px;
+    /* padding-top: 100px; */
 }
 
-.services h1{
+.features h1{
     font-family: "EfcoBrookshire", sans-serif;
     font-size: 50px;
     font-weight: 400;
@@ -101,7 +102,7 @@ h1{
     padding: 20px 0 60px 50px;
 }
 
-.servicesContainer{
+.featuresContainer{
     width: 100%;
     padding: 0 20px;
     height: 65vh;
@@ -112,7 +113,7 @@ h1{
     margin-bottom: 50px;
 }
 
-.service-card{
+.features-card{
     height: 95%;
     width: 25%;
     background-color: var(--green);
@@ -126,11 +127,11 @@ h1{
     transition: all 0.3s ease;
 }
 
-.service-card:hover{
+.features-card:hover{
     transform: scale(1.1);
 }
 
-.service-card h2{
+.features-card h2{
     font-family: "EfcoBrookshire", sans-serif;
     color: var(--yellow);
     font-weight: 400;
@@ -138,7 +139,7 @@ h1{
     text-align: center;
 }
 
-.service-card p{
+.features-card p{
     font-family: "Lora", sans-serif;
     color: var(--beige);
     font-weight: 100;
@@ -147,7 +148,7 @@ h1{
     padding: 12px 0;
 }
 
-.service-card img{
+.features-card img{
     height: 60%;
     width: 100%;
     border-radius: 30px;
@@ -163,7 +164,8 @@ h1{
     background-color: var(--green);
     display: flex;
     flex-direction: row;
-    padding-top: 100px;
+    padding-top: 60px;
+    padding-bottom: 20px;
     position: relative;
 }
 
@@ -180,6 +182,7 @@ h1{
     text-align: right;
     width: 35rem;
     height: auto;
+    padding-top: 40px;
 }
 
 .aboutContainer h1{
@@ -213,8 +216,8 @@ h1{
 
 .aboutIMG {
     position:absolute;
-    bottom: 10px;
-    right: 20px;
+    bottom: 30px;
+    right: 40px;
     z-index: 2; 
     width: 30px; 
     height: 40px; 
@@ -223,6 +226,7 @@ h1{
 .developersBTN:hover{
     background-color: var(--yellow);
 }
+
 
 /* NOT UPDATED */
 @media (max-width: 1380px) {

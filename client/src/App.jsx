@@ -2,6 +2,7 @@ import React from 'react';
 import Home from './pages/Home/Home';
 import Navbar from './components/Navbar/Navbar';
 import LoSi from './pages/Login&SignUp/LoSi'; 
+import ContactUs from './pages/ContactUs/ContactUs'
 import Main from './pages/Main/Main'; 
 import Custom from './pages/CustomGenerate/Custom';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'; 
@@ -16,6 +17,7 @@ const AppContent = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/LoSi" element={<LoSi />} /> 
+        <Route path="/contact-us" element={<ContactUs />} /> 
         <Route path="/main" element={<Main />} /> 
         <Route path="/custom" element={<Custom />} /> 
       </Routes>

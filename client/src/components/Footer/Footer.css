@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
+
+@font-face {
+	font-family: 'EfcoBrookshire'; 
+	src: url('../../assets/fonts/EFCOBrookshire.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+footer{
+    background-color: var(--beige);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.footerInfo{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 30px 20px 20px 20px;
+}
+
+.leftPart{
+    width: 45%;
+}
+
+.leftPart h1{
+    color: var(--green);
+    font-family: "EfcoBrookshire", sans-serif;
+}
+
+.leftPart p{
+    color: var(--green);
+    width: 90%;
+    padding: 10px 0;
+}
+
+.socialMedia-item{
+    margin-right: 10px;
+    font-size: 30px;
+    color: var(--green);
+    cursor: pointer;
+}
+
+.rightPart img{
+    width: 120px;
+    height: 120px;
+}
+
+.termsPolicy{
+    padding: 0 20px 10px 20px;
+}
+
+.termsPolicy-item{
+    text-decoration: underline;
+    color: var(--green);
+    padding: 0 20px;
+}
+
+.copyright{
+    width: 100%;
+    background-color: var(--yellow);
+    display: flex;
+    justify-content: center;
+}
+
+.copyright h4{
+    padding: 10px 20px;
+    cursor: default;
+}
