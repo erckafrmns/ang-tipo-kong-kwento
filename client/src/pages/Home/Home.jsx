@@ -31,8 +31,8 @@ const Home = () => {
           <h1>Ang tipo kong Kwento</h1>
           <img className="heroBG" src={heroBG} alt="" />
           <div className='container'>
-            <Link to="/losi" className='loginBTN'>LOGIN</Link>
-            <Link to="/LoSi" className='signupBTN'>SIGN UP</Link>
+            <Link to="/login-signup" className='loginBTN'>LOGIN</Link>
+            <Link to="/login-signup" className='signupBTN'>SIGN UP</Link>
             <a href="/#" className='guestBTN'>Continue as Guest</a>
           </div>
         </section>

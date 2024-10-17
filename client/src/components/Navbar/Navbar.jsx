@@ -1,7 +1,6 @@
 import { useRef } from "react";
 import logo from '../../assets/logo.png';
 import banner from '../../assets/banner.png';
-import { FaBars, FaTimes } from "react-icons/fa";
 import './Navbar.css'; 
 import { Link } from 'react-router-dom'; 
 
@@ -20,7 +19,7 @@ const Navbar = ({ scrollToFeatures, scrollToAbout }) => {
 			<Link to="/"><img src={logo} className="logo" alt="Logo"/></Link>
 			
 			<Link to="/contact-us" className="nav-right">Contact Us</Link>
-			<Link to="/LoSi" className="nav-right">Sign Up/Login</Link>
+			<Link to="/login-signup" className="nav-right">Sign Up/Login</Link>
 			
 		</header>
         </>
