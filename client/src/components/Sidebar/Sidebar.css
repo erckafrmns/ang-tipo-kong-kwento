@@ -1,81 +1,153 @@
 :root {
-  --brown: #534014;            /* Primary brown color */
+  --green: #294122;            /* Primary brown color */
   --white: #FFFFFF;           /* White color */
   --hoverColor: rgba(53, 40, 14, 0.2); /* Hover color for buttons */
-  --bgColor: #9A9280;         /* Sidebar background color */
-  --light-bg: #D4D0C5;        /* Light background color for search bar */
+  --mustard: #E1A10B;         /* Sidebar background color */
+  --beige: #FFEACF;        /* Light background color for search bar */
   --placeholderColor: #7A6C4C; /* Placeholder color */
-  --chat-btn-bg: #534014;     /* Background for the new chat button */ 
-  --fontweight: 450;
+  --fontweight: 450; 
+  --main-font: "EfcoBrookshire", sans-serif;  
+}  
+
+.navbar {
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  display: flex; 
+  justify-content: center;
+  align-items: center; 
+  z-index: 2;
 }
- 
+
+.inside-banner {
+  position: fixed; 
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 100%; 
+  height: 52vw;
+  object-fit: cover;   
+}
+
+.logo{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	z-index: 2;
+	width: 110px;
+    height: 100px;
+	margin-top: 25px;
+} 
 
 .sidebar {
-  position: fixed;
-  left: -300px;
-  top: 60px;
-  width: 300px;
-  height: 100%;
-  background-color: var(--bgColor);
-  transition: left 0.3s ease;
-  padding: 5px;
-  z-index: 1000;   
-  display: flex; 
+  position: absolute;  
+  margin-left: 10px;
+  margin-top: 67px; 
+  width: 250px;
+  height: 89%;  
+  border-radius: 10px;
+  background-color: var(--mustard);
+  z-index: 6; 
+  display: none; 
   flex-direction: column; 
+  overflow: hidden;
 }
 
 .sidebar.open {
-  left: 0; /* Slide in */
-}   
-
-.top-buttons-container {
   display: flex; 
-  justify-content: space-between; 
-  align-items: center;
-  gap: 5px;
 }
 
-.close-btn, .new-btn {
+.sidebar-content {
+  position: relative; 
+  z-index: 3;  
+  padding: 0 5px;
+}
+
+.resizer {
+  width: 5px;
+  background-color: rgba(0, 0, 0, 0.1);
+  cursor: ew-resize;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+} 
+
+.grainy-bg-sidebar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;  
+}
+
+
+.top-buttons-container {
+  display: flex;  
+  justify-content: space-between; 
+  align-items: center;  
+  padding-top: 5px;
+  z-index: 1000; 
+  position: relative;
+}
+
+
+.close-btn, .new-btn { 
   background-color: transparent; 
-  color: var(--brown); 
+  color: var(--green); 
   font-size: 25px; 
   border: none;  
   padding: 10px 10px 5px 10px; 
   cursor: pointer; 
   border-radius: 10px; 
-  transition: background-color 0.3s; 
-  margin-top: 5px;
+  transition: background-color 0.3s;  
 }
 
 .close-btn:hover, .new-btn:hover, .new-chat-container:hover { 
   background-color: var(--hoverColor); 
-  border-radius: 10px;  
-}   
+  border-radius: 10px;     
+  z-index:1001; 
+}  
+
+.search-container {
+    flex-grow: 1; 
+    margin: 0 10px; 
+}
 
 .search-bar {
   width: 95%; 
-  padding: 15px;
-  margin: 5px; 
-  border: none;
+  padding: 12px;
+  margin:5px; 
+  border: 2px solid transparent; 
   border-radius: 10px; 
   outline: none; 
-  color: var(--brown); 
-  background-color: var(--light-bg); 
-  cursor: text;  
-  transition: background-color 0.3s ease;  
-}
+  background-color: var(--beige); 
+  cursor: text;    
+  transition: background-color 0.3s ease, border-color 0.3s ease; 
+} 
  
 .search-bar:hover {
-  background-color: rgba(212, 208, 197, 0.8); 
+  background-color: rgba(212, 208, 197, 0.3);  
 } 
 
+.search-bar:focus {  
+  border: 2px solid var(--green);
+  background-color: transparent;
+}
+
+
 .search-bar::placeholder {
-  color: var(--placeholderColor); 
-}   
+  color: var(--green);  
+  font-family: var(--main-font); 
+}     
 
 .new-chat-btn {
-  color: #ffffff;  
-  font-size: 13px; 
+  color: var(--beige);  
+  font-size: 14px; 
   border: none;  
   padding: 15px; 
   cursor: pointer; 
@@ -84,12 +156,13 @@
   margin-top: auto; 
   border-radius: 10px;  
   background-color: transparent;  
-  flex-grow: 1;
+  flex-grow: 1; 
+  font-family: var(--main-font);
 }
 
 .new-chat-container {
   width: 100%;  
-  background-color: var(--chat-btn-bg); 
+  background-color: var(--green); 
   border-radius: 10px;   
   margin-top: 10px;   
   display: flex; 
@@ -102,19 +175,19 @@
   height: 20px; 
   margin-left: 10px; 
   border-radius: 50%;
-}  
+}   
 
 /*This Sidebar is placed inside the InsideNavbar*/
 .button-container {
-  text-align: center;
+  text-align: center; 
   display: flex;  
-  border: 2px solid var(--brown);   
+  border: 2px solid var(--mustard);   
   margin-left: 10px;  
   position: fixed; 
   margin-top: 67px; 
   border-radius: 10px; 
-  padding: 3px; 
-  transition: opacity 0.5s ease, transform 0.5s ease;  
+  padding: 3px;    
+  z-index: 999;
 }  
 
 .button-container.hidden {
@@ -128,7 +201,7 @@
 
 .open-btn, .outside-new-btn {
   background-color: transparent;
-  color: var(--brown); 
+  color: var(--green); 
   padding: 10px 10px 5px 10px; 
   border: none; 
   border-radius: 10px; 
@@ -145,9 +218,34 @@
 
 .between-text {
   font-size: 13px;
-  color: var(--brown); 
+  color: var(--green); 
   margin: 0 5px; 
   align-self: center;  
-  font-weight:var(--fontweight);
+  font-weight:var(--fontweight); 
+} 
+
+.logout-btn-container {
+  position: absolute; 
+  margin-top: 67px; 
+  right: 30px;
+  z-index: 999; 
+  font-size: 30px; 
 }
 
+.logout-btn {
+  background-color: var(--mustard);
+  color: var(--green); 
+  padding: 12px 17px 12px 17px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight:var(--fontweight);  
+  display: flex;                     
+  align-items:center; 
+  text-align: left;
+  transition: background-color 0.3s;
+}
+
+.logout-btn:hover {
+  background-color: var(--hoverColor);
+}

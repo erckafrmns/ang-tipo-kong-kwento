@@ -1,66 +1,130 @@
-import { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import logo from '../../assets/logo.png';
-import Sidebar from '../Sidebar/Sidebar';  
-import { TbLayoutSidebarInactive } from "react-icons/tb";  
-import { FaBars } from "react-icons/fa";
+import React, { useState } from 'react';
+import { useNavigate, Link } from "react-router-dom";
+import { TbLayoutSidebarInactive } from "react-icons/tb";
 import { MdOutlineHistoryEdu } from "react-icons/md";
-import './Navbar.css';  
+import { RiLogoutBoxRLine } from "react-icons/ri";
+import logo from '../../assets/logo.png';
+import grainy from '../../assets/grainy-bg.svg';
+import insidebanner from '../../assets/banner.svg';
 import '../Sidebar/Sidebar.css';
 
 const InsideNavbar = () => {
-	const navRef = useRef();
-	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-	const navigate = useNavigate();
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [sidebarWidth, setSidebarWidth] = useState(null); // Sidebar will default to CSS width
+    const navigate = useNavigate();
 
-	const showNavbar = () => {
-	  navRef.current.classList.toggle("responsive_nav");
-	};
+    const toggleSidebar = () => {
+        setIsSidebarOpen(!isSidebarOpen);
+    };
 
-	const toggleSidebar = () => {
-	  setIsSidebarOpen(!isSidebarOpen);
-	};
+    const handleOutsideNewClick = () => {
+        navigate('/main');
+    };
 
-	const handleOutsideNewClick = () => {
-	  navigate('/main'); // Redirect to Main page
-	};
+    const handleLogout = () => {
+        navigate('/');
+    };
 
-	return (
+    // Resizing logic
+    const handleMouseDown = (e) => {
+        e.preventDefault();
+        document.addEventListener('mousemove', handleMouseMove);
+        document.addEventListener('mouseup', handleMouseUp);
+    };
+
+    const handleMouseMove = (e) => {
+        const newWidth = e.clientX - 10; // Calculate width based on sidebar position
+        const defaultWidth = 250; // Default CSS width
+        if (newWidth > defaultWidth && newWidth < 500) { // Min and max width
+            setSidebarWidth(newWidth);
+        }
+    };
+
+    const handleMouseUp = () => {
+        document.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('mouseup', handleMouseUp);
+    };
+
+    return (
         <>
-            <header>
-                <img src={logo} className="logo" alt="Logo" />
-                <nav ref={navRef}><a href="/#">Logout</a></nav> 
-                <button className="nav-btn" onClick={showNavbar}><FaBars /></button>
-                {/* whats this for? i removed the vines */}
-            </header> 
+            {/* Navbar Section */}
+            <div className="navbar">
+                <img src={insidebanner} className="inside-banner" alt="" />
+                <Link to="">
+                    <img src={logo} className="logo" alt="Logo" />
+                </Link>
+            </div>
 
             {/* Sidebar Component */}
-            <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />  
+            <div
+                className={`sidebar ${isSidebarOpen ? 'open' : ''}`}
+                style={{ width: sidebarWidth ? `${sidebarWidth}px` : 'auto' }} // Use inline width only if resized
+            >
+                {isSidebarOpen && <img src={grainy} className="grainy-bg-sidebar" alt="Background" />}
 
-            {/* Button container for open and outside new buttons */}
+                {/* Sidebar Content */}
+                <div className="sidebar-content">
+                    <div className="top-buttons-container">
+                        <div className="close-btn-container">
+                            <button className="close-btn" onClick={toggleSidebar}>
+                                <TbLayoutSidebarInactive />
+                            </button>
+                        </div>
+
+                        {/* Search Bar */}
+                        <div className="search-container">
+                            <input 
+                                type="text" 
+                                placeholder="Search title" 
+                                className="search-bar"
+                            /> 
+                        </div>
+
+                        {/* New Story Button */}
+                        <div className="new-btn-container">
+                            <button className="new-btn" onClick={handleOutsideNewClick}>
+                                <MdOutlineHistoryEdu />
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* New Chat Button */}
+                    <div className="new-chat-container">  
+                        <img src={logo} className="logo_small" alt="Logo" />
+                        <button className="new-chat-btn">New chat</button>
+                    </div>
+                </div>
+                <div className="resizer" onMouseDown={handleMouseDown}></div>
+            </div>
+
+            {/* Button Container for Open, Outside New, and Logout Buttons */}
             <div className={`button-container ${isSidebarOpen ? 'hidden' : ''}`}>
-                {/* Container for the open button */}
                 <div className="open-btn-container">
-					<button
-						className={`open-btn ${isSidebarOpen ? 'hidden' : ''}`}
-						onClick={toggleSidebar}
-					>
-						<TbLayoutSidebarInactive />
-					</button>
-				</div>
+                    <button
+                        className={`open-btn ${isSidebarOpen ? 'hidden' : ''}`}
+                        onClick={toggleSidebar}
+                    >
+                        <TbLayoutSidebarInactive />
+                    </button>
+                </div>
 
-                {/* Text in between the buttons */}
                 <span className="between-text">Ang Ibong Adarna</span>
 
-                {/* Container for the outside new button */}
                 <div className="outside-btn-container">
                     <button className="outside-new-btn" onClick={handleOutsideNewClick}>
                         <MdOutlineHistoryEdu />
                     </button>
                 </div>
+            </div> 
+
+            {/* Logout Button */}
+            <div className="logout-btn-container">
+                <button className="logout-btn" onClick={handleLogout}>
+                    <RiLogoutBoxRLine /> Logout
+                </button>
             </div>
         </>
     );
 };
-  
+
 export default InsideNavbar;
