@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import paper from '../../assets/tornpaper.svg'; 
 import grainy from '../../assets/grainy-bg.svg'; 
 import logo from '../../assets/logo-2.svg'; 
-import { BiSolidCastle } from "react-icons/bi";
+import { GiCrossedBones } from "react-icons/gi"; 
+import Footer from '../../components/Footer/Footer';
 import './Main-Custom.css';  
 
 const Custom = () => {
@@ -24,7 +25,8 @@ const Custom = () => {
         // You can also add further actions here
     };
 
-    return (
+    return ( 
+        <>
         <div className="custom-body">
             <div className="grainy-bg-container"> 
                 <img src={grainy} className="grainy-bg" alt="Background" /> 
@@ -35,7 +37,7 @@ const Custom = () => {
                 <div className="small-container">
                     <img src={paper} className="tornpaper" alt="" />  
                     <button className="close-icon" onClick={handleOutsideNewClick}>
-                    <BiSolidCastle />
+                    <GiCrossedBones />
                 </button>
                 </div>  
                     <div className="inputs">
@@ -49,8 +51,10 @@ const Custom = () => {
                         <label className="title-label">title</label>
                         <button onClick={handleGenerateClick} className="generate-button">generate</button>     
                     </div>
-            </div>
-        </div>
+            </div> 
+        </div> 
+        <Footer isAlternative={false} /> 
+        </>
     );
 };
 

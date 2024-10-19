@@ -1,0 +1,16 @@
+:root {
+    --green: #294122;           
+    --white: #FFFFFF;           
+    --hoverColor: rgba(221, 189, 115, 0.4); 
+    --mustard: #E1A10B;         
+    --beige: #FFEACF;        
+    --main-font: "EfcoBrookshire", sans-serif;  
+  }  
+ 
+.footer-alt{ 
+    background-color: var(--green); 
+} 
+
+.footer-alt .leftPart h1, .footer-alt .leftPart p, .footer-alt .socialMedia-item, .footer-alt .termsPolicy-item{  
+    color: var(--beige);
+}

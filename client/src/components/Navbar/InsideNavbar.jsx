@@ -51,7 +51,7 @@ const InsideNavbar = () => {
             <div className="navbar">
                 <img src={insidebanner} className="inside-banner" alt="" />
                 <Link to="">
-                    <img src={logo} className="logo" alt="Logo" />
+                    <img src={logo} className="logo1" alt="Logo" />
                 </Link>
             </div>
 

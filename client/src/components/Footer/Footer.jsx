@@ -1,18 +1,14 @@
-import React from 'react'
-import './Footer.css'; 
+import React from 'react';
+import './Footer.css';    // Default footer style
+import './Footer-vv.css'; // Alternative footer style
 import logo from '../../assets/logo.png';
-import { FaFacebook } from "react-icons/fa";
-import { FaGithub } from "react-icons/fa";
-import { FaInstagram } from "react-icons/fa";
-import { FaLinkedin } from "react-icons/fa";
-import { FaYoutube } from "react-icons/fa";
+import { FaFacebook, FaGithub, FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa";
 import { Link } from 'react-router-dom'; 
 
-
-const Footer = () => {
+const Footer = ({ isAlternative }) => {
   return (
     <>
-        <footer>
+        <footer className={isAlternative ? 'footer-alt' : 'footer'}>
             <div className='footerInfo'>
                 <div className='leftPart'>
                     <h1>Ang tipo kong Kwento</h1>
@@ -47,4 +43,4 @@ const Footer = () => {
   )
 }
 
-export default Footer
+export default Footer;
