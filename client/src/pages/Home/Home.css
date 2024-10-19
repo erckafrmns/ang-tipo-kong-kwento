@@ -15,7 +15,7 @@ h1, h2, p{
 .hero {
     position: relative;
     padding-top: 60px;
-    height: 93vh;
+    height: 89vh;
     background-color: var(--beige);
     display: flex;
     flex-direction: column;
@@ -43,7 +43,7 @@ h1, h2, p{
     color: aqua;
 }
 
-.container {
+.heroContainer {
     position: relative;
     z-index: 2;
     display: flex;

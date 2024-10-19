@@ -1,0 +1,231 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
+
+@font-face {
+	font-family: 'EfcoBrookshire'; 
+	src: url('../../assets/fonts/EFCOBrookshire.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+
+.loginSignup {
+    height: 100%;
+}
+
+.loginSignup-logoIMG img{
+    position: absolute;
+    height: 14%;
+    width: 14%;
+    top: 2%;
+    z-index: 2;
+}
+
+.loginSignup-grainy{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.loginSignup-container {
+    z-index: 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    transition: background-color 0.5s ease-in-out; 
+}
+
+.login-bg {
+    background-color: var(--green);
+}
+
+.signup-bg {
+    background-color: var(--yellow);
+}
+
+.form-container {
+    z-index: 3;
+    display: flex;
+    width: 60%;
+    height: 70%;
+    gap: 0.5%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+
+.form-side {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background-color: var(--beige);
+    transition: all 0.5s ease-in-out;
+}
+
+.form-content {
+    width: 100%;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+}
+
+h2 {
+    margin-bottom: 20px;
+    font-size: 30px;
+    font-family: "EfcoBrookshire", sans-serif;
+    color: var(--green);
+    text-align: center;
+}
+
+input {
+    width: 100%;
+    padding: 12px 10px;
+    margin: 10px 0;
+    font-size: 16px;
+    letter-spacing: 1px;
+    color: var(--green);
+    font-family: "Lora", sans-serif;
+    background-color: var(--beige);
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid var(--green);
+}
+
+.loginSignup-buttons{
+    width: 100%;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-btn {
+    width: 35%;
+    color: var(--beige);  
+    background-color: var(--green);
+}
+
+.guest-btn{
+    width: 62%;
+    color: var(--green);
+    background-color: var(--yellow);
+}
+
+.form-btn, .guest-btn{
+    font-size: 24px;
+    text-transform: lowercase;
+    font-family: "EfcoBrookshire", sans-serif;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    padding: 2% 0%;
+    transition: all 0.3s ease;
+}
+
+.form-btn:hover, .guest-btn:hover {
+    transform: scale(0.98);
+}
+
+.form-fullname{
+    display: flex;
+    flex-direction: row;
+    gap: 2%;
+}
+
+.forgotPassBtn{
+    text-decoration: none;
+    color: var(--green);
+}
+
+.forgotPassBtn:hover{
+    text-decoration: underline;
+    text-decoration-color: var(--green);
+}
+
+.loginSignUp-exIcon{
+    color: var(--green);
+    position: absolute;
+    top: 5%;
+    right: 3%;
+    font-size: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    z-index: 3;
+}
+
+.loginSignUp-exIcon:hover{
+    color: var(--yellow);
+}
+
+.side-content{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.side-image{
+    z-index: 1;
+    height: 100%;
+    width: 100%;
+
+}
+
+.side-btn{
+    z-index: 2;
+    position: absolute;
+    bottom: 25%;
+    padding: 1% 4%;
+    border-radius: 5px;
+    background-color: var(--beige);
+    font-size: 18px;
+    text-transform: lowercase;
+    font-family: "EfcoBrookshire", sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.side-signbtn{
+    color: var(--green);
+    border: 3px solid var(--green);
+}
+
+.side-signbtn:hover{
+    background-color: var(--green);
+    color: var(--beige);
+}
+
+.side-loginbtn{
+    color: var(--yellow);
+    border: 3px solid var(--yellow);
+}
+
+.side-loginbtn:hover{
+    background-color: var(--yellow);
+    color: var(--beige);
+}
+
+
+/* Responsive for smaller screens */
+@media (max-width: 768px) {
+    .form-container {
+        flex-direction: column;
+        height: auto;
+        width: 90%;
+    }
+
+    .form-side {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .form-content {
+        width: 100%;
+        padding: 20px;
+    }
+
+}

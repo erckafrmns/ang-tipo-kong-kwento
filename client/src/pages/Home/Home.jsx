@@ -30,7 +30,7 @@ const Home = () => {
         <section className='hero'>
           <h1>Ang tipo kong Kwento</h1>
           <img className="heroBG" src={heroBG} alt="" />
-          <div className='container'>
+          <div className='heroContainer'>
             <Link to="/login-signup" className='loginBTN'>LOGIN</Link>
             <Link to="/login-signup" className='signupBTN'>SIGN UP</Link>
             <a href="/#" className='guestBTN'>Continue as Guest</a>
