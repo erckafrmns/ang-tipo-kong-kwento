@@ -91,7 +91,7 @@ h1, h2, p{
     background-color: var(--beige);
     display: flex;
     flex-direction: column;
-    /* padding-top: 100px; */
+    /* padding-top: 100px; */  
 }
 
 .features h1{
@@ -99,39 +99,48 @@ h1, h2, p{
     font-size: 50px;
     font-weight: 400;
     color: var(--yellow);
-    padding: 20px 0 60px 50px;
+    padding: 20px 0 60px 50px; 
+    z-index: 2;
 }
 
-.featuresContainer{
+.featuresContainer {
     width: 100%;
     padding: 0 20px;
-    height: 65vh;
+    height: 65vh; /* Adjust the height as needed */
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-evenly;
-    margin-bottom: 50px;
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    margin-bottom: 50px; 
+    z-index: 5;
 }
 
-.features-card{
-    height: 95%;
-    width: 25%;
+.features-slider {
+    display: flex; /* Make it a flex container */
+    align-items: center; /* Center items vertically */
+    justify-content: center; /* Center items horizontally */
+    height: 100%; /* Ensure it takes full height of container */
+}
+
+.features-card {
+    height: 95%; /* Adjust height as necessary */
+    width: 25%; /* Width of each card */
     background-color: var(--green);
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: center; /* Center content inside card */
     padding: 10px 40px;
     border-radius: 30px;
     cursor: pointer;
     transition: all 0.3s ease;
+    margin: 0 10px; /* Add margin for spacing */
 }
 
-.features-card:hover{
+.features-card:hover {
     transform: scale(1.1);
 }
 
-.features-card h2{
+.features-card h2 {
     font-family: "EfcoBrookshire", sans-serif;
     color: var(--yellow);
     font-weight: 400;
@@ -139,7 +148,7 @@ h1, h2, p{
     text-align: center;
 }
 
-.features-card p{
+.features-card p {
     font-family: "Lora", sans-serif;
     color: var(--beige);
     font-weight: 100;
@@ -148,14 +157,39 @@ h1, h2, p{
     padding: 12px 0;
 }
 
-.features-card img{
-    height: 60%;
+.features-card img {
+    height: 60%; /* Set as per your design */
     width: 100%;
     border-radius: 30px;
 }
 
-.bottomBanner{
+.features-nav {
+    display: flex;
+    justify-content: space-between;
     width: 100%;
+    margin: 20px 0; 
+    z-index: 5;
+}
+
+.features-nav button {
+    padding: 10px 20px;
+    background-color: var(--green);
+    color: var(--beige);
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.features-nav button:disabled {
+    background-color: grey;
+    cursor: not-allowed;
+}
+
+.bottomBanner {  
+    height: 52vw;    
+    width: 100%; 
+    object-fit: cover;    
+    margin-top: -43%; 
 }
 
 /* ABOUT US SECTION */
@@ -166,7 +200,7 @@ h1, h2, p{
     flex-direction: row;
     padding-top: 60px;
     padding-bottom: 20px;
-    position: relative;
+    position: relative; 
 }
 
 .aboutBG{
