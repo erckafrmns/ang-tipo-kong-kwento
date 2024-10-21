@@ -54,8 +54,8 @@ const Developers = () => {
             image: dev4,
             socials: {
                 facebook: 'https://www.facebook.com/manzerella',
-                linkedin: 'https://linkedin.com/in/ernest',
-                github: 'https://github.com/ernest',
+                linkedin: 'https://www.linkedin.com/in/angelo-manzanero-300437169/',
+                github: 'https://github.com/manzerella',
             },
         },
         { 
@@ -109,7 +109,7 @@ const Developers = () => {
                         {visibleDevelopers.map((dev, index) => (
                             <div 
                                 key={dev.id} 
-                                className={`dev-card ${index === 1 ? 'active' : ''}`} // Add 'active' class to the middle card
+                                className={`dev-card ${index === 1 ? 'active' : ''}`}
                             >
                                 <div className='dev-card-top'>
                                     <img src={dev.image} alt={dev.name} className="card-img" />
