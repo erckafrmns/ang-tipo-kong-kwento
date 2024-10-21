@@ -1,0 +1,15 @@
+.story-page {
+    margin: 50px auto;
+    width: 80%;
+    text-align: center;
+}
+
+.story-page h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.story-page p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+}

@@ -3,9 +3,70 @@ from flask_sqlalchemy import SQLAlchemy
 from os import environ
 from flask_cors import CORS
 import psycopg2
+import random
+from transformers import GPT2LMHeadModel, GPT2Tokenizer
+
 
 app = Flask(__name__)
 CORS(app)
+
+
+# Load the model and tokenizer locally
+model = GPT2LMHeadModel.from_pretrained("models/trained_model/")
+tokenizer = GPT2Tokenizer.from_pretrained("models/trained_model/")
+
+# Ensure tokenizer's pad token is set
+if tokenizer.pad_token is None:
+    tokenizer.pad_token = tokenizer.eos_token
+
+def generate_story(title):
+    prompt = f"Title: {title} [SEP]"
+    inputs = tokenizer(prompt, return_tensors="pt")
+    outputs = model.generate(
+        inputs.input_ids,
+        do_sample=True,
+        max_length=700,
+        num_return_sequences=1,
+        top_k=50,
+        top_p=0.95,
+        temperature=0.7,
+        pad_token_id=tokenizer.eos_token_id,
+    )
+    story = tokenizer.decode(outputs[0], skip_special_tokens=False)
+    story = story.split('[END]')[0].strip()  
+    return story
+
+title = "Si George at ang Gintong Sapatos"
+
+@app.route('/generate-story', methods=['POST'])
+def generate_story_endpoint():
+    data = request.get_json()
+    print("Received data:", data)  # Debug print
+    title = data.get('title', "Default Title")
+    print("Title for story generation:", title)  # Debug print
+    story = generate_story(title)
+    print("Story:", story) # Debug print
+    return jsonify({"story": story})
+
+
+
+
+
+# # Dummy stories for example
+# stories = [
+#     "Si Pedro ay nagpunta sa palengke at nakita ang isang higanteng prutas.",
+#     "Ang aso ni Juan ay biglang nagsalita at nagturo sa kanya ng aralin sa matematika.",
+#     "Naglakbay si Maria sa isang mahiwagang kagubatan at natagpuan ang isang lumang aklat.",
+#     "Si Lito ay natutong lumipad matapos makakain ng isang kakaibang kendi."
+# ]
+
+# @app.route('/generate-story', methods=['GET'])
+# def generate_story():
+#     # Randomly select a story (Replace this with the actual model later)
+#     story = random.choice(stories)
+#     return jsonify({"story": story})
+
+
 
 @app.route("/users")
 def users():
