@@ -15,7 +15,7 @@ h1, h2, p{
 .hero {
     position: relative;
     padding-top: 60px;
-    height: 93vh;
+    height: 89vh;
     background-color: var(--beige);
     display: flex;
     flex-direction: column;
@@ -43,13 +43,13 @@ h1, h2, p{
     color: aqua;
 }
 
-.container {
+.heroContainer {
     position: relative;
     z-index: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 75px; 
+    margin-bottom: 65px; 
 }
 
 .signupBTN, .loginBTN {
@@ -106,35 +106,42 @@ h1, h2, p{
 .featuresContainer {
     width: 100%;
     padding: 0 20px;
-    height: 65vh; /* Adjust the height as needed */
     display: flex;
-    align-items: center; /* Center vertically */
-    justify-content: center; /* Center horizontally */
+    align-items: center; 
+    justify-content: center; 
     margin-bottom: 50px; 
-    z-index: 5;
+    z-index: 5; 
 }
 
 .features-slider {
-    display: flex; /* Make it a flex container */
-    align-items: center; /* Center items vertically */
-    justify-content: center; /* Center items horizontally */
-    height: 100%; /* Ensure it takes full height of container */
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
 }
 
 .features-card {
-    height: 95%; /* Adjust height as necessary */
-    width: 25%; /* Width of each card */
+    width: 30%; 
     background-color: var(--green);
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center; /* Center content inside card */
-    padding: 10px 40px;
+    justify-content: center; 
+    padding: 25px 20px;
     border-radius: 30px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    margin: 0 10px; /* Add margin for spacing */
-}
+    transition: transform 0.5s ease, opacity 0.5s ease; /* Smooth transition */
+    margin: 0 10px;  
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+} 
+ 
+
+.features-card.inactive{  
+    height: 500px;
+} 
+
+.features-card.inactive img{ 
+    height: 100%;
+} 
 
 .features-card:hover {
     transform: scale(1.1);
@@ -145,7 +152,8 @@ h1, h2, p{
     color: var(--yellow);
     font-weight: 400;
     font-size: 30px;
-    text-align: center;
+    text-align: center; 
+    margin-bottom: 1px;
 }
 
 .features-card p {
@@ -157,32 +165,26 @@ h1, h2, p{
     padding: 12px 0;
 }
 
-.features-card img {
-    height: 60%; /* Set as per your design */
+.features-card img { 
+    height: 350px;
     width: 100%;
     border-radius: 30px;
 }
 
-.features-nav {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    margin: 20px 0; 
-    z-index: 5;
-}
-
-.features-nav button {
-    padding: 10px 20px;
-    background-color: var(--green);
-    color: var(--beige);
-    border: none;
+.leftArrow, .rightArrow {  
+    margin: 0 15px; 
+    font-size: 30px; 
+    z-index: 5; 
+    color: var(--green); 
     cursor: pointer;
-    font-size: 16px;
-}
+    display: flex;
+    justify-content: center; 
+    align-items: center;   
+    transition: transform 0.3s;
+} 
 
-.features-nav button:disabled {
-    background-color: grey;
-    cursor: not-allowed;
+.leftArrow:hover, .rightArrow:hover{ 
+    transform: scale(1.1);
 }
 
 .bottomBanner {  
@@ -259,8 +261,39 @@ h1, h2, p{
 
 .developersBTN:hover{
     background-color: var(--yellow);
+} 
+
+@keyframes jump {
+    0%, 100% {
+        transform: translate(-50%, 0);
+    }
+    50% {
+        transform: translate(-50%, -15px);
+    }
 }
 
+.upButton {
+    position: absolute;   
+    top: 2255px;
+    left: 50%; 
+    transform: translateX(-50%) translateY(20px);
+    font-size: 40px; 
+    cursor: pointer; 
+    transition: opacity 0.3s ease, transform 0.3s ease, animation 0.3s ease;
+    color: var(--green); 
+    z-index: 1000;
+    opacity: 0;
+}
+
+.upButton.visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+    animation: jump 1s ease infinite;        
+} 
+
+.upButton:hover {
+    animation: none; 
+}
 
 /* NOT UPDATED */
 @media (max-width: 1380px) {

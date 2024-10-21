@@ -7,7 +7,7 @@
 	font-style: normal;
 }
 
-footer{
+footer{ 
     background-color: var(--beige);
     display: flex;
     flex-direction: column;
