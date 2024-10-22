@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import InsideNavbar from '../../components/Navbar/InsideNavbar';  
@@ -8,21 +8,20 @@ import '../CustomGenerate/Main-Custom.css';
 
 const Main = () => {
 
-    const [story, setStory] = useState('');
     const navigate = useNavigate(); 
 
     const handleGenerateStory = () => {
-        const title = "Ang Batang Matulungin"; //temporary 
-        axios.post('http://localhost:5000/generate-story', { title })
+        axios.post('http://localhost:5000/generate-story', {})
             .then(response => {
+                const generatedTitle = response.data.title;
                 const generatedStory = response.data.story;
-                setStory(generatedStory);  // Store the story in the state
-                navigate('/story', { state: { story: generatedStory } });  // Redirect and pass the story
+                navigate('/story', { state: { title: generatedTitle, story: generatedStory } });  // Redirect and pass the title and story
             })
             .catch(error => {
-                console.error('There was an error generating the story!', error);
+                console.error('There was an error generating the story without prompt!', error);
             });
     };
+    
     
 
 
