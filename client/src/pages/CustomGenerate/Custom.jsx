@@ -1,5 +1,6 @@
 import React, { useState } from 'react'; 
 import { useNavigate } from "react-router-dom";
+import axios from 'axios'; 
 import paper from '../../assets/tornpaper.svg'; 
 import grainy from '../../assets/grainy-bg.svg'; 
 import logo from '../../assets/logo-2.svg'; 
@@ -19,10 +20,20 @@ const Custom = () => {
         navigate('/main'); // Redirect to Main page
       };
 
-    const handleGenerateClick = () => {
-        // Handle the generate button click (e.g., logging the title or processing it)
-        console.log("Title to generate:", title);
-        // You can also add further actions here
+      const handleGenerateClick = () => {
+        if (!title) {
+            alert('Please enter a title');
+            return;
+        }
+        // Send the user inputted title to the backend
+        axios.post('http://localhost:5000/generate-custom-story', { title })
+            .then(response => {
+                const generatedStory = response.data.story;
+                navigate('/story', { state: { story: generatedStory } }); // Redirect to the story page
+            })
+            .catch(error => {
+                console.error('Error generating the story!', error);
+            });
     };
 
     return ( 
