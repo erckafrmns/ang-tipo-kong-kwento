@@ -33,8 +33,8 @@ const LoginSignup = () => {
               {isLogin ? (
                 <div className="form-content login-form">
                   <h2>Login your account</h2>
-                  <input type="text" placeholder="Email" />
-                  <input type="password" placeholder="Password" />
+                  <input type="text" placeholder="email" />
+                  <input type="password" placeholder="password" />
                   <a href="/#" className='forgotPassBtn'>Forgot password?</a>
                   <div className='loginSignup-buttons'>
                     <button className="form-btn">Login</button>
@@ -55,11 +55,11 @@ const LoginSignup = () => {
                   <Link to="/" className='loginSignUp-exIcon'><ImCross/></Link>
                   <h2>Create your account</h2>
                   <div className='form-fullname'>
-                    <input type="text" placeholder="First Name" />
-                    <input type="text" placeholder="Last Name" />
+                    <input type="text" placeholder="first name" />
+                    <input type="text" placeholder="last name" />
                   </div>
-                  <input type="email" placeholder="Email" />
-                  <input type="password" placeholder="Password" />
+                  <input type="email" placeholder="email" />
+                  <input type="password" placeholder="password" />
                   <div className='loginSignup-buttons'>
                     <button className="form-btn">Sign Up</button>
                     <button className='guest-btn'>Continue as guest</button>

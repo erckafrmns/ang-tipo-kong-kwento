@@ -69,7 +69,7 @@
 
 .form-content {
     width: 100%;
-    padding: 50px;
+    padding: 12%;
     display: flex;
     flex-direction: column;
     transition: all 0.5s ease-in-out;
@@ -104,7 +104,7 @@ input {
     width: 100%;
     padding: 12px 10px;
     margin: 10px 0;
-    font-size: 16px;
+    font-size: 15px;
     letter-spacing: 1px;
     color: var(--green);
     font-family: "Lora", sans-serif;
@@ -112,6 +112,12 @@ input {
     outline: none;
     border-radius: 5px;
     border: 1px solid var(--green);
+} 
+
+input::placeholder { 
+    font-family: "EfcoBrookshire", sans-serif; 
+    font-size: 17px;
+    color: var(--green);
 }
 
 .loginSignup-buttons{
@@ -154,7 +160,8 @@ input {
     gap: 2%;
 }
 
-.forgotPassBtn{
+.forgotPassBtn{ 
+    font-size: 15px;
     text-decoration: none;
     color: var(--green);
 }
@@ -194,20 +201,20 @@ input {
 }
 
 .side-btn{
-    z-index: 2;
+    z-index: 2; 
     position: absolute;
     bottom: 25%;
-    padding: 1% 4%;
+    padding: 0.7% 3%;
     border-radius: 5px;
     background-color: var(--beige);
-    font-size: 18px;
+    font-size: 24px;
     text-transform: lowercase;
     font-family: "EfcoBrookshire", sans-serif;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
-.side-signbtn{
+.side-signbtn{ 
     color: var(--green);
     border: 3px solid var(--green);
 }
@@ -217,7 +224,7 @@ input {
     color: var(--beige);
 }
 
-.side-loginbtn{
+.side-loginbtn{  
     color: var(--yellow);
     border: 3px solid var(--yellow);
 }
