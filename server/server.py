@@ -1,101 +1,46 @@
-from flask import Flask, request, jsonify, make_response
-from flask_sqlalchemy import SQLAlchemy
-from os import environ
+import sys
+import os
+import logging
+sys.path.insert(0, os.path.join(os.getcwd(), 'model'))
+from model import load_model, generate_custom_story, generate_uncustom_story
+from flask import Flask, request, jsonify
 from flask_cors import CORS
-import psycopg2
-import random
-from transformers import GPT2LMHeadModel, GPT2Tokenizer
 
+# Set up logging
+logging.basicConfig(level=logging.DEBUG)
 
 app = Flask(__name__)
 CORS(app)
 
-
-# Load the model and tokenizer locally
-model = GPT2LMHeadModel.from_pretrained("model/trained_model/")
-tokenizer = GPT2Tokenizer.from_pretrained("model/trained_model/")
-
-# Ensure tokenizer's pad token is set
-if tokenizer.pad_token is None:
-    tokenizer.pad_token = tokenizer.eos_token
+# Load the model and tokenizer at the start
+logging.info("LOADING MODEL AND TOKENIZER...")
+model, tokenizer = load_model()
+logging.info("MODEL AND TOKENIZER LOADED SUCCESSFULLY.")
 
 
-# GENERATE WITH CUSTOMIZATION
-def generate_custom_story(title):
-    prompt = f"Title: {title} [SEP]"
-    inputs = tokenizer(prompt, return_tensors="pt")
-    outputs = model.generate(
-        inputs.input_ids,
-        do_sample=True,
-        max_length=700,
-        num_return_sequences=1,
-        top_k=50,
-        top_p=0.95,
-        temperature=0.7,
-        pad_token_id=tokenizer.eos_token_id,
-    )
-    story = tokenizer.decode(outputs[0], skip_special_tokens=False)
-    story = story.split('[END]')[0].strip()  
-    return story
-
-# ENDPOINT FOR CUSTOM STORY
+# Endpoint for generating custom story
 @app.route('/generate-custom-story', methods=['POST'])
-def ggenerate_custom_story_endpoint():
+def generate_custom_story_endpoint():
     data = request.get_json()
-    print("Received data:", data)  # Debug print
     title = data.get('title', "Default Title")
-    print("Title for story generation:", title)  # Debug print
-    print("Generating ...")  # Debug print
-    story = generate_custom_story(title)
-    print("Story:", story) # Debug print
+    logging.debug(f"GENERATING CUSTOM STORY WITH TITLE: {title}")
+    story = generate_custom_story(title, model, tokenizer)
+    logging.info(f"STORY GENERATED SUCCESSFULLY: {story[:100]}...") 
     return jsonify({"story": story})
 
 
-
-# GENERATE WITHOUT CUSTOMIZATION
-def generate_uncustom_story():
-    prompt = "Generate a title and a story:"
-
-    inputs = tokenizer(prompt, return_tensors="pt")
-    outputs = model.generate(
-        inputs.input_ids,
-        do_sample=True,
-        max_length=700,
-        num_return_sequences=1,
-        top_k=50,
-        top_p=0.95,
-        temperature=0.7,
-        pad_token_id=tokenizer.eos_token_id,
-    )
-
-    generated_text = tokenizer.decode(outputs[0], skip_special_tokens=True).strip()
-
-    
-    if "Story:" in generated_text:
-        title, story = generated_text.split("Story:", 1)
-        title = title.replace("Title:", "").strip()  
-        story = story.strip()  
-    else:
-        title = "Untitled Story"
-        story = generated_text  
-    
-    return title, story
-
-# ENDPOINT FOR UNCUSTOMIZE STORY
+# Endpoint for generating uncategorized story
 @app.route('/generate-story', methods=['POST'])
 def generate_story():
-    print("Generating ...")  # Debug print
-    title, story = generate_uncustom_story()
-    print("Generated Title:", title)  # Debug print
-    print("Generated Story:", story)  # Debug print
+    logging.debug("GENERATING RANDOM STORY...")
+    title, story = generate_uncustom_story(model, tokenizer)
+    logging.info(f"STORY GENERATED SUCCESSFULLY: {title} - {story[:100]}...")  
     return jsonify({"title": title, "story": story})
-
 
 
 @app.route("/users")
 def users():
-    return {"users": ["Ericka", "Grace", "Ernest", "Pao","Nino"]}
-
+    return {"users": ["Ericka", "Grace", "Ernest", "Pao", "Nino"]}
 
 # Database connection
 # def get_db_connection():

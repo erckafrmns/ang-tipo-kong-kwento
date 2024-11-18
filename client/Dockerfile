@@ -1,0 +1,26 @@
+# Dockerfile for React
+FROM node:20-alpine as build
+
+WORKDIR /client-app
+
+COPY package.json ./
+
+COPY package-lock.json ./
+
+RUN npm install
+
+COPY . ./
+
+RUN npm run build
+
+# Serve static files using a lightweight server
+FROM nginx:stable-alpine
+
+COPY --from=build /client-app/build /usr/share/nginx/html
+
+# Optional: Add custom NGINX configuration (if needed)
+# COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]

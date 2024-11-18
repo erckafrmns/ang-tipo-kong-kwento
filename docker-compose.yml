@@ -1,0 +1,54 @@
+services:
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"  
+    depends_on:
+      - server
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    volumes:
+      - ./server:/server-app
+    ports:
+      - "5000:5000"  
+    depends_on:
+      - model
+      - db 
+    environment:
+      - FLASK_APP=server.py
+      - FLASK_ENV=development
+      - DATABASE_URL=postgresql://postgres:password@db:5432/ATKK_DB
+
+  model:
+    build:
+      context: ./model
+      dockerfile: Dockerfile
+    volumes:
+      - ./model:/model-app
+    expose:
+      - "5000"
+    ports:
+      - "5001:5000"
+    environment:
+      - MODEL_PATH=/model/trained_model
+
+  db:
+    image: postgres:17.1
+    environment:
+      - POSTGRES_USER=postgres  
+      - POSTGRES_PASSWORD=admin  
+      - POSTGRES_DB=ATKK_DB 
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  
+    ports:
+      - "5432:5432"  
+
+
+volumes:
+  postgres_data:  # Define a named volume for PostgreSQL data persistence

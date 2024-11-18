@@ -1,3 +1,0 @@
-react-router-dom
-axios
-react-icons --save
