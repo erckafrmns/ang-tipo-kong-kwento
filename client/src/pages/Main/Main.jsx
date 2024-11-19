@@ -11,16 +11,18 @@ const Main = () => {
     const navigate = useNavigate(); 
 
     const handleGenerateStory = () => {
-        axios.post('http://localhost:5000/generate-story', {})
-            .then(response => {
-                const generatedTitle = response.data.title;
-                const generatedStory = response.data.story;
-                navigate('/story', { state: { title: generatedTitle, story: generatedStory } });  // Redirect and pass the title and story
-            })
-            .catch(error => {
-                console.error('There was an error generating the story without prompt!', error);
-            });
-    };
+    navigate('/story', { state: { loading: true } }); // Navigate immediately with loading state
+    axios.post('http://localhost:5000/generate-story', {})
+        .then(response => {
+            const generatedTitle = response.data.title;
+            const generatedStory = response.data.story;
+            navigate('/story', { state: { title: generatedTitle, story: generatedStory } }); // Update with the story
+        })
+        .catch(error => {
+            console.error('There was an error generating the story without prompt!', error);
+        });
+};
+
     
     
 

@@ -21,20 +21,21 @@ const Custom = () => {
       };
 
       const handleGenerateClick = () => {
-        if (!title) {
-            alert('Please enter a title');
-            return;
-        }
-        // Send the user inputted title to the backend
-        axios.post('http://localhost:5000/generate-custom-story', { title })
-            .then(response => {
-                const generatedStory = response.data.story;
-                navigate('/story', { state: { story: generatedStory } }); // Redirect to the story page
-            })
-            .catch(error => {
-                console.error('Error generating the story!', error);
-            });
-    };
+            if (!title) {
+                alert('Please enter a title');
+                return;
+            }
+            navigate('/story', { state: { loading: true } }); // Navigate immediately with loading state
+            axios.post('http://localhost:5000/generate-custom-story', { title })
+                .then(response => {
+                    const generatedStory = response.data.story;
+                    navigate('/story', { state: { story: generatedStory } }); // Update with the story
+                })
+                .catch(error => {
+                    console.error('Error generating the story!', error);
+                });
+        };
+
 
     return ( 
         <>
