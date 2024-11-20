@@ -1,18 +1,18 @@
-import React from 'react'
+import React, {useEffect } from 'react';
 import Footer from '../../components/Footer/Footer';
-import logo from '../../assets/logo.png';
-import { GiCrossedBones } from "react-icons/gi";
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'; 
+import Navbar from '../../components/Navbar/Navbar';
 import './TermsOfUse.css'
 
 const TermsOfUse = () => {
+    useEffect(() => {
+      window.scrollTo(0, 0); // Scroll to the top of the page
+    }, []);
+  
   return (
-    <>
+    <> 
+    <Navbar/>
         <div className='termsandpolicies'>
-            <div className='container-top'>
-                <Link to="/" className='logoIMG'><img src={logo} alt="" /></Link>
-                <Link to="/" className='exIcon'><GiCrossedBones/></Link>
-            </div>
 
             <div className='container-bot'>
                 <h1>Terms of use</h1>
@@ -91,8 +91,8 @@ const TermsOfUse = () => {
         </div>
 
 
-        <Footer/>
-    </>
+        <Footer isAlternative={true} />
+        </>
   )
 }
 

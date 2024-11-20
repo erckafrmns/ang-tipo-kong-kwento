@@ -29,7 +29,7 @@ const Custom = () => {
             axios.post('http://localhost:5000/generate-custom-story', { title })
                 .then(response => {
                     const generatedStory = response.data.story;
-                    navigate('/story', { state: { story: generatedStory } }); // Update with the story
+                    navigate('/story', { state: { title, story: generatedStory } }); // Update with the generated story and custom title
                 })
                 .catch(error => {
                     console.error('Error generating the story!', error);

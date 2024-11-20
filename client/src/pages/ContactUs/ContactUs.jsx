@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaPhoneAlt } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6";
-import './ContactUs.css'
+import './ContactUs.css' 
+import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/Footer';
-import logo from '../../assets/logo.png';
-import { GiCrossedBones } from "react-icons/gi";
 import { Link } from 'react-router-dom';
 
-const ContactUs = () => {
+const ContactUs = () => { 
+    useEffect(() => {
+        window.scrollTo(0, 0); // Scroll to the top of the page
+      }, []);
 
     // State to manage form data
     const [formData, setFormData] = useState({
@@ -32,17 +34,14 @@ const ContactUs = () => {
         // You can make an API call to send the form data to your backend here
     };
 
-  return (
-    <>
+  return ( 
+    <> 
+    <Navbar/>
         <div className='contactUs'>
-            <div className='contactUs-top'>
-                <Link to="/" className='logoIMG'><img src={logo} alt="" /></Link>
-                <Link to="/" className='exIcon'><GiCrossedBones/></Link>
-            </div>
             
             <div className='contactUs-bot'>
                 <h1>Contact Us</h1>
-                <p>Have any questions or need assistance?</p>
+                <p style={{ color: "#29412d" }}>Have any questions or need assistance?</p>
                 
                 <div className='contactUs-container'>
                     <div className='contacts'>
@@ -64,25 +63,25 @@ const ContactUs = () => {
 
                     <form className='contactForm' onSubmit={handleSubmit}>
                     <div>
-                        <input type="text" id="fullname" name="fullname" placeholder="Name" value={formData.fullname} onChange={handleChange} required/>
+                        <input type="text" id="fullname" name="fullname" placeholder="name" value={formData.fullname} onChange={handleChange} required/>
                     </div>
 
                     <div>
-                        <input type="email" id="email" name="email" placeholder='Email' value={formData.email} onChange={handleChange} required/>
+                        <input type="email" id="email" name="email" placeholder='email' value={formData.email} onChange={handleChange} required/>
                     </div>
 
                     <div>
-                        <textarea id="message" name="message" placeholder='Message' rows="5" value={formData.message} onChange={handleChange} required></textarea>
+                        <textarea id="message" name="message" placeholder='message' rows="5" value={formData.message} onChange={handleChange} required></textarea>
                     </div>
 
-                    <button type="submit">Send</button>
+                    <button type="submit">send</button>
                     </form>
                 </div>
 
             </div>
 
         </div>
-        <Footer/>
+        <Footer isAlternative={true} />
     </>
   )
 }

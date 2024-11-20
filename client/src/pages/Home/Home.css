@@ -16,7 +16,6 @@ h1, h2, p{
     position: relative;
     padding-top: 60px;
     height: 89vh;
-    background-color: var(--beige);
     display: flex;
     flex-direction: column;
     justify-content: space-between; 
@@ -88,7 +87,6 @@ h1, h2, p{
 /* FEATURES SECTION */
 .features{
     height: auto;
-    background-color: var(--beige);
     display: flex;
     flex-direction: column;
     /* padding-top: 100px; */  
@@ -246,7 +244,7 @@ h1, h2, p{
     text-transform: lowercase;
     font-size: 25px;
     color: var(--green);
-    background-color: beige;
+    background-color: var(--beige);
     transition: all 0.3s ease;
 }
 
