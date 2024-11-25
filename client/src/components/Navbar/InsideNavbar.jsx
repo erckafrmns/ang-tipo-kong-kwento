@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from "react-router-dom";
 import { TbLayoutSidebarInactive } from "react-icons/tb";
 import { MdOutlineHistoryEdu } from "react-icons/md";
-import { RiLogoutBoxRLine } from "react-icons/ri";
 import logo from '../../assets/logo.png';
 import grainy from '../../assets/grainy-bg.svg';
 import insidebanner from '../../assets/banner.svg';
@@ -66,7 +65,7 @@ const InsideNavbar = () => {
                         <Link to="" className="nav-right">Contact Us</Link>
                     </li>
                     <li>
-                        <Link to="" className="nav-right">Logout</Link>
+                        <Link to="/"  className="nav-right">Logout</Link>
                     </li>
                 </ul>
             </div> 

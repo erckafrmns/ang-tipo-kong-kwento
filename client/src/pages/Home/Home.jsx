@@ -76,7 +76,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section ref={featuresRef} className='features'>
+      <section ref={featuresRef} id="features" className='features'>
         <h1>Our Features</h1>
         <div className='featuresContainer'> 
           <div className='leftArrow' onClick={handlePrev}><FiArrowLeftCircle className="nav-icon" /></div>
@@ -112,7 +112,7 @@ const Home = () => {
         <img src={bottomBanner} className="bottomBanner" alt="" />
       </section>
 
-      <section ref={aboutRef} className='aboutUs'>
+      <section ref={aboutRef} id="about" className='aboutUs'>
         <img src={aboutBG} className='aboutBG' alt="" />
         <div className='aboutContainer'>
           <h1>About Us</h1>
