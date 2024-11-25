@@ -1,17 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Footer from '../../components/Footer/Footer';
-import logo from '../../assets/logo.png';
 import dev1 from '../../assets/dev1.jpg'; 
 import dev2 from '../../assets/dev2.jpg';
 import dev3 from '../../assets/dev3.jpg';
 import dev4 from '../../assets/dev4.jpg';
 import dev5 from '../../assets/dev5.jpg';
-import { GiCrossedBones } from "react-icons/gi";
+import Navbar from '../../components/Navbar/Navbar';
 import { FaFacebook, FaGithub, FaLinkedin } from "react-icons/fa";
-import { Link } from 'react-router-dom';
 import './Developers.css';
 
-const Developers = () => {
+const Developers = () => { 
+
+    useEffect(() => {
+        window.scrollTo(0, 0); // Scroll to the top of the page
+      }, []);
 
     const developers = [
         { 
@@ -95,14 +97,12 @@ const Developers = () => {
     const visibleDevelopers = getVisibleDevelopers();
 
     return (
-        <>
-            <div className='developersPage'>
-                <div className='dev-top'>
-                    <Link to="/" className='logoIMG'><img src={logo} alt="Logo" /></Link>
+        <> 
+        <Navbar/>
+            <div className='developersPage'> 
+            <div className='dev-top'>
                     <h1>Meet the team</h1>
-                    <Link to="/" className='exIcon'><GiCrossedBones/></Link>
                 </div>
-  
                 <div className='dev-slider-container'>
                     <button className="prev-btn" onClick={handlePrevClick}>❮</button>
                     <div className={`dev-card-slider ${transitionDirection}`}>
@@ -136,7 +136,7 @@ const Developers = () => {
                 </div>
             </div>
 
-            <Footer />
+            <Footer isAlternative={true} />
         </>
     );
 };

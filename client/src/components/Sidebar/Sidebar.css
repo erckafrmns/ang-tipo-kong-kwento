@@ -2,7 +2,7 @@
   --green: #294122;            /* Primary brown color */
   --white: #FFFFFF;           /* White color */
   --hoverColor: rgba(53, 40, 14, 0.2); /* Hover color for buttons */
-  --mustard: #E1A10B;         /* Sidebar background color */
+  --yellow: #E1A10B;         /* Sidebar background color */
   --beige: #FFEACF;        /* Light background color for search bar */
   --placeholderColor: #7A6C4C; /* Placeholder color */
   --fontweight: 450; 
@@ -98,7 +98,7 @@
   width: 250px;
   height: 89%;  
   border-radius: 10px;
-  background-color: var(--mustard);
+  background-color: var(--yellow);
   z-index: 1000; 
   display: none; 
   flex-direction: column; 
@@ -231,7 +231,7 @@
 .button-container {
   text-align: center; 
   display: flex;  
-  border: 2px solid var(--mustard);   
+  border: 2px solid var(--yellow);   
   margin-left: 10px;  
   position: absolute; 
   margin-top: 67px; 
@@ -283,7 +283,7 @@
 }
 
 .logout-btn {
-  background-color: var(--mustard);
+  background-color: var(--yellow);
   color: var(--green); 
   padding: 12px 17px 12px 17px;
   border: none;

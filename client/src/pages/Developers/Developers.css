@@ -15,45 +15,21 @@ h3, h1, p{
 .developersPage {
     height: 100vh;
     width: 100%;
-    background-color: var(--green);
     padding: 40px 50px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-}
-
-.dev-top {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px 0 20px;
-}
-
-.dev-top img {
-    width: 80px;
-    height: 80px;
-    cursor: pointer;
+    align-items: center;  
 }
 
 .dev-top h1{
-    color: var(--beige);
-    font-size: 40px;
-    letter-spacing: 2px;
-    font-weight: 400;
+    color: var(--green);
     font-family: "EfcoBrookshire", sans-serif;
+    font-size: 50px;
+    letter-spacing: 1px;
+    padding: 10px;
+    margin-top: 20px;  
 }
 
-.dev-top .exIcon {
-    font-size: 30px;
-    color: var(--beige);
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.dev-top .exIcon:hover{
-    color: var(--yellow);
-}
 
 .dev-slider-container {
     display: flex;
@@ -61,9 +37,8 @@ h3, h1, p{
     justify-content: center;
     position: relative;
     overflow: hidden;
-    height: 80%;
-    width: 80%;
-    margin-top: 2%;
+    height: 77%;
+    width: 75%;
 }
 
 .dev-card-slider {
@@ -81,38 +56,44 @@ h3, h1, p{
     flex-direction: column;
     align-items: center;
     background: var(--beige);
-    border-radius: 8px;
+    border-radius: 8px; 
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     transition: all 0.5s ease-in-out;
 }
 
 
 .dev-card.active {
-    border: 5px solid var(--green);
-    border-radius: 6%;
+    border: 3px solid #d4a05f;
+    border-radius: 3%;
     transform: scale(1.1);
-    z-index: 1; 
+    z-index: 1;  
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
 }
 
-.dev-card-top{
-    width: 100%;
+.dev-card-top { 
+    width: 100%; 
     height: 50%;
-    border-radius: 8px 8px 0 0;
-    background-color: var(--yellow);
+    border-radius: 8px 8px 0 0;  
+    background-color: var(--green);
     padding: 20px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: center; 
+    background-image: url('../../assets/dev-bg.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-blend-mode: overlay
 }
 
 .dev-card img {
     border-radius: 50%;
-    width: 40%;
+    width: 39%;
     height: 70%;
-    border: 2px solid white;
+    border: 2px solid #d4a05f;
     padding: 2px;
     cursor: pointer;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.6s ease-in-out;
 }
 
 .dev-card-bot{
@@ -138,43 +119,42 @@ h3, h1, p{
 
 .dev-socials{
     margin-top: 4%;
-    font-size: 35px;
+    font-size: 30px; 
 }
 
 .dev-socials-item{
     margin: 0 8px;
     cursor: pointer;
-    color: var(--yellow);
     transition: all 0.3s ease-in-out;
 }
 
-.fb{
-    color: #1877F2;
+.fb, .li, .gh{
+    color: var(--green);  
+} 
+
+.fb:hover{ 
+    color: #1877F2; 
 }
 
-.li{
+.li:hover{
     color: #0077B5;
 }
 
-.gh{
+.gh:hover{
     color: black;
-}
-
-.dev-socials-item:hover{
-    color: var(--yellow);
-}
-
+} 
 
 .prev-btn, .next-btn {
     background-color: transparent;
-    color: var(--yellow);
+    color: #d4a05f;
     border: none;
     font-size: 2rem;
     cursor: pointer;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    z-index: 10;
+    z-index: 10; 
+    transition: transform 0.3s ease, color 0.3s ease;
 }
 
 .prev-btn {
@@ -183,5 +163,9 @@ h3, h1, p{
 
 .next-btn {
     right: 10px;
+}
+ 
+.prev-btn:hover, .next-btn:hover {
+    transform: translateY(-50%) scale(1.1);
 }
 

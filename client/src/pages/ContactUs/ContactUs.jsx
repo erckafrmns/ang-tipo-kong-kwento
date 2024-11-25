@@ -5,7 +5,6 @@ import { FaLocationDot } from "react-icons/fa6";
 import './ContactUs.css' 
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/Footer';
-import { Link } from 'react-router-dom';
 
 const ContactUs = () => { 
     useEffect(() => {
