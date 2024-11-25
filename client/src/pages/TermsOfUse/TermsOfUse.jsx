@@ -1,7 +1,8 @@
 import React, {useEffect } from 'react';
-import Footer from '../../components/Footer/Footer';
 import { Link } from 'react-router-dom'; 
-import Navbar from '../../components/Navbar/Navbar';
+import Navbar from '../../components/Navbar/Navbar'; 
+import ScrollToTop from '../../components/ScrollToTop/ScrollToTop';  
+import Footer from '../../components/Footer/Footer';
 import './TermsOfUse.css'
 
 const TermsOfUse = () => {
@@ -85,11 +86,11 @@ const TermsOfUse = () => {
                 <div className='bot-item'>
                     <h4>Contact Information</h4>
                     <p>For any questions, concerns, or inquiries regarding these Terms of Use or the platform, you may contact us at <a href="mailto:angtipokongkwento@gmail.com"><u>angtipokongkwento@gmail.com</u></a> or through our  <Link to="/contact-us"><u>website</u></Link>.</p>
-                </div>
-        
-            </div>
-        </div>
+                </div> 
+            </div> 
+        </div> 
 
+        <ScrollToTop isAlternative={true} />
 
         <Footer isAlternative={true} />
         </>

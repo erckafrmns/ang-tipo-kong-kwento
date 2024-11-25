@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { FiArrowRightCircle, FiArrowLeftCircle } from "react-icons/fi";   
-import { TbCircleChevronsUp } from "react-icons/tb";
-import Navbar from '../../components/Navbar/Navbar';
+import Navbar from '../../components/Navbar/Navbar'; 
+import ScrollToTop from '../../components/ScrollToTop/ScrollToTop'; 
 import Footer from '../../components/Footer/Footer';
 import heroBG from '../../assets/hero-bg.png';
 import aboutBG from '../../assets/about-bg.png';
@@ -16,7 +16,6 @@ const Home = () => {
   const aboutRef = useRef(null);
   const navbarRef = useRef(null); 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isButtonVisible, setIsButtonVisible] = useState(false); // State for button visibility
 
   // List of feature objects
   const features = [
@@ -28,10 +27,6 @@ const Home = () => {
   ];
 
   // Scroll functions
-  const scrollToNavbar = () => {
-    navbarRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
   const scrollToFeatures = () => {
     featuresRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -40,17 +35,7 @@ const Home = () => {
     aboutRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const handleScroll = () => {
-    const bottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 100;
-    setIsButtonVisible(bottom);
-  };
 
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
 
   const handleNext = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % features.length);
@@ -121,11 +106,7 @@ const Home = () => {
         </div>
         <img src={aboutIMG} className='aboutIMG' alt="" />  
       </section> 
-
-      <TbCircleChevronsUp 
-        className={`upButton ${isButtonVisible ? 'visible' : ''}`}
-        onClick={scrollToNavbar} 
-      />
+      <ScrollToTop/>
       <Footer /> 
     </>
   );

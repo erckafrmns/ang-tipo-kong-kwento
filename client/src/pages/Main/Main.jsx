@@ -45,7 +45,7 @@ const Main = () => {
             <span>Customization</span> 
             </div>
         </div>
-      </section>
+      </section> 
       <Footer isAlternative={true} />
       {isModalOpen && <Custom closeModal={toggleModal} />} {/* Modal rendering */}
     </div>

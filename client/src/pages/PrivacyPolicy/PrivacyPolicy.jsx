@@ -1,7 +1,8 @@
 import React, {useEffect } from 'react';
-import Footer from '../../components/Footer/Footer';
 import { Link } from 'react-router-dom'; 
-import Navbar from '../../components/Navbar/Navbar';
+import Navbar from '../../components/Navbar/Navbar'; 
+import ScrollToTop from '../../components/ScrollToTop/ScrollToTop';   
+import Footer from '../../components/Footer/Footer';
 import '../TermsOfUse/TermsOfUse.css'
 
 const PrivacyPolicy = () => { 
@@ -93,7 +94,7 @@ const PrivacyPolicy = () => {
         
             </div>
         </div>
-
+        <ScrollToTop isAlternative={true} />
         <Footer isAlternative={true} />
     </>
   )
