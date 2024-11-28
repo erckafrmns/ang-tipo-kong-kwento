@@ -1,66 +1,83 @@
-import sys
-import os
-import logging
-sys.path.insert(0, os.path.join(os.getcwd(), 'model'))
-from model import load_model, generate_custom_story, generate_uncustom_story
+import requests
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+import logging
+import time
 
-# Set up logging
-logging.basicConfig(level=logging.DEBUG)
+# Configured Logging
+logging.basicConfig(level=logging.INFO)
 
 app = Flask(__name__)
 CORS(app)
 
-# Load the model and tokenizer at the start
-logging.info("LOADING MODEL AND TOKENIZER...")
-model, tokenizer = load_model()
-logging.info("MODEL AND TOKENIZER LOADED SUCCESSFULLY.")
+MODEL_SERVICE_URL = "http://model:5001"
 
 
-# Endpoint for generating custom story
-@app.route('/generate-custom-story', methods=['POST'])
-def generate_custom_story_endpoint():
-    data = request.get_json()
-    title = data.get('title', "Default Title")
-    logging.debug(f"GENERATING CUSTOM STORY WITH TITLE: {title}")
-    story = generate_custom_story(title, model, tokenizer)
-    logging.info(f"STORY GENERATED SUCCESSFULLY: {story[:100]}...") 
-    return jsonify({"story": story})
-
-
-# Endpoint for generating uncategorized story
+# ENDPOINT FOR CLIENT TO SERVER - RANDOM STORY
 @app.route('/generate-story', methods=['POST'])
 def generate_story():
-    logging.debug("GENERATING RANDOM STORY...")
-    title, story = generate_uncustom_story(model, tokenizer)
-    logging.info(f"STORY GENERATED SUCCESSFULLY: {title} - {story[:100]}...")  
-    return jsonify({"title": title, "story": story})
+    try:
+        logging.info("RECEIVED REQUEST FOR RANDOM STORY.")
+        
+        start_time = time.time() #TO TRACK GENERATION TIME
+        
+        # REQUEST TO MODEL SERVICE
+        response = requests.post(f"{MODEL_SERVICE_URL}/model-generate-random")
+
+        if response.status_code == 200:
+            result = response.json()
+            logging.info("RANDOM STORY WAS SUCCESSFULLY GENERATED.")
+            end_time = time.time()
+            logging.info(f"STORY GENERATION TOOK {end_time - start_time} SECONDS")
+            return jsonify(result)
+        else:
+            logging.error(f"FAILED TO GENERATE STORY. MODEL SERVICE RETURNED STATUS CODE: {response.status_code}")
+            return jsonify({"error": "Failed to generate story."}), response.status_code
+    
+    except Exception as e:
+        logging.error(f"ERROR GENERATING RANDOM STORY: {str(e)}")
+        return jsonify({"error": str(e)}), 500
 
 
-@app.route("/users")
-def users():
-    return {"users": ["Ericka", "Grace", "Ernest", "Pao", "Nino"]}
+# ENDPOINT FOR CLIENT TO SERVER - CUSTOM STORY
+@app.route('/generate-custom-story', methods=['POST'])
+def generate_custom_story_endpoint():
+    try:
+        data = request.get_json()
+        title = data.get('title', "Default Title")
+        logging.info(f"RECEIVED REQUEST FOR CUSTOM STORY: {title}")
+        start_time = time.time() #TO TRACK GENERATION TIME
 
-# Database connection
-# def get_db_connection():
-#     conn = psycopg2.connect(
-#         host="localhost",
-#         database="ATKK_DB",
-#         user="postgres",
-#         password="admin"
-#     )
-#     return conn
+        # REQUEST TO MODEL SERVICE
+        response = requests.post(
+            f"{MODEL_SERVICE_URL}/model-generate-custom",
+            json={"title": title},
+        )
 
-# @app.route('/history', methods=['GET'])
-# def get_history():
-#     conn = get_db_connection()
-#     cur = conn.cursor()
-#     cur.execute("SELECT * FROM stories;")  # Adjust to your stories table structure
-#     stories = cur.fetchall()
-#     cur.close()
-#     conn.close()
-#     return jsonify(stories)
+        if response.status_code == 200:
+            story = response.json().get("story", "No story generated.")
+            logging.info("CUSTOM STORY WAS SUCCESSFULLY GENERATED.")
+            end_time = time.time()
+            logging.info(f"STORY GENERATION TOOK {end_time - start_time} SECONDS")
+            return jsonify({"story": story})
+        else:
+            logging.error(f"FAILED TO GENERATE STORY. MODEL SERVICE RETURNED STATUS CODE: {response.status_code}")
+            return jsonify({"error": "Failed to generate story."}), response.status_code
+    
+    except Exception as e:
+        logging.error(f"ERROR GENERATING CUSTOM STORY: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+
+
+# JUST TO TEST IF SERVER WORKS
+@app.route("/developers")
+def developers():
+    return {"developers": ["Ericka", "Grace", "Ernest", "Pao", "Nino"]}
+
+@app.route('/ping', methods=['GET'])
+def ping():
+    return jsonify({"message": "Pong! Server is reachable!"})
+
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0", port=5000)

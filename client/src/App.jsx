@@ -10,6 +10,7 @@ import OtherPolicies from './pages/OtherPolicies/OtherPolicies'
 import Main from './pages/Main/Main'; 
 import Custom from './pages/CustomGenerate/Custom';
 import StoryPage from './pages/StoryPage/StoryPage';
+import Test from './pages/Test';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'; 
 
 const AppContent = () => {
@@ -29,6 +30,7 @@ const AppContent = () => {
         <Route path="/main" element={<Main />} /> 
         <Route path="/custom" element={<Custom />} /> 
         <Route path="/story" element={<StoryPage />} />
+        <Route path="/test" element={<Test />} />
       </Routes>
     </>
   );

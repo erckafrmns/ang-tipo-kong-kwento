@@ -1,6 +1,6 @@
 FROM python:3.12
 
-WORKDIR /server-app/
+WORKDIR /server-app
 
 COPY requirements.txt .
 
@@ -10,5 +10,4 @@ COPY . .
 
 EXPOSE 5000
 
-CMD ["python", "server.py"]
-
+CMD ["flask", "run", "--host=0.0.0.0", "--port=5000"]

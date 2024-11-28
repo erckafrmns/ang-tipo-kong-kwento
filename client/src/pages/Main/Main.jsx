@@ -11,11 +11,12 @@ const Main = () => {
     const navigate = useNavigate(); 
 
     const handleGenerateStory = () => {
+        console.log("Generating story...");
         axios.post('http://localhost:5000/generate-story', {})
             .then(response => {
                 const generatedTitle = response.data.title;
                 const generatedStory = response.data.story;
-                navigate('/story', { state: { title: generatedTitle, story: generatedStory } });  // Redirect and pass the title and story
+                navigate('/story', { state: { title: generatedTitle, story: generatedStory } });  
             })
             .catch(error => {
                 console.error('There was an error generating the story without prompt!', error);

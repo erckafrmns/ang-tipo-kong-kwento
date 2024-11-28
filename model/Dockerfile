@@ -1,6 +1,6 @@
 FROM python:3.12
 
-WORKDIR /model-app/
+WORKDIR /model-app
 
 COPY requirements.txt .
 
@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 5001
 
-CMD ["python", "model_server.py"]
+CMD ["python", "model.py"]
