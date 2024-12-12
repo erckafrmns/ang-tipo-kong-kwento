@@ -206,7 +206,8 @@ h1, h2, p{
 .aboutBG{
     height: 90vh;
     width: 85%;
-    z-index: 2;
+    z-index: 2; 
+    margin-left: -280px;
 }
 
 .aboutContainer{

@@ -4,7 +4,7 @@ import Navbar from '../../components/Navbar/Navbar';
 import ScrollToTop from '../../components/ScrollToTop/ScrollToTop'; 
 import Footer from '../../components/Footer/Footer';
 import heroBG from '../../assets/hero-bg.png';
-import aboutBG from '../../assets/about-bg.png';
+import aboutBG from '../../assets/about-books.gif';
 import aboutIMG from '../../assets/about-img.png';
 import featuresCard from '../../assets/features-card.png';
 import bottomBanner from '../../assets/bottomBanner.svg';
