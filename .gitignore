@@ -19,3 +19,7 @@ server/venv/
 server/__pycache__/
 
 server/.env
+
+server/config.py
+
+.env

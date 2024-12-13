@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { useNavigate, Link } from "react-router-dom";
 import { TbLayoutSidebarInactive } from "react-icons/tb";
 import { MdOutlineHistoryEdu } from "react-icons/md";
@@ -20,10 +21,6 @@ const InsideNavbar = () => {
         navigate('/main');
     };
 
-    const handleLogout = () => {
-        navigate('/');
-    };
-
     // Resizing logic
     const handleMouseDown = (e) => {
         e.preventDefault();
@@ -42,6 +39,25 @@ const InsideNavbar = () => {
     const handleMouseUp = () => {
         document.removeEventListener('mousemove', handleMouseMove);
         document.removeEventListener('mouseup', handleMouseUp);
+    };
+
+
+    const handleLogout = async () => {
+        try {
+            const response = await axios.post('http://localhost:5000/logout', {}, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+        
+            if (response.status === 200) {
+                alert('Logged out successfully!');
+                navigate('/');
+            }
+        } catch (error) {
+            console.error('Error logging out:', error);
+            alert('Logout failed. Please try again.');
+        }
     };
 
     return (
@@ -65,7 +81,7 @@ const InsideNavbar = () => {
                         <Link to="" className="nav-right">Contact Us</Link>
                     </li>
                     <li>
-                        <Link to="/"  className="nav-right">Logout</Link>
+                        <button onClick={handleLogout} className="nav-right">Logout</button>
                     </li>
                 </ul>
             </div> 

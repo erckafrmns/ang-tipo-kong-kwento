@@ -1,81 +1,163 @@
-import requests
-from flask import Flask, request, jsonify
-from flask_cors import CORS
-import logging
-import time
-from flask_sqlalchemy import SQLAlchemy
-from flask_mail import Mail, Message
+from flask import Flask, request, jsonify, render_template, url_for, redirect
+from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_cors import CORS
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 from db_models import db, User, Story
 from config import Config
+import requests
+import logging
+import time
+import random
+import string
+import smtplib
+import os
 
 
-# Configured Logging
 logging.basicConfig(level=logging.INFO)
-
 app = Flask(__name__)
 CORS(app)
-
 app.config.from_object(Config)
 db.init_app(app)
-mail = Mail(app)
+login_manager = LoginManager(app)
+login_manager.login_view = "login"
 
 MODEL_SERVICE_URL = "http://model:5001"
 
 
-# User Signup Route
+
+# CREATE TABLES
+with app.app_context():
+    db.create_all()
+    print("Tables created successfully!")
+
+
+# USER LOADER FOR FLASK LOGIN
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+
+# SIGNUP ROUTE 
 @app.route('/signup', methods=['POST'])
 def signup():
-    data = request.get_json()
-    first_name = data['first_name']
-    last_name = data['last_name']
-    email = data['email']
-    password = data['password']
+    data = request.json
+    logging.info(f"Received signup data: {data}")
+    first_name = data.get('first_name')
+    last_name = data.get('last_name')
+    email = data.get('signup_email')
+    password = data.get('signup_password')
 
-    if User.query.filter_by(email=email).first():
-        return jsonify({"message": "User already exists"}), 400
+    if not first_name or not last_name or not email or not password:
+        return jsonify({"message": "Missing required fields"}), 400
+    
+    if User.query.filter_by(email=email).first(): # Check if email already exists
+        return jsonify({"message": "Email already exists!"}), 400
 
-    hashed_password = generate_password_hash(password)
-    new_user = User(first_name=first_name, last_name=last_name, email=email, password=hashed_password)
+
+    hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
+    verification_token = generate_verification_token() 
+
+    verification_url = url_for('verify_email', token=verification_token, _external=True)
+    send_verification_email(email, verification_url)  # Send email for verification
+
+
+    new_user = User(
+        first_name=first_name,
+        last_name=last_name,
+        email=email,
+        password=hashed_password,
+        verification_token=verification_token
+    )
     db.session.add(new_user)
     db.session.commit()
 
-    # Send activation email (simplified)
-    activation_link = f'http://localhost:5000/activate/{new_user.id}'
-    msg = Message('Activate your account', recipients=[email])
-    msg.body = f'Click the following link to activate your account: {activation_link}'
-    mail.send(msg)
-
-    return jsonify({"message": "User created, check your email to activate your account"}), 201
+    return jsonify({"message": "User registered successfully! Please check your email to verify your account."}), 201
 
 
-# User Activation Route
-@app.route('/activate/<int:user_id>', methods=['GET'])
-def activate(user_id):
-    user = User.query.get(user_id)
-    if not user:
-        return jsonify({"message": "User not found"}), 404
-
-    user.is_active = True
-    db.session.commit()
-    return jsonify({"message": "Account activated successfully"}), 200
+# GENERATE EMAIL VERIFICATION TOKEN
+def generate_verification_token():
+    return ''.join(random.choices(string.ascii_letters + string.digits, k=32))
 
 
-# USER LOGIN ROUTE
+# SEND EMAIL FOR VERIFICATION
+def send_verification_email(to_email, verification_url):
+    try:
+        smtp_server = Config.MAIL_SERVER 
+        smtp_port = Config.MAIL_PORT 
+        email_address = Config.MAIL_USERNAME 
+        app_password = Config.MAIL_PASSWORD  
+
+        logging.info(f"Email Address: {email_address}")
+        logging.info(f"App Password: {app_password}")
+
+        if not email_address or not app_password:
+            raise ValueError("Missing email or app password configuration.")
+
+        subject = "Please verify your email"
+        body = f"Please click the following link to verify your email: {verification_url}"
+
+        message = MIMEMultipart()
+        message['From'] = email_address
+        message['To'] = to_email
+        message['Subject'] = subject
+        message.attach(MIMEText(body, 'plain'))
+
+        with smtplib.SMTP(smtp_server, smtp_port) as server:
+            server.set_debuglevel(1)  
+            server.starttls() 
+            server.login(email_address, app_password)
+            server.send_message(message)
+
+        logging.info(f"Verification email sent to {to_email}")
+    except Exception as e:
+        logging.error(f"Failed to send verification email: {str(e)}")
+
+
+# EMAIL VERIFICATION ROUTE
+@app.route('/verify-email/<token>', methods=['GET'])
+def verify_email(token):
+    user = User.query.filter_by(verification_token=token).first()
+
+    if user:
+        user.is_active = True
+        user.verification_token = None  
+        db.session.commit()
+        return jsonify({"message": "Email verified successfully!"}), 200
+    else:
+        return jsonify({"message": "Invalid or expired token."}), 400
+
+
+# LOGIN ROUTE
 @app.route('/login', methods=['POST'])
 def login():
-    data = request.get_json()
-    email = data['email']
-    password = data['password']
+    data = request.json
+    email = data.get('login_email')
+    password = data.get('login_password')
 
     user = User.query.filter_by(email=email).first()
-    if not user or not check_password_hash(user.password, password):
-        return jsonify({"message": "Invalid credentials"}), 401
+
+    if not user:
+        return jsonify({"message": "User not found!"}), 404
+
+    if not check_password_hash(user.password, password):
+        return jsonify({"message": "Invalid password!"}), 400
 
     if not user.is_active:
-        return jsonify({"message": "Account not activated"}), 403
+        return jsonify({"message": "Please verify your email before logging in."}), 400
 
-    return jsonify({"message": "Login successful"}), 200
+    # Log the user in
+    login_user(user)
+    return jsonify({"message": "Logged in successfully!"}), 200
+
+
+# LOGOUT ROUTE
+@app.route('/logout', methods=['POST'])
+@login_required
+def logout():
+    logout_user()
+    return jsonify({"message": "Logged out successfully!"}), 200
 
 
 # GENERATE RANDOM STORY ROUTE
@@ -139,9 +221,26 @@ def generate_custom_story_endpoint():
 def developers():
     return {"developers": ["Ericka", "Grace", "Ernest", "Pao", "Nino"]}
 
-@app.route('/ping', methods=['GET'])
-def ping():
-    return jsonify({"message": "Pong! Server is reachable!"})
+
+@app.route('/check-tables', methods=['GET'])
+def check_tables():
+    try:
+        # Query the users table
+        users = User.query.all()
+        user_list = [{"user_id": user.user_id, "email": user.email} for user in users]
+
+        # Query the stories table
+        stories = Story.query.all()
+        story_list = [{"story_id": story.story_id, "title": story.title} for story in stories]
+
+        return jsonify({
+            "users_table": user_list,
+            "stories_table": story_list,
+            "message": "Tables exist and data fetched successfully!"
+        }), 200
+    except Exception as e:
+        return jsonify({"error": str(e), "message": "An error occurred. Check if tables are created."}), 500
+
 
 
 if __name__ == "__main__":
