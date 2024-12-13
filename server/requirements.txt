@@ -4,3 +4,13 @@ requests
 psycopg2
 psycopg2-binary
 Flask-SQLAlchemy
+
+Flask-Migrate
+Flask-Mail
+werkzeug
+Flask-Bcrypt
+Flask-Login
+itsdangerous
+google-api-python-client
+google-auth-httplib2
+google-auth-oauthlib

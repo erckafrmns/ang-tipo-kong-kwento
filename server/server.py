@@ -3,6 +3,12 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import logging
 import time
+from flask_sqlalchemy import SQLAlchemy
+from flask_mail import Mail, Message
+from werkzeug.security import generate_password_hash, check_password_hash
+from db_models import db, User, Story
+from config import Config
+
 
 # Configured Logging
 logging.basicConfig(level=logging.INFO)
@@ -10,10 +16,69 @@ logging.basicConfig(level=logging.INFO)
 app = Flask(__name__)
 CORS(app)
 
+app.config.from_object(Config)
+db.init_app(app)
+mail = Mail(app)
+
 MODEL_SERVICE_URL = "http://model:5001"
 
 
-# ENDPOINT FOR CLIENT TO SERVER - RANDOM STORY
+# User Signup Route
+@app.route('/signup', methods=['POST'])
+def signup():
+    data = request.get_json()
+    first_name = data['first_name']
+    last_name = data['last_name']
+    email = data['email']
+    password = data['password']
+
+    if User.query.filter_by(email=email).first():
+        return jsonify({"message": "User already exists"}), 400
+
+    hashed_password = generate_password_hash(password)
+    new_user = User(first_name=first_name, last_name=last_name, email=email, password=hashed_password)
+    db.session.add(new_user)
+    db.session.commit()
+
+    # Send activation email (simplified)
+    activation_link = f'http://localhost:5000/activate/{new_user.id}'
+    msg = Message('Activate your account', recipients=[email])
+    msg.body = f'Click the following link to activate your account: {activation_link}'
+    mail.send(msg)
+
+    return jsonify({"message": "User created, check your email to activate your account"}), 201
+
+
+# User Activation Route
+@app.route('/activate/<int:user_id>', methods=['GET'])
+def activate(user_id):
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"message": "User not found"}), 404
+
+    user.is_active = True
+    db.session.commit()
+    return jsonify({"message": "Account activated successfully"}), 200
+
+
+# USER LOGIN ROUTE
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    email = data['email']
+    password = data['password']
+
+    user = User.query.filter_by(email=email).first()
+    if not user or not check_password_hash(user.password, password):
+        return jsonify({"message": "Invalid credentials"}), 401
+
+    if not user.is_active:
+        return jsonify({"message": "Account not activated"}), 403
+
+    return jsonify({"message": "Login successful"}), 200
+
+
+# GENERATE RANDOM STORY ROUTE
 @app.route('/generate-story', methods=['POST'])
 def generate_story():
     try:
@@ -39,7 +104,7 @@ def generate_story():
         return jsonify({"error": str(e)}), 500
 
 
-# ENDPOINT FOR CLIENT TO SERVER - CUSTOM STORY
+# GENERATE CUSTOM STORY ROUTE
 @app.route('/generate-custom-story', methods=['POST'])
 def generate_custom_story_endpoint():
     try:
