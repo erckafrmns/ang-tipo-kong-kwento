@@ -1,0 +1,31 @@
+.upButton {
+    position: fixed;
+    bottom: 28%;  
+    left: 50%;   
+    transform: translateX(-50%);
+    font-size: 40px;
+    cursor: pointer;
+    transition: opacity 0.3s ease, transform 0.3s ease, animation 0.3s ease;
+    color: var(--green);  
+    z-index: 1000;
+    opacity: 0;  
+}
+
+.upButton.visible {
+    opacity: 1; 
+    transform: translateX(-50%) translateY(0);
+    animation: jump 1s ease infinite;
+}
+
+.upButton:hover {
+    animation: none;
+}
+
+@keyframes jump {
+    0%, 100% {
+        transform: translate(-50%, 0);
+    }
+    50% {
+        transform: translate(-50%, -15px);
+    }
+}

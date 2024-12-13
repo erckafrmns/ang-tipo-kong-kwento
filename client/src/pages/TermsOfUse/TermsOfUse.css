@@ -5,7 +5,7 @@
 	src: url('../../assets/fonts/EFCOBrookshire.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
-}
+} 
 
 h1, h4, p{
     cursor: default;
@@ -14,7 +14,7 @@ h1, h4, p{
 u{
     cursor: pointer;
     color: var(--yellow);
-    text-decoration-color: #a17307;
+    text-decoration-color: #a17307; 
 }
 
 u:hover{
@@ -22,7 +22,6 @@ u:hover{
 }
 
 .termsandpolicies{
-    background-color: var(--green);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -30,52 +29,38 @@ u:hover{
     padding: 40px 50px;
     width: 100%;
     box-sizing: border-box;
-    height: auto;
-}
-
-.container-top{
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px 0 20px;
-}
-
-.container-top img{
-    width: 80px;
-    height: 80px;
-    cursor: pointer;
-}
-
-.container-top .exIcon{
-    font-size: 30px;
-    color: var(--beige);
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.exIcon:hover{
-    color: var(--yellow);
+    height: auto;   
 }
 
 .container-bot{
     display: flex;
     flex-direction: column;
-    padding: 2% 15%;
+    padding: 2% 15%; 
+    z-index: 2;
 }
 
 .container-bot h1{
     font-family: "EfcoBrookshire", sans-serif;
     font-size: 50px;
     letter-spacing: 1px;
-    color: var(--beige);
+    color: var(--green);
     text-align: center;
 }
 
 .container-bot .effectivity,
 .container-bot h4{
     padding: 3% 0;
+} 
+
+.effectivity {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+    margin-top: -20px;
 }
+
 
 .container-bot .bot-item{
     padding-top: 3%;
@@ -83,7 +68,7 @@ u:hover{
 
 .container-bot p{
     font-family: "Lora", sans-serif;
-    color: var(--beige);
+    color: var(--green);
     font-size: 18px;
     text-align: justify;
     line-height: 1.8;
@@ -96,7 +81,7 @@ u:hover{
 .container-bot h4{
     font-family: "Lora", sans-serif;
     font-size: 22px;
-    color: var(--beige);
+    color: var(--green);
     padding-bottom: 1%;
 }
 

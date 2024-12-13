@@ -1,18 +1,19 @@
-import React from 'react'
+import React, {useEffect } from 'react';
+import { Link } from 'react-router-dom'; 
+import Navbar from '../../components/Navbar/Navbar'; 
+import ScrollToTop from '../../components/ScrollToTop/ScrollToTop';  
 import Footer from '../../components/Footer/Footer';
-import logo from '../../assets/logo.png';
-import { GiCrossedBones } from "react-icons/gi";
-import { Link } from 'react-router-dom';
 import './TermsOfUse.css'
 
 const TermsOfUse = () => {
+    useEffect(() => {
+      window.scrollTo(0, 0); // Scroll to the top of the page
+    }, []);
+  
   return (
-    <>
+    <> 
+    <Navbar/>
         <div className='termsandpolicies'>
-            <div className='container-top'>
-                <Link to="/" className='logoIMG'><img src={logo} alt="" /></Link>
-                <Link to="/" className='exIcon'><GiCrossedBones/></Link>
-            </div>
 
             <div className='container-bot'>
                 <h1>Terms of use</h1>
@@ -85,14 +86,14 @@ const TermsOfUse = () => {
                 <div className='bot-item'>
                     <h4>Contact Information</h4>
                     <p>For any questions, concerns, or inquiries regarding these Terms of Use or the platform, you may contact us at <a href="mailto:angtipokongkwento@gmail.com"><u>angtipokongkwento@gmail.com</u></a> or through our  <Link to="/contact-us"><u>website</u></Link>.</p>
-                </div>
-        
-            </div>
-        </div>
+                </div> 
+            </div> 
+        </div> 
 
+        <ScrollToTop isAlternative={true} />
 
-        <Footer/>
-    </>
+        <Footer isAlternative={true} />
+        </>
   )
 }
 

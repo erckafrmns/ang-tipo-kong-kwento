@@ -1,18 +1,18 @@
-import React from 'react'
+import React, {useEffect } from 'react';
+import { Link } from 'react-router-dom'; 
+import Navbar from '../../components/Navbar/Navbar'; 
+import ScrollToTop from '../../components/ScrollToTop/ScrollToTop';  
 import Footer from '../../components/Footer/Footer';
-import logo from '../../assets/logo.png';
-import { GiCrossedBones } from "react-icons/gi";
-import { Link } from 'react-router-dom';
 import '../TermsOfUse/TermsOfUse.css'
 
-const Guidelines = () => {
+const Guidelines = () => { 
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top of the page
+  }, []);
   return (
-    <>
+    <> 
+    <Navbar/>
       <div className='termsandpolicies'>
-            <div className='container-top'>
-                <Link to="/" className='logoIMG'><img src={logo} alt="" /></Link>
-                <Link to="/" className='exIcon'><GiCrossedBones/></Link>
-            </div>
 
             <div className='container-bot'>
                 <h1>Guidelines for using 'Ang tipo kong Kwento'</h1>
@@ -140,8 +140,9 @@ const Guidelines = () => {
                 </div>
         
             </div>
-      </div>
-      <Footer/>
+      </div> 
+      <ScrollToTop isAlternative={true} />
+      <Footer isAlternative={true} />
     </>
   )
 }

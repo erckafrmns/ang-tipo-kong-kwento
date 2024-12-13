@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from "react-router-dom";
 import { TbLayoutSidebarInactive } from "react-icons/tb";
 import { MdOutlineHistoryEdu } from "react-icons/md";
-import { RiLogoutBoxRLine } from "react-icons/ri";
 import logo from '../../assets/logo.png';
 import grainy from '../../assets/grainy-bg.svg';
 import insidebanner from '../../assets/banner.svg';
@@ -47,13 +46,30 @@ const InsideNavbar = () => {
 
     return (
         <>
-            {/* Navbar Section */}
-            <div className="navbar">
-                <img src={insidebanner} className="inside-banner" alt="" />
-                <Link to="">
-                    <img src={logo} className="logo1" alt="Logo" />
+            <img src={insidebanner} className="inside-banner" alt="Banner" />
+        <div id='navbar'>   		
+            <div className="logo">
+                <Link to="/">
+                    <img src={logo} className="logo-image" alt="Logo" />
                 </Link>
             </div>
+            <div className="inside-navbar1">
+                <ul>
+                    <li>
+                        <Link to="/main" className="nav-left">Home</Link>
+                    </li>
+                    <li>
+                        <a href="" className="nav-left nav-space" >Settings</a>
+                    </li>
+                    <li>
+                        <Link to="" className="nav-right">Contact Us</Link>
+                    </li>
+                    <li>
+                        <Link to="/"  className="nav-right">Logout</Link>
+                    </li>
+                </ul>
+            </div> 
+        </div> 
 
             {/* Sidebar Component */}
             <div
@@ -117,12 +133,12 @@ const InsideNavbar = () => {
                 </div>
             </div> 
 
-            {/* Logout Button */}
+            {/* Logout Button 
             <div className="logout-btn-container">
                 <button className="logout-btn" onClick={handleLogout}>
                     <RiLogoutBoxRLine /> Logout
                 </button>
-            </div>
+            </div>*/}
         </>
     );
 };

@@ -12,22 +12,6 @@
     height: 100%;
 }
 
-.loginSignup-logoIMG img{
-    position: absolute;
-    height: 14%;
-    width: 14%;
-    top: 2%;
-    z-index: 2;
-}
-
-.loginSignup-grainy{
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: 1;
-}
-
 .loginSignup-container {
     z-index: 3;
     display: flex;
@@ -35,9 +19,9 @@
     align-items: center;
     height: 100vh;
     transition: background-color 0.5s ease-in-out; 
-}
+}  
 
-.login-bg {
+.login-bg { 
     background-color: var(--green);
 }
 
@@ -111,7 +95,7 @@ input {
     background-color: var(--beige);
     outline: none;
     border-radius: 5px;
-    border: 1px solid var(--green);
+    border: 2px solid var(--green);
 } 
 
 input::placeholder { 

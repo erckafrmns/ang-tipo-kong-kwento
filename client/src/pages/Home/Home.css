@@ -16,7 +16,6 @@ h1, h2, p{
     position: relative;
     padding-top: 60px;
     height: 89vh;
-    background-color: var(--beige);
     display: flex;
     flex-direction: column;
     justify-content: space-between; 
@@ -88,7 +87,6 @@ h1, h2, p{
 /* FEATURES SECTION */
 .features{
     height: auto;
-    background-color: var(--beige);
     display: flex;
     flex-direction: column;
     /* padding-top: 100px; */  
@@ -208,7 +206,8 @@ h1, h2, p{
 .aboutBG{
     height: 90vh;
     width: 85%;
-    z-index: 2;
+    z-index: 2; 
+    margin-left: -280px;
 }
 
 .aboutContainer{
@@ -246,7 +245,7 @@ h1, h2, p{
     text-transform: lowercase;
     font-size: 25px;
     color: var(--green);
-    background-color: beige;
+    background-color: var(--beige);
     transition: all 0.3s ease;
 }
 
@@ -261,39 +260,7 @@ h1, h2, p{
 
 .developersBTN:hover{
     background-color: var(--yellow);
-} 
-
-@keyframes jump {
-    0%, 100% {
-        transform: translate(-50%, 0);
-    }
-    50% {
-        transform: translate(-50%, -15px);
-    }
-}
-
-.upButton {
-    position: absolute;   
-    top: 2255px;
-    left: 50%; 
-    transform: translateX(-50%) translateY(20px);
-    font-size: 40px; 
-    cursor: pointer; 
-    transition: opacity 0.3s ease, transform 0.3s ease, animation 0.3s ease;
-    color: var(--green); 
-    z-index: 1000;
-    opacity: 0;
-}
-
-.upButton.visible {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-    animation: jump 1s ease infinite;        
-} 
-
-.upButton:hover {
-    animation: none; 
-}
+}  
 
 /* NOT UPDATED */
 @media (max-width: 1380px) {

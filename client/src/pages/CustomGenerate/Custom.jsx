@@ -1,72 +1,84 @@
-import React, { useState } from 'react'; 
-import { useNavigate } from "react-router-dom";
-import axios from 'axios'; 
-import paper from '../../assets/tornpaper.svg'; 
-import grainy from '../../assets/grainy-bg.svg'; 
-import logo from '../../assets/logo-2.svg'; 
-import { GiCrossedBones } from "react-icons/gi"; 
-import Footer from '../../components/Footer/Footer';
-import './Main-Custom.css';  
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { ImCross } from "react-icons/im";
+import './Main-Custom.css';
 
-const Custom = () => {
-    const [title, setTitle] = useState(''); // State to hold the title input 
-    const navigate = useNavigate();
+const Custom = ({ closeModal }) => {
+  const [title, setTitle] = useState('');
+  const [genre, setGenre] = useState('');
+  const navigate = useNavigate();
 
-    const handleInputChange = (event) => {
-        setTitle(event.target.value); // Update the state as the user types
-    }; 
+  const handleInputChange = (event) => { setTitle(event.target.value); };
 
-    const handleOutsideNewClick = () => {
-        navigate('/main'); // Redirect to Main page
-      };
+  const handleGenreChange = (event) => { setGenre(event.target.value); };
 
-      const handleGenerateClick = () => {
-        if (!title) {
-            alert('Please enter a title');
-            return;
-        }
-        // Send the user inputted title to the backend
-        axios.post('http://localhost:5000/generate-custom-story', { title })
-            .then(response => {
-                const generatedStory = response.data.story;
-                navigate('/story', { state: { story: generatedStory } }); // Redirect to the story page
-            })
-            .catch(error => {
-                console.error('Error generating the story!', error);
-            });
-    };
+  const handleGenerateClick = () => {
+    if (!title || !genre) {
+      alert('Please enter a title and select a genre');
+      return;
+    }
 
-    return ( 
-        <>
-        <div className="custom-body">
-            <div className="grainy-bg-container"> 
-                <img src={grainy} className="grainy-bg" alt="Background" /> 
-                <img src={logo} className="logo-2" alt="logo" /> 
-            </div> 
-            
-            <div className="custom-container">   
-                <div className="small-container">
-                    <img src={paper} className="tornpaper" alt="" />  
-                    <button className="close-icon" onClick={handleOutsideNewClick}>
-                    <GiCrossedBones />
-                </button>
-                </div>  
-                    <div className="inputs">
-                        <h1>Customize Your Story</h1> 
-                        <input 
-                            type="text" 
-                            value={title} 
-                            onChange={handleInputChange} 
-                            placeholder="e.g., alamat ng papaya" 
-                            className="title-input"/> 
-                        <label className="title-label">title</label>
-                        <button onClick={handleGenerateClick} className="generate-button">generate</button>     
-                    </div>
-            </div> 
-        </div> 
-        <Footer isAlternative={false} /> 
-        </>
-    );
+    navigate('/story', { state: { loading: true } }); 
+
+    axios.post('http://localhost:5000/generate-custom-story', { title, genre })
+      .then((response) => {
+        const generatedStory = response.data.story;
+        navigate('/story', { state: { title, genre, story: generatedStory } });
+        closeModal();
+      })
+      .catch((error) => {
+        console.error('Error generating the story!', error);
+        alert('There was an error generating your story. Please try again.');
+      });
+  };
+
+  // Handle key press for Enter
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      handleGenerateClick();
+    }
+  };
+
+  // Add event listener for Enter key on mount and cleanup on unmount
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [title, genre]);
+
+  return (
+    <div className="custom-modal-overlay">
+      {/* Modal Container */}
+      <div className="custom-modal">
+        {/* Close Button */}
+        <button className="close-icon" onClick={closeModal}><ImCross /></button>
+        
+        <div className="inputs">
+          <h1>Customize your Story</h1>
+
+          {/* Genre Dropdown */}
+          <select value={genre} onChange={handleGenreChange} className="genre-select">
+            <option value="">- select genre -</option>
+            <option value="Alamat">Alamat</option>
+            <option value="Kwentong Bayan">Kwentong Bayan</option>
+            <option value="Pabula">Pabula</option>
+          </select>
+
+          {/* Story Title Input */}
+          <input
+            type="text"
+            value={title}
+            onChange={handleInputChange}
+            placeholder="story title"
+            className="title-input"
+          />
+
+          {/* Generate Button */}
+          <button onClick={handleGenerateClick} className="generate-button">generate</button>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Custom;

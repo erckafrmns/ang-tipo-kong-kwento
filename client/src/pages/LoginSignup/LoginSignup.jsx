@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
-import logo2 from '../../assets/logo-2.svg';
-import grainy1 from '../../assets/grainy-1.svg';
-import grainy2 from '../../assets/grainy-2.svg';
 import manSitting from '../../assets/man-sitting.svg';
 import ladyReading from '../../assets/lady-reading.svg';
-import logo from '../../assets/logo-1.svg';
 import { ImCross } from "react-icons/im";
 import { Link } from 'react-router-dom';
 import './LoginSignup.css'
@@ -21,10 +17,6 @@ const LoginSignup = () => {
     <>
         <div className='loginSignup'>
 
-        <Link to="/" className='loginSignup-logoIMG'>
-          <img src={isLogin ? logo2 : logo} alt="" />
-        </Link>
-        <img className="loginSignup-grainy" src={isLogin ? grainy1 : grainy2} alt="" />
         <div className={`loginSignup-container ${isLogin ? 'login-bg' : 'signup-bg'}`}>
           
           <div className={`form-container ${isLogin ? 'login-active' : 'signup-active'}`}>
