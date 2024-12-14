@@ -1,10 +1,11 @@
 import React, { useRef, useState, useEffect } from "react";
 import HTMLFlipBook from "react-pageflip";
-import { useLocation } from "react-router-dom"; 
+import { useLocation } from "react-router-dom";
+import jsPDF from "jspdf"; // Import jsPDF
 import InsideNavbar from '../../components/Navbar/InsideNavbar';  
 import Footer from "../../components/Footer/Footer"; 
 import "./StoryPage.css";
- 
+
 import Paper from "../../assets/paper-mode.svg";
 import FrontCover from "../../assets/book-front-cover.png";
 import BackCover from "../../assets/book-back-cover.png";
@@ -30,7 +31,7 @@ const StoryPage = () => {
     const { title = "Generated Story", story = "", loading = false } = location.state || {};
     const [storyPages, setStoryPages] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
-    const [isPaperMode, setIsPaperMode] = useState(false); // Toggle between book and paper mode
+    const [isPaperMode, setIsPaperMode] = useState(false);
     const bookRef = useRef();
 
     const width = window.innerWidth;
@@ -40,11 +41,9 @@ const StoryPage = () => {
     useEffect(() => {
         if (loading) return;
 
-        // Clean the title and story to remove content before and including [SEP]
         const cleanTitle = title.includes("[SEP]") ? title.split("[SEP]")[1].trim() : title;
         const cleanStory = story.includes("[SEP]") ? story.split("[SEP]")[1].trim() : story;
 
-        // Split the story into pages for the flipbook mode
         const words = cleanStory.split(" ");
         const wordsPerPage = 50;
         const pages = [];
@@ -80,6 +79,65 @@ const StoryPage = () => {
         event.target.style.setProperty("--progress-width", `${progressWidth}%`);
     };
 
+    const handleDownloadPDF = () => {
+        const doc = new jsPDF();
+        const cleanTitle = title.includes("[SEP]") ? title.split("[SEP]")[1].trim() : title;
+    
+        // Set the title
+        doc.setFontSize(18);
+        doc.setFont("Helvetica", "bold");
+        const pageWidth = doc.internal.pageSize.width;
+        const titleWidth = doc.getTextWidth(cleanTitle);
+        doc.text(cleanTitle, (pageWidth - titleWidth) / 2, 20); // Centered title
+    
+        // Add the story content
+        doc.setFontSize(12);
+        doc.setFont("Helvetica", "normal");
+        const storyText = story.includes("[SEP]") ? story.split("[SEP]")[1].trim() : story;
+    
+        const marginLeft = 20; 
+        const marginRight = 20; 
+        const usableWidth = pageWidth - marginLeft - marginRight;
+    
+        // Split text into lines with justification
+        const lines = doc.splitTextToSize(storyText, usableWidth);
+        let yPosition = 40; 
+        const smallerLineHeight = doc.getLineHeight() * 0.5; 
+    
+        lines.forEach((line, index) => {
+            const isLastLine = index === lines.length - 1;
+    
+            if (isLastLine || line.trim().length < usableWidth / 3) {
+                // For the last line or short lines, left-align to prevent awkward spacing
+                doc.text(line, marginLeft, yPosition);
+            } else {
+                // Justify the line
+                const words = line.split(" ");
+                const spaceCount = words.length - 1;
+                const textWidth = doc.getTextWidth(line);
+                const extraSpace = (usableWidth - textWidth) / spaceCount;
+    
+                let xPosition = marginLeft;
+                words.forEach((word, wordIndex) => {
+                    doc.text(word, xPosition, yPosition);
+                    if (wordIndex < spaceCount) {
+                        xPosition += doc.getTextWidth(word) + extraSpace;
+                    }
+                });
+            }
+    
+            yPosition += smallerLineHeight;
+            if (yPosition > doc.internal.pageSize.height - 20) {
+                // Add new page if content exceeds page height
+                doc.addPage();
+                yPosition = 20;
+            }
+        });
+    
+        doc.save(`${cleanTitle}.pdf`);
+    };
+    
+    
     return (
         <>
             {loading && (
@@ -131,12 +189,19 @@ const StoryPage = () => {
                                     <div className="paper-content">
                                         <p className="story-subtitle">Ang tipo kong Kwento</p>
                                         <h1 className="story-title">"{title.includes("[SEP]") ? title.split("[SEP]")[1].trim() : title}"</h1>
-                                        <p className="story-text">
-                                            {story.includes("[SEP]") ? story.split("[SEP]")[1].trim() : story}
-                                        </p>
+                                        <div className="story-text">
+                                            {(story.includes("[SEP]") ? story.split("[SEP]")[1].trim() : story)
+                                                .split(/(?<=[.!?])\s+/) // Split by sentence boundaries
+                                                .map((paragraph, index) => (
+                                                    <p key={index} style={{ textIndent: "1.5em", marginBottom: "1em" }}>
+                                                        {paragraph}
+                                                    </p>
+                                                ))}
+                                        </div>
                                     </div>
                                 </div>
                             )}
+
                             <div className="progress-bar-container">
                                 <input
                                     type="range"
@@ -152,7 +217,7 @@ const StoryPage = () => {
                                     {isPaperMode ? <VscBook /> : <TiDocumentText />}
                                 </div>
 
-                                <div className="download-btn">
+                                <div className="download-btn" onClick={handleDownloadPDF}>
                                     <IoMdDownload /> 
                                 </div>
                             </div>
