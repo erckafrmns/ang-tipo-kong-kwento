@@ -42,23 +42,13 @@ const InsideNavbar = () => {
     };
 
 
-    const handleLogout = async () => {
-        try {
-            const response = await axios.post('http://localhost:5000/logout', {}, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-        
-            if (response.status === 200) {
-                alert('Logged out successfully!');
-                navigate('/');
-            }
-        } catch (error) {
-            console.error('Error logging out:', error);
-            alert('Logout failed. Please try again.');
-        }
+    const handleLogout = () => {
+        localStorage.removeItem('token');  // Clear JWT token
+        alert('Logged out successfully!');
+        navigate('/'); 
     };
+    
+    
 
     return (
         <>

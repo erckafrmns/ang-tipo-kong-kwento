@@ -36,7 +36,10 @@ const LoginSignup = () => {
       const data = await response.json();
 
       if (response.ok) {
+        localStorage.setItem('token', data.token); // Store JWT token
         alert('Logged in successfully!');
+        setLoginEmail('');
+        setLoginPassword('');
         navigate('/main');
       } else {
         alert(data.message || 'Login failed');
@@ -62,6 +65,10 @@ const LoginSignup = () => {
 
       if (response.ok) {
         alert('Sign up successful! Please check your email to verify your account.');
+        setSignupEmail('');
+        setSignupPassword('');
+        setFirstName('');
+        setLastName('');
         navigate('/login-signup');
       } else {
         alert(data.message || 'Signup failed');
