@@ -208,7 +208,8 @@ body {
     font-family: var(--main-font);  
     text-transform: lowercase;
     transition: border-color 0.3s;
-}
+} 
+
 
 .genre-select option[value=""] { 
     font-style: italic;  
@@ -222,7 +223,7 @@ body {
 
 .genre-select option:checked {
     background-color: rgba(255, 191, 58, 0.7);    
-} 
+}  
 
 /* Title input */
 .title-input {
