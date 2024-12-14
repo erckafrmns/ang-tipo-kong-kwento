@@ -1,5 +1,4 @@
 from flask import Flask, request, jsonify, render_template, url_for, redirect
-from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_cors import CORS
 from email.mime.multipart import MIMEMultipart
@@ -13,30 +12,24 @@ import random
 import string
 import smtplib
 import os
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+
 
 
 logging.basicConfig(level=logging.INFO)
 app = Flask(__name__)
-CORS(app)
+CORS(app, supports_credentials=True)
 app.config.from_object(Config)
 db.init_app(app)
-login_manager = LoginManager(app)
-login_manager.login_view = "login"
+app.config['JWT_SECRET_KEY'] = Config.JWT_SECRET_KEY
+jwt = JWTManager(app)
 
 MODEL_SERVICE_URL = "http://model:5001"
-
-
 
 # CREATE TABLES
 with app.app_context():
     db.create_all()
     print("Tables created successfully!")
-
-
-# USER LOADER FOR FLASK LOGIN
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
 
 
 # SIGNUP ROUTE 
@@ -88,9 +81,6 @@ def send_verification_email(to_email, verification_url):
         smtp_port = Config.MAIL_PORT 
         email_address = Config.MAIL_USERNAME 
         app_password = Config.MAIL_PASSWORD  
-
-        logging.info(f"Email Address: {email_address}")
-        logging.info(f"App Password: {app_password}")
 
         if not email_address or not app_password:
             raise ValueError("Missing email or app password configuration.")
@@ -147,17 +137,61 @@ def login():
     if not user.is_active:
         return jsonify({"message": "Please verify your email before logging in."}), 400
 
-    # Log the user in
-    login_user(user)
-    return jsonify({"message": "Logged in successfully!"}), 200
+    # Else all checks out
+    if user and check_password_hash(user.password, password):
+        access_token = create_access_token(identity=user.user_id)
+        return jsonify({
+            "message": "Logged in successfully!",
+            "access_token": access_token
+        }), 200
+    
+    return jsonify({"message": "Invalid credentials"}), 401
 
 
-# LOGOUT ROUTE
+# GET USER DATA ROUTE
+@app.route('/get-user-data', methods=['GET'])
+@jwt_required()
+def get_user_data():
+    try:
+        user_id = get_jwt_identity() # get user identity from jwt token
+
+        user = User.query.filter_by(user_id=user_id).first()
+
+        if not user:
+            return jsonify({"message": "User not found."}), 404
+
+        user_stories = Story.query.filter_by(user_id=user_id).all()
+
+        user_data = {
+            "user_id": user.user_id,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+            "email": user.email,
+            "stories": [
+                {
+                    "story_id": story.story_id,
+                    "title": story.title,
+                    "genre": story.genre,
+                    "content": story.content,
+                    "created_at": story.created_at.strftime('%Y-%m-%d %H:%M:%S')
+                }
+                for story in user_stories
+            ]
+        }
+
+        return jsonify(user_data), 200
+
+    except Exception as e:
+        logging.error(f"Error fetching user stories: {str(e)}")
+        return jsonify({"error": "An error occurred while fetching user stories."}), 500
+
+
+
+# LOGOUT ROUTE, though this will not be needed
 @app.route('/logout', methods=['POST'])
-@login_required
 def logout():
-    logout_user()
-    return jsonify({"message": "Logged out successfully!"}), 200
+    # For JWT, logout means simply not providing the token in the requests.
+    return jsonify({"message": "Successfully logged out."}), 200
 
 
 # GENERATE RANDOM STORY ROUTE
@@ -214,32 +248,6 @@ def generate_custom_story_endpoint():
     except Exception as e:
         logging.error(f"ERROR GENERATING CUSTOM STORY: {str(e)}")
         return jsonify({"error": str(e)}), 500
-
-
-# JUST TO TEST IF SERVER WORKS
-@app.route("/developers")
-def developers():
-    return {"developers": ["Ericka", "Grace", "Ernest", "Pao", "Nino"]}
-
-
-@app.route('/check-tables', methods=['GET'])
-def check_tables():
-    try:
-        # Query the users table
-        users = User.query.all()
-        user_list = [{"user_id": user.user_id, "email": user.email} for user in users]
-
-        # Query the stories table
-        stories = Story.query.all()
-        story_list = [{"story_id": story.story_id, "title": story.title} for story in stories]
-
-        return jsonify({
-            "users_table": user_list,
-            "stories_table": story_list,
-            "message": "Tables exist and data fetched successfully!"
-        }), 200
-    except Exception as e:
-        return jsonify({"error": str(e), "message": "An error occurred. Check if tables are created."}), 500
 
 
 

@@ -7,6 +7,6 @@ Flask-SQLAlchemy
 Flask-Migrate
 Flask-Mail
 werkzeug
-Flask-Bcrypt
-Flask-Login
 python-dotenv
+PyJWT
+Flask-JWT-Extended
