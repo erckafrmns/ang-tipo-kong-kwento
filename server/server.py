@@ -282,7 +282,7 @@ def forgot_password():
 
         reset_link = f"http://localhost:3000/reset-password/{reset_token}"
 
-        subject = "Change Password"
+        subject = "Reset Password"
         body = f"Click the link to reset your password: {reset_link}"
         
         message = MIMEMultipart()
