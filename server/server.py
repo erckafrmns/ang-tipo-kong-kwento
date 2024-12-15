@@ -32,7 +32,7 @@ with app.app_context():
     print("Tables created successfully!")
 
 
-# SIGNUP ROUTE 
+# SIGNUP API 
 @app.route('/signup', methods=['POST'])
 def signup():
     data = request.json
@@ -119,7 +119,7 @@ def verify_email(token):
         return jsonify({"message": "Invalid or expired token."}), 400
 
 
-# LOGIN ROUTE
+# LOGIN API
 @app.route('/login', methods=['POST'])
 def login():
     data = request.json
@@ -148,45 +148,6 @@ def login():
     return jsonify({"message": "Invalid credentials"}), 401
 
 
-# GET USER DATA ROUTE
-@app.route('/get-user-data', methods=['GET'])
-@jwt_required()
-def get_user_data():
-    try:
-        user_id = get_jwt_identity() # get user identity from jwt token
-
-        user = User.query.filter_by(user_id=user_id).first()
-
-        if not user:
-            return jsonify({"message": "User not found."}), 404
-
-        user_stories = Story.query.filter_by(user_id=user_id).all()
-
-        user_data = {
-            "user_id": user.user_id,
-            "first_name": user.first_name,
-            "last_name": user.last_name,
-            "email": user.email,
-            "stories": [
-                {
-                    "story_id": story.story_id,
-                    "title": story.title,
-                    "genre": story.genre,
-                    "content": story.content,
-                    "created_at": story.created_at.strftime('%Y-%m-%d %H:%M:%S')
-                }
-                for story in user_stories
-            ]
-        }
-
-        return jsonify(user_data), 200
-
-    except Exception as e:
-        logging.error(f"Error fetching user stories: {str(e)}")
-        return jsonify({"error": "An error occurred while fetching user stories."}), 500
-
-
-
 # LOGOUT ROUTE, though this will not be needed
 @app.route('/logout', methods=['POST'])
 def logout():
@@ -194,7 +155,184 @@ def logout():
     return jsonify({"message": "Successfully logged out."}), 200
 
 
-# GENERATE RANDOM STORY ROUTE
+# GET USER INFORMATION API
+@app.route('/get-user-info', methods=['GET'])
+@jwt_required()
+def get_user_info():
+    try:
+        user_id = get_jwt_identity()
+        user = User.query.filter_by(user_id=user_id).first()
+        
+        if not user:
+            return jsonify({"message": "User not found."}), 404
+        
+        user_info = {
+            "user_id": user.user_id,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+            "email": user.email
+        }
+        return jsonify(user_info), 200
+        
+    except Exception as e:
+        logging.error(f"Error fetching user info: {str(e)}")
+        return jsonify({"error": "An error occurred while fetching user info."}), 500
+
+
+# RETRIEVE STORIES IN USER ACCOUNT
+@app.route('/retrieve-user-stories', methods=['GET'])
+@jwt_required()
+def retrieve_user_stories():
+    try:
+        user_id = get_jwt_identity()
+        stories = Story.query.filter_by(user_id=user_id).all()
+        
+        
+        user_stories = [
+            {
+                "story_id": story.story_id,
+                "title": story.title,
+                "genre": story.genre,
+                "content": story.content,
+                "created_at": story.created_at.strftime('%Y-%m-%d %H:%M:%S')
+            }
+            for story in stories
+        ]
+        return jsonify(user_stories), 200
+    
+    except Exception as e:
+        logging.error(f"Error fetching user stories: {str(e)}")
+        return jsonify({"error": "An error occurred while fetching user stories."}), 500
+
+
+# SAVE GENERATED STORY TO CURRENT USER ACCOUNT
+@app.route('/save-user-story', methods=['POST'])
+@jwt_required()
+def save_user_story():
+    try:
+        user_id = get_jwt_identity()
+        data = request.get_json()
+        title = data.get('title')
+        genre = data.get('genre')
+        content = data.get('content')
+        
+        if not all([title, genre, content]):
+            return jsonify({"error": "All fields (title, genre, content) are required."}), 400
+        
+        new_story = Story(user_id=user_id, title=title, genre=genre, content=content)
+        db.session.add(new_story)
+        db.session.commit()
+
+        return jsonify({
+            "message": "Story saved successfully.",
+        }), 201
+    
+    except Exception as e:
+        logging.error(f"Error saving user story: {str(e)}")
+        return jsonify({"error": "An error occurred while saving the story."}), 500
+
+
+# CHANGE PASSWORD API
+@app.route('/change-password', methods=['POST'])
+@jwt_required()
+def change_password():
+    try:
+        user_id = get_jwt_identity()
+        data = request.get_json()
+        current_password = data.get('current_password')
+        new_password = data.get('new_password')
+        confirm_new_password = data.get('confirm_new_password')
+
+        user = User.query.filter_by(user_id=user_id).first()
+
+        if not user or not check_password_hash(user.password, current_password):
+            return jsonify({"error": "Current password is incorrect."}), 400
+        
+        if new_password != confirm_new_password:
+            return jsonify({"error": "New password and confirm password do not match."}), 400
+
+        user.password = generate_password_hash(confirm_new_password, method='pbkdf2:sha256')
+        db.session.commit()
+        return jsonify({"message": "Password updated successfully."}), 200
+    
+    except Exception as e:
+        logging.error(f"Error changing password: {str(e)}")
+        return jsonify({"error": "An error occurred while changing the password."}), 500
+
+
+# FORGOT PASSWORD API
+@app.route('/forgot-password', methods=['POST'])
+def forgot_password():
+    try:
+        data = request.get_json()
+        email = data.get('email')
+        user = User.query.filter_by(email=email).first()
+
+        if not user:
+            return jsonify({"error": "User with this email does not exist."}), 404
+
+        reset_token = generate_verification_token() 
+        user.verification_token = reset_token
+        db.session.commit()
+
+        smtp_server = Config.MAIL_SERVER 
+        smtp_port = Config.MAIL_PORT 
+        email_address = Config.MAIL_USERNAME 
+        app_password = Config.MAIL_PASSWORD 
+
+        reset_link = f"http://localhost:3000/reset-password/{reset_token}"
+
+        subject = "Change Password"
+        body = f"Click the link to reset your password: {reset_link}"
+        
+        message = MIMEMultipart()
+        message['From'] = email_address
+        message['To'] = email
+        message['Subject'] = subject
+        message.attach(MIMEText(body, 'plain'))
+
+        with smtplib.SMTP(smtp_server, smtp_port) as server:
+            server.set_debuglevel(1)  
+            server.starttls() 
+            server.login(email_address, app_password)
+            server.send_message(message)
+
+        logging.info(f"Verification email sent to {email}")
+        return jsonify({"message": "Password reset link sent to your email."}), 200
+    
+    except Exception as e:
+        logging.error(f"Error sending reset password email: {str(e)}")
+        return jsonify({"error": "An error occurred while sending the reset password email."}), 500
+
+
+# RESET PASSWORD API
+@app.route('/reset-password/<token>', methods=['POST'])
+def reset_password(token):
+    try:
+        data = request.get_json()
+        new_password = data.get('new_password')
+        confirm_new_password = data.get('confirm_new_password')
+
+        user = User.query.filter_by(verification_token=token).first()
+
+        if not user:
+            return jsonify({"error": "Invalid or expired token."}), 400
+        
+        if new_password != confirm_new_password:
+            return jsonify({"error": "New password and confirm password do not match."}), 400
+
+        user.password = generate_password_hash(confirm_new_password, method='pbkdf2:sha256')
+        user.verification_token = None
+        db.session.commit()
+
+        return jsonify({"message": "Password reset successfully."}), 200
+    
+    except Exception as e:
+        logging.error(f"Error resetting password: {str(e)}")
+        return jsonify({"error": "An error occurred while resetting the password."}), 500
+
+
+# GENERATE RANDOM STORY API
 @app.route('/generate-story', methods=['POST'])
 def generate_story():
     try:
@@ -220,7 +358,7 @@ def generate_story():
         return jsonify({"error": str(e)}), 500
 
 
-# GENERATE CUSTOM STORY ROUTE
+# GENERATE CUSTOM STORY API
 @app.route('/generate-custom-story', methods=['POST'])
 def generate_custom_story_endpoint():
     try:
