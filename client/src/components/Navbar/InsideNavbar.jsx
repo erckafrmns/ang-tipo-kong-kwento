@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate, Link } from "react-router-dom";
 import { TbLayoutSidebarInactive } from "react-icons/tb";
 import { MdOutlineHistoryEdu } from "react-icons/md"; 
@@ -19,27 +18,6 @@ const InsideNavbar = () => {
     const handleOutsideNewClick = () => {
         navigate('/main');
     };
-
-    // Resizing logic
-    const handleMouseDown = (e) => {
-        e.preventDefault();
-        document.addEventListener('mousemove', handleMouseMove);
-        document.addEventListener('mouseup', handleMouseUp);
-    };
-
-    const handleMouseMove = (e) => {
-        const newWidth = e.clientX - 10; // Calculate width based on sidebar position
-        const defaultWidth = 250; // Default CSS width
-        if (newWidth > defaultWidth && newWidth < 500) { // Min and max width
-            setSidebarWidth(newWidth);
-        }
-    };
-
-    const handleMouseUp = () => {
-        document.removeEventListener('mousemove', handleMouseMove);
-        document.removeEventListener('mouseup', handleMouseUp);
-    };
-
 
     const handleLogout = () => {
         localStorage.removeItem('token');  // Clear JWT token
