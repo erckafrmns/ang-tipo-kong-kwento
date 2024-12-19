@@ -12,7 +12,7 @@ import Custom from './pages/CustomGenerate/Custom';
 import StoryPage from './pages/StoryPage/StoryPage';
 import Pointer from './components/Pointer/Pointer'; // Import Pointer for global sparkle effect
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; 
-import ProtectedRoute from './components/ProtectedRoute';
+import ProtectedRoute from './components/ProtectedRoute'; 
 
 
 const AppContent = () => {
@@ -26,9 +26,14 @@ const AppContent = () => {
       <Route path="/privacy-policy" element={<PrivacyPolicy />} /> 
       <Route path="/guidelines" element={<Guidelines />} /> 
       <Route path="/other-policies" element={<OtherPolicies />} /> 
-      <Route path="/main" element={<ProtectedRoute><Main /></ProtectedRoute>} />
+       
+      <Route path="/main" element={<Main />} />
+      <Route path="/custom" element={<Custom />} />
+      <Route path="/story" element={<StoryPage />} />
+      
+    {/*<Route path="/main" element={<ProtectedRoute><Main /></ProtectedRoute>} />
       <Route path="/custom" element={<ProtectedRoute><Custom /></ProtectedRoute>} />
-      <Route path="/story" element={<ProtectedRoute><StoryPage /></ProtectedRoute>} />
+      <Route path="/story" element={<ProtectedRoute><StoryPage /></ProtectedRoute>} />*/}   
     </Routes>
   );
 };

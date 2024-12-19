@@ -3,7 +3,8 @@ import { FaPhoneAlt } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6";
 import './ContactUs.css' 
-import Navbar from '../../components/Navbar/Navbar';
+import Navbar from '../../components/Navbar/Navbar'; 
+import InsideNavbar from '../../components/Navbar/InsideNavbar';
 import Footer from '../../components/Footer/Footer';
 
 const ContactUs = () => { 
@@ -31,12 +32,19 @@ const ContactUs = () => {
         e.preventDefault();
         console.log('Form submitted:', formData);
         // You can make an API call to send the form data to your backend here
-    };
+    }; 
+
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    
+        useEffect(() => {
+            const token = localStorage.getItem('token');
+            setIsLoggedIn(!!token);
+        }, []);
 
   return ( 
     <> 
-    <Navbar/>
-        <div className='contactUs'>
+      {isLoggedIn ? <InsideNavbar /> : <Navbar />}
+      <div className='contactUs'>
             
             <div className='contactUs-bot'>
                 <h1>Contact Us</h1>
