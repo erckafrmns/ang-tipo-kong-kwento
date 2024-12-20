@@ -6,14 +6,16 @@ import {useNavigate} from 'react-router-dom';
 import './LoginSignup.css'
 
 const LoginSignup = ({ closeModal, formType }) => { 
-  const [isLogin, setIsLogin] = useState(formType === 'login');
+  const [isLogin, setIsLogin] = useState(formType === 'login'); 
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     setIsLogin(formType === 'login');
   }, [formType]);
 
   const toggleForm = () => {
-    setIsLogin(!isLogin);
+    setIsLogin(!isLogin); 
+    setErrorMessage(''); // Clear error message when switching forms
   };
 
 
@@ -42,14 +44,15 @@ const LoginSignup = ({ closeModal, formType }) => {
         localStorage.setItem('token', data.token); // Store JWT token
         alert('Logged in successfully!');
         setLoginEmail('');
-        setLoginPassword('');
+        setLoginPassword(''); 
+        setErrorMessage(''); 
         navigate('/main');
       } else {
-        alert(data.message || 'Login failed');
+        setErrorMessage(data.message || 'Incorrect username or password.'); 
       }
     } catch (error) {
       console.error('Error during login:', error);
-      alert('Something went wrong, please try again later');
+      setErrorMessage('Something went wrong, please try again later.');
     }
   };
 
@@ -66,19 +69,20 @@ const LoginSignup = ({ closeModal, formType }) => {
 
       const data = await response.json();
 
-      if (response.ok) {
-        alert('Sign up successful! Please check your email to verify your account.');
+      if (response.ok) { 
+        navigate('/verify-email');
+        //alert('Sign up successful! Please check your email to verify your account.');
         setSignupEmail('');
         setSignupPassword('');
         setFirstName('');
-        setLastName('');
-        navigate('/login-signup');
-      } else {
-        alert(data.message || 'Signup failed');
+        setLastName(''); 
+        setErrorMessage(''); 
+      } else { 
+        setErrorMessage(data.message || 'Signup failed'); 
       }
     } catch (error) {
       console.error('Error during signup:', error);
-      alert(`Something went wrong, please try again later: ${error}`);
+      setErrorMessage('Something went wrong, please try again later.'); 
     }
   };
 
@@ -93,7 +97,8 @@ const LoginSignup = ({ closeModal, formType }) => {
             <div className="form-side left-side">
               {isLogin ? (
                 <div className="form-content login-form">
-                  <h2>Login your account</h2>
+                  <h2>Login your account</h2> 
+                  {errorMessage && <p className="error-message">{errorMessage}</p>} 
                   <input type="text" placeholder="email" value={login_email} onChange={(e) => setLoginEmail(e.target.value)}  />
                   <input type="password" placeholder="password" value={login_password} onChange={(e) => setLoginPassword(e.target.value)} />
                   <a href="/#" className='forgotPassBtn'>Forgot password?</a>
@@ -114,7 +119,8 @@ const LoginSignup = ({ closeModal, formType }) => {
               {!isLogin ? (
                 <div className="form-content signup-form">
                   <button onClick={closeModal} className='loginSignUp-exIcon'><ImCross/></button>
-                  <h2>Create your accounts</h2>
+                  <h2>Create your account</h2> 
+                  {errorMessage && <p className="error-message">{errorMessage}</p>} 
                   <div className='form-fullname'>
                     <input type="text" placeholder="first name" value={firstName} onChange={(e) => setFirstName(e.target.value)}  required/>
                     <input type="text" placeholder="last name" value={lastName} onChange={(e) => setLastName(e.target.value)} required/>
