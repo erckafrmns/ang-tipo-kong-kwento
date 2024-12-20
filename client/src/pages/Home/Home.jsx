@@ -16,6 +16,7 @@ const Home = () => {
   const aboutRef = useRef(null);
   const navbarRef = useRef(null); 
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [transitionDirection, setTransitionDirection] = useState('');
 
   // List of feature objects
   const features = [
@@ -35,14 +36,16 @@ const Home = () => {
     aboutRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-
-
   const handleNext = () => {
+    setTransitionDirection('next');
     setCurrentIndex((prevIndex) => (prevIndex + 1) % features.length);
+    setTimeout(() => setTransitionDirection(''), 500);
   };
 
   const handlePrev = () => {
+    setTransitionDirection('prev');
     setCurrentIndex((prevIndex) => (prevIndex - 1 + features.length) % features.length);
+    setTimeout(() => setTransitionDirection(''), 500);
   };
 
   return (
@@ -65,20 +68,19 @@ const Home = () => {
         <h1>Our Features</h1>
         <div className='featuresContainer'> 
           <div className='leftArrow' onClick={handlePrev}><FiArrowLeftCircle className="nav-icon" /></div>
-            <div className='features-slider'>
+            <div className={`features-slider ${transitionDirection}`}>
               {Array.from({ length: 3 }).map((_, index) => {
                 const featureIndex = (currentIndex + index) % features.length; 
                 const feature = features[featureIndex]; 
                 const isMiddleCard = index === 1; 
+                const isExiting = transitionDirection && index === (transitionDirection === 'next' ? 0 : 2);
+                const isEntering = transitionDirection && index === (transitionDirection === 'next' ? 2 : 0);
 
                 return (
                   <div
-                    className={`features-card ${isMiddleCard ? 'active' : 'inactive'}`}
+                    className={`features-card ${isMiddleCard ? 'active' : 'inactive'} ${isExiting ? 'exiting' : ''} ${isEntering ? 'entering' : ''}`}
+                    onClick={index === 0 ? handlePrev : index === 2 ? handleNext : null}
                     key={featureIndex}
-                    style={{
-                      transform: isMiddleCard ? 'scale(1.1)' : 'scale(0.8)',
-                      opacity: isMiddleCard ? 1 : 0.5,
-                    }}
                   >
                     {isMiddleCard && (
                       <>

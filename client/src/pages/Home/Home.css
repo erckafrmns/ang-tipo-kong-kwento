@@ -127,22 +127,106 @@ h1, h2, p{
     padding: 25px 20px;
     border-radius: 30px;
     cursor: pointer;
-    transition: transform 0.5s ease, opacity 0.5s ease; /* Smooth transition */
+    transition: transform 0.5s ease, opacity 0.5s ease;
     margin: 0 10px;  
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-} 
- 
+    z-index: 5;
+}
 
-.features-card.inactive{  
+@keyframes slideInFromLeft {
+    0% {
+        transform: translateX(-100%) scale(0.7);
+        opacity: 0.75;
+    }
+    100% {
+        transform: translateX(0) scale(1.1);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromRight {
+    0% {
+        transform: translateX(100%) scale(0.7);
+        opacity: 0.75;
+    }
+    100% {
+        transform: translateX(0) scale(1.1);
+        opacity: 1;
+    }
+}
+
+.features-slider.prev .features-card.active {
+    animation: slideInFromLeft 0.5s forwards;
+}
+
+.features-slider.next .features-card.active {
+    animation: slideInFromRight 0.5s forwards;
+}
+
+.features-card.active {
+    scale: 1.1;
+} 
+
+.features-card.inactive {  
+    scale: 0.8;
+    opacity: 0.75;
     height: 500px;
 } 
 
-.features-card.inactive img{ 
+.features-card.inactive img { 
     height: 100%;
 } 
 
 .features-card:hover {
-    transform: scale(1.1);
+    transform: scale(0.95);
+}
+
+.features-card.exiting {
+    opacity: 0.75;
+}
+
+.features-slider.prev .features-card.exiting {
+    translate: -80%;
+    animation: slideOutRight 0.5s forwards;
+}
+
+.features-slider.next .features-card.exiting {
+    translate: 80%;
+    animation: slideOutLeft 0.5s forwards;
+}
+
+@keyframes slideOutLeft {
+    0% {
+        transform: translateX(0) scale(1.2);
+    }
+    100% {
+        transform: translateX(-100%) scale(1);
+    }
+}
+
+@keyframes slideOutRight {
+    0% {
+        transform: translateX(0) scale(1.2);
+    }
+    100% {
+        transform: translateX(100%) scale(1);
+    }
+}
+
+.features-card.entering {
+    transition: transform 0.5s ease;
+    transform: scale(1);
+    opacity: 0.75;
+    animation: popIn 0.5s forwards;
+}
+
+@keyframes popIn {
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
 
 .features-card h2 {
