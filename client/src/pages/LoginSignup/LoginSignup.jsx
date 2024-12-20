@@ -70,7 +70,7 @@ const LoginSignup = ({ closeModal, formType }) => {
       const data = await response.json();
 
       if (response.ok) { 
-        navigate('/verify-email');
+        navigate('/verify-email', { state: { email: signup_email } });
         //alert('Sign up successful! Please check your email to verify your account.');
         setSignupEmail('');
         setSignupPassword('');
