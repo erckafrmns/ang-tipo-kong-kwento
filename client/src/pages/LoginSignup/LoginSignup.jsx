@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import manSitting from '../../assets/man-sitting.svg';
 import ladyReading from '../../assets/lady-reading.svg';
 import { ImCross } from "react-icons/im";
-import { Link, useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import './LoginSignup.css'
 
-const LoginSignup = () => {
+const LoginSignup = ({ closeModal, formType }) => { 
+  const [isLogin, setIsLogin] = useState(formType === 'login');
 
-  const [isLogin, setIsLogin] = useState(true);
+  useEffect(() => {
+    setIsLogin(formType === 'login');
+  }, [formType]);
 
   const toggleForm = () => {
     setIsLogin(!isLogin);
@@ -83,11 +86,9 @@ const LoginSignup = () => {
 
   return (
     <>
-        <div className='loginSignup'>
-
-        <div className={`loginSignup-container ${isLogin ? 'login-bg' : 'signup-bg'}`}>
-          
-          <div className={`form-container ${isLogin ? 'login-active' : 'signup-active'}`}>
+        <div className="loginSignup">
+          <div className="loginSignup-container">
+            <div className={`form-container ${isLogin ? 'login-bg login-active' : 'signup-bg signup-active'}`}>
 
             <div className="form-side left-side">
               {isLogin ? (
@@ -112,7 +113,7 @@ const LoginSignup = () => {
             <div className="form-side right-side">
               {!isLogin ? (
                 <div className="form-content signup-form">
-                  <Link to="/" className='loginSignUp-exIcon'><ImCross/></Link>
+                  <button onClick={closeModal} className='loginSignUp-exIcon'><ImCross/></button>
                   <h2>Create your accounts</h2>
                   <div className='form-fullname'>
                     <input type="text" placeholder="first name" value={firstName} onChange={(e) => setFirstName(e.target.value)}  required/>
@@ -127,7 +128,7 @@ const LoginSignup = () => {
                 </div>
               ) : (
                 <div className="side-content">
-                  <Link to="/" className='loginSignUp-exIcon'><ImCross/></Link>
+                  <button onClick={closeModal} className='loginSignUp-exIcon'><ImCross/></button>
                   <img src={manSitting}  className="side-image" alt="" />
                   <button className="side-btn side-signbtn" onClick={toggleForm}>Sign up</button>
                 </div>
