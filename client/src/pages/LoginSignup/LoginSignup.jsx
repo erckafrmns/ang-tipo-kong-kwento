@@ -7,7 +7,8 @@ import './LoginSignup.css'
 
 const LoginSignup = ({ closeModal, formType }) => { 
   const [isLogin, setIsLogin] = useState(formType === 'login'); 
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState(''); 
+  const [isLoading, setIsLoading] = useState(false); 
 
   useEffect(() => {
     setIsLogin(formType === 'login');
@@ -15,7 +16,8 @@ const LoginSignup = ({ closeModal, formType }) => {
 
   const toggleForm = () => {
     setIsLogin(!isLogin); 
-    setErrorMessage(''); // Clear error message when switching forms
+    setErrorMessage(''); // Clear error message when switching forms 
+    setIsLoading(false);
   };
 
 
@@ -29,6 +31,7 @@ const LoginSignup = ({ closeModal, formType }) => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setIsLoading(true); 
     try {
       const response = await fetch('http://localhost:5000/login', {
         method: 'POST',
@@ -44,20 +47,23 @@ const LoginSignup = ({ closeModal, formType }) => {
         localStorage.setItem('token', data.token); // Store JWT token
         alert('Logged in successfully!');
         setLoginEmail('');
-        setLoginPassword(''); 
-        setErrorMessage(''); 
+        setLoginPassword('');
+        setErrorMessage('');
         navigate('/main');
       } else {
-        setErrorMessage(data.message || 'Incorrect username or password.'); 
+        setErrorMessage(data.message || 'Incorrect username or password.');
       }
     } catch (error) {
       console.error('Error during login:', error);
       setErrorMessage('Something went wrong, please try again later.');
+    } finally {
+      setIsLoading(false); 
     }
   };
 
   const handleSignup = async (e) => {
     e.preventDefault();
+    setIsLoading(true); 
     try {
       const response = await fetch('http://localhost:5000/signup', {
         method: 'POST',
@@ -69,24 +75,23 @@ const LoginSignup = ({ closeModal, formType }) => {
 
       const data = await response.json();
 
-      if (response.ok) { 
+      if (response.ok) {
         navigate('/verify-email', { state: { email: signup_email } });
-        //alert('Sign up successful! Please check your email to verify your account.');
         setSignupEmail('');
         setSignupPassword('');
         setFirstName('');
-        setLastName(''); 
-        setErrorMessage(''); 
-      } else { 
-        setErrorMessage(data.message || 'Signup failed'); 
+        setLastName('');
+        setErrorMessage('');
+      } else {
+        setErrorMessage(data.message || 'Signup failed');
       }
     } catch (error) {
       console.error('Error during signup:', error);
-      setErrorMessage('Something went wrong, please try again later.'); 
+      setErrorMessage('Something went wrong, please try again later.');
+    } finally {
+      setIsLoading(false); // Stop loading
     }
   };
-
-
 
   return (
     <>
@@ -103,7 +108,14 @@ const LoginSignup = ({ closeModal, formType }) => {
                   <input type="password" placeholder="password" value={login_password} onChange={(e) => setLoginPassword(e.target.value)} />
                   <a href="/#" className='forgotPassBtn'>Forgot password?</a>
                   <div className='loginSignup-buttons'>
-                    <button className="form-btn" onClick={handleLogin}>Login</button>
+                  <button className="form-btn" onClick={handleLogin} disabled={isLoading}>
+                      {isLoading ?   
+                      <div className="spinner-wrapper">
+                        <div className="button-spinner"></div>   
+                      </div>
+                      : 'Login'}
+                    </button>
+
                     <button className='guest-btn'>Continue as guest</button>
                   </div>
                 </div>
@@ -128,7 +140,11 @@ const LoginSignup = ({ closeModal, formType }) => {
                   <input type="email" placeholder="email" value={signup_email} onChange={(e) => setSignupEmail(e.target.value)} required/>
                   <input type="password" placeholder="password" value={signup_password} onChange={(e) => setSignupPassword(e.target.value)} required/>
                   <div className='loginSignup-buttons'>
-                    <button className="form-btn" onClick={handleSignup}>Sign Up</button>
+                  <button className="form-btn" onClick={handleSignup} disabled={isLoading}>
+                      {isLoading ? ( <div className="spinner-wrapper">
+                        <div className="button-spinner"></div>   
+                      </div>) : ('Sign Up')}
+                    </button>
                     <button className='guest-btn'>Continue as guest</button>
                   </div>
                 </div>

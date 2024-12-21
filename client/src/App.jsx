@@ -9,8 +9,9 @@ import Guidelines from './pages/Guidelines/Guidelines';
 import OtherPolicies from './pages/OtherPolicies/OtherPolicies';
 import Main from './pages/Main/Main'; 
 import Custom from './pages/CustomGenerate/Custom';
-import StoryPage from './pages/StoryPage/StoryPage'; 
+import StoryPage from './pages/StoryPage/StoryPage';  
 import VerifyEmail from './pages/VerifyEmail/VerifyEmail';
+import VerifiedEmail from './pages/VerifiedEmail/VerifiedEmail';
 import Pointer from './components/Pointer/Pointer'; 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; 
 import ProtectedRoute from './components/ProtectedRoute'; 
@@ -22,7 +23,8 @@ const AppContent = () => {
       <Route path="/" element={<Home />} />
       <Route path="/developers" element={<Developers />} /> 
       <Route path="/login-signup" element={<LoginSignup />} />  
-      <Route path="/verify-email" element={<VerifyEmail />} />
+      <Route path="/verify-email" element={<VerifyEmail />} /> 
+      <Route path="/verify-email/:token" element={<VerifiedEmail />} />
       <Route path="/contact-us" element={<ContactUs />} /> 
       <Route path="/terms-of-use" element={<TermsOfUse />} /> 
       <Route path="/privacy-policy" element={<PrivacyPolicy />} /> 

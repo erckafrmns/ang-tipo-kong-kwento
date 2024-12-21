@@ -150,7 +150,12 @@ input::placeholder {
 
 .form-btn:hover, .guest-btn:hover {
     transform: scale(0.98);
-}
+} 
+  
+.form-btn:disabled:hover {
+    transform: none;
+  }
+  
 
 .form-fullname{
     display: flex;
@@ -232,8 +237,29 @@ input::placeholder {
 .side-loginbtn:hover{
     background-color: var(--yellow);
     color: var(--beige);
-}
+} 
 
+.spinner-wrapper {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+  }
+  
+.button-spinner {
+    border: 3px solid var(--beige);
+    border-top: 3px solid var(--yellow); 
+    border-radius: 50%;
+    width: 23px;
+    height: 23px; 
+    animation: spin 1s linear infinite;
+  }
+  
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  
 
 /* Responsive for smaller screens */
 @media (max-width: 768px) {
