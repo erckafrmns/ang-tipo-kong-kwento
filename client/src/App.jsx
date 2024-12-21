@@ -24,7 +24,7 @@ const AppContent = () => {
       <Route path="/developers" element={<Developers />} /> 
       <Route path="/login-signup" element={<LoginSignup />} />  
       <Route path="/verify-email" element={<VerifyEmail />} /> 
-      <Route path="/verify-email/:token" element={<VerifiedEmail />} />
+      <Route path="/verified-email" element={<VerifiedEmail />} />
       <Route path="/contact-us" element={<ContactUs />} /> 
       <Route path="/terms-of-use" element={<TermsOfUse />} /> 
       <Route path="/privacy-policy" element={<PrivacyPolicy />} /> 

@@ -114,9 +114,9 @@ def verify_email(token):
         user.is_active = True
         user.verification_token = None  
         db.session.commit()
-        return jsonify({"message": "Email verified successfully!"}), 200
+        return redirect(f"http://localhost:3000/verified-email?token={token}&status=success")
     else:
-        return jsonify({"message": "Invalid or expired token."}), 400
+        return redirect(f"http://localhost:3000/verified-email?status=failure")
 
 
 # LOGIN API
