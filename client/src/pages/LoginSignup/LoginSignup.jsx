@@ -45,7 +45,6 @@ const LoginSignup = ({ closeModal, formType }) => {
 
       if (response.ok) {
         localStorage.setItem('token', data.token); // Store JWT token
-        alert('Logged in successfully!');
         setLoginEmail('');
         setLoginPassword('');
         setErrorMessage('');

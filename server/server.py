@@ -141,7 +141,7 @@ def login():
     if user and check_password_hash(user.password, password):
         access_token = create_access_token(identity=user.user_id)
         return jsonify({
-            "message": "Logged in successfully!",
+            #"message": "Logged in successfully!",
             "access_token": access_token
         }), 200
     
