@@ -70,14 +70,7 @@ const Navbar = ({ hideInsideNavbar = false }) => { // Add a prop to control visi
                                 </Link>
                             </li>
                             <li>
-                                <a
-                                    href="#"
-                                    className="nav-right"
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        handleLoginSignupClick("signup");
-                                    }}
-                                >
+                                <a href="#" className="nav-right" onClick={(e) => { e.preventDefault(); handleLoginSignupClick("signup");}}>
                                     Sign Up/Login
                                 </a>
                             </li>
