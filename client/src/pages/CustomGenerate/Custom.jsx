@@ -7,12 +7,12 @@ import './Main-Custom.css';
 const Custom = ({ closeModal }) => {
   const [title, setTitle] = useState('');
   const [genre, setGenre] = useState('');
-  const [isShortStory, setIsShortStory] = useState(true); // Toggle state
+  const [isShortStory, setIsShortStory] = useState(true); 
   const navigate = useNavigate();
 
   const handleInputChange = (event) => setTitle(event.target.value);
   const handleGenreChange = (event) => setGenre(event.target.value);
-  const toggleStoryLength = () => setIsShortStory((prev) => !prev); // Toggle function
+  const toggleStoryLength = () => setIsShortStory((prev) => !prev);
 
   const handleGenerateClick = useCallback(() => {
     if (!title || !genre) {

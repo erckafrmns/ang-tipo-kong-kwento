@@ -32,6 +32,14 @@ const Navbar = ({ hideInsideNavbar = false }) => { // Add a prop to control visi
         } else {
             scrollToSection("about");
         }
+    };  
+     
+    const handleLoginSignupClick = (modalType) => {
+        if (location.pathname !== "/") {
+            navigate("/", { state: { openModal: modalType } });
+        } else {
+            navigate(location.pathname, { state: { openModal: modalType } });
+        }
     };
 
     return (
@@ -62,9 +70,16 @@ const Navbar = ({ hideInsideNavbar = false }) => { // Add a prop to control visi
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/login-signup" className="nav-right">
+                                <a
+                                    href="#"
+                                    className="nav-right"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        handleLoginSignupClick("signup");
+                                    }}
+                                >
                                     Sign Up/Login
-                                </Link>
+                                </a>
                             </li>
                         </ul>
                     </div>
