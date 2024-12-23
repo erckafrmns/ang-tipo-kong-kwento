@@ -5,7 +5,7 @@ import { ImCross } from "react-icons/im";
 import {useNavigate} from 'react-router-dom';
 import './LoginSignup.css'
 
-const LoginSignup = ({ closeModal, formType }) => { 
+const LoginSignup = ({ closeModal, formType, toggleModal  }) => { 
   const [isLogin, setIsLogin] = useState(formType === 'login'); 
   const [errorMessage, setErrorMessage] = useState(''); 
   const [isLoading, setIsLoading] = useState(false); 
@@ -16,7 +16,16 @@ const LoginSignup = ({ closeModal, formType }) => {
 
   const toggleForm = () => {
     setIsLogin(!isLogin); 
-    setErrorMessage(''); // Clear error message when switching forms 
+    setErrorMessage(''); // Clear error message when switching forms
+    // Clear inputs
+    setLoginEmail(''); 
+    setLoginPassword('');
+    setErrorMessage('');
+    setSignupEmail('');
+    setSignupPassword('');
+    setFirstName('');
+    setLastName('');
+    setErrorMessage('');
     setIsLoading(false);
   };
 
@@ -105,7 +114,7 @@ const LoginSignup = ({ closeModal, formType }) => {
                   {errorMessage && <p className="error-message">{errorMessage}</p>} 
                   <input type="text" placeholder="email" value={login_email} onChange={(e) => setLoginEmail(e.target.value)}  />
                   <input type="password" placeholder="password" value={login_password} onChange={(e) => setLoginPassword(e.target.value)} />
-                  <a href="/#" className='forgotPassBtn'>Forgot password?</a>
+                  <button className='forgotPassBtn' onClick={() => toggleModal('forgotpassword')}>Forgot password?</button>
                   <div className='loginSignup-buttons'>
                   <button className="form-btn" onClick={handleLogin} disabled={isLoading}>
                       {isLoading ?   

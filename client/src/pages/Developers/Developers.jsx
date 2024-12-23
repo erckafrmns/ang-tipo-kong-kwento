@@ -30,7 +30,7 @@ const Developers = () => {
         { 
             id: 2, 
             name: 'Ericka Joy Formanes', 
-            description: 'Full Stack Developer', 
+            description: 'Full-Stack Developer', 
             image: dev2,
             socials: {
                 facebook: 'https://facebook.com/EriiSsi',
@@ -41,7 +41,7 @@ const Developers = () => {
         { 
             id: 3, 
             name: 'Grace Anne Garchitorena', 
-            description: 'Frontend Developer, UI/UX Designer', 
+            description: 'Front-End Developer, UI/UX Designer', 
             image: dev3,
             socials: {
                 facebook: 'https://www.facebook.com/graceanne.garchitorena',

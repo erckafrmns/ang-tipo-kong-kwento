@@ -165,8 +165,15 @@ input::placeholder {
 
 .forgotPassBtn{ 
     font-size: 15px;
+    width: fit-content;
     text-decoration: none;
     color: var(--green);
+    background-color: transparent;
+    outline: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 .forgotPassBtn:hover{

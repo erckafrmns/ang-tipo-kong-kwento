@@ -12,6 +12,8 @@ import {Link, useLocation } from "react-router-dom";
 import './Home.css'; 
 
 import LoginSignup from '../LoginSignup/LoginSignup';   
+import ForgotPassword from '../ForgotPassword/ForgotPassword';   
+
 
 const Home = () => { 
   const location = useLocation(); // Access state passed via navigation
@@ -31,8 +33,15 @@ const Home = () => {
   }, [location.state]);
 
   const toggleModal = (type) => {
-    setModalType(type);
-    setShowModal(!showModal);
+    if (!type) {
+      setShowModal(false); 
+      setModalType('');   
+    } else if (type === modalType) {
+      setShowModal(!showModal); 
+    } else {
+      setModalType(type);
+      setShowModal(true);
+    }
   };
 
   const features = [
@@ -126,10 +135,15 @@ const Home = () => {
       {showModal && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <LoginSignup closeModal={() => toggleModal('')} formType={modalType} />
+            {modalType === 'login' || modalType === 'signup' ? (
+              <LoginSignup closeModal={() => toggleModal('')} formType={modalType} toggleModal={toggleModal}/>
+            ) : modalType === 'forgotpassword' ? (
+              <ForgotPassword closeModal={() => toggleModal('')} toggleModal={toggleModal}/>
+            ) : null}
           </div>
         </div>
       )}
+
     </>
   );
 };

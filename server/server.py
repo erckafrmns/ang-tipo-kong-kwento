@@ -150,6 +150,7 @@ def login():
 
 # LOGOUT ROUTE, though this will not be needed
 @app.route('/logout', methods=['POST'])
+@jwt_required()
 def logout():
     # For JWT, logout means simply not providing the token in the requests.
     return jsonify({"message": "Successfully logged out."}), 200
@@ -319,13 +320,13 @@ def reset_password(token):
             return jsonify({"error": "Invalid or expired token."}), 400
         
         if new_password != confirm_new_password:
-            return jsonify({"error": "New password and confirm password do not match."}), 400
+            return jsonify({"error": "Passwords do not match."}), 400
 
         user.password = generate_password_hash(confirm_new_password, method='pbkdf2:sha256')
         user.verification_token = None
         db.session.commit()
 
-        return jsonify({"message": "Password reset successfully."}), 200
+        return jsonify({"message": "Password was successfully changed."}), 200
     
     except Exception as e:
         logging.error(f"Error resetting password: {str(e)}")
