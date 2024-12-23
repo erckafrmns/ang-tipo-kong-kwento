@@ -29,6 +29,11 @@ const AppContent = () => {
       <Route path="/main" element={<ProtectedRoute><Main /></ProtectedRoute>} />
       <Route path="/custom" element={<ProtectedRoute><Custom /></ProtectedRoute>} />
       <Route path="/story" element={<ProtectedRoute><StoryPage /></ProtectedRoute>} />
+
+      {/* FOR FASTER DEVELOPMENT */}
+      {/* <Route path="/main" element={<Main />} />
+      <Route path="/custom" element={<Custom />} />
+      <Route path="/story" element={<StoryPage />} /> */}
     </Routes>
   );
 };
