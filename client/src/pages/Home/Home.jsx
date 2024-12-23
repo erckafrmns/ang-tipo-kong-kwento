@@ -7,17 +7,34 @@ import heroBG from '../../assets/hero-bg.png';
 import aboutBG from '../../assets/about-books.gif';
 import aboutIMG from '../../assets/about-img.png';
 import featuresCard from '../../assets/features-card.png';
-import bottomBanner from '../../assets/bottomBanner.svg';
-import './Home.css';
-import { Link } from 'react-router-dom';
+import bottomBanner from '../../assets/bottomBanner.svg'; 
+import {Link, useLocation } from "react-router-dom";
+import './Home.css'; 
 
-const Home = () => {
+import LoginSignup from '../LoginSignup/LoginSignup';   
+
+const Home = () => { 
+  const location = useLocation(); // Access state passed via navigation
   const featuresRef = useRef(null);
   const aboutRef = useRef(null);
   const navbarRef = useRef(null); 
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [showModal, setShowModal] = useState(false);
+  const [modalType, setModalType] = useState('login'); 
 
-  // List of feature objects
+  useEffect(() => {
+    // Check if state indicates to open a modal
+    if (location.state?.openModal) {
+      setModalType(location.state.openModal);
+      setShowModal(true);
+    }
+  }, [location.state]);
+
+  const toggleModal = (type) => {
+    setModalType(type);
+    setShowModal(!showModal);
+  };
+
   const features = [
     { title: "Quick Story Generation", description: "Instantly generate engaging stories with a few clicks." },
     { title: "Customized Story Generation", description: "Personalize stories by choosing themes, characters, and morals." },
@@ -26,7 +43,6 @@ const Home = () => {
     { title: "Story Archive 3", description: "Save and revisit generated stories for future reading." }
   ];
 
-  // Scroll functions
   const scrollToFeatures = () => {
     featuresRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -34,8 +50,6 @@ const Home = () => {
   const scrollToAbout = () => {
     aboutRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
-
-
 
   const handleNext = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % features.length);
@@ -55,8 +69,8 @@ const Home = () => {
         <h1>Ang tipo kong Kwento</h1>
         <img className="heroBG" src={heroBG} alt="" />
         <div className='heroContainer'>
-          <Link to="/login-signup" className='loginBTN'>LOGIN</Link>
-          <Link to="/login-signup" className='signupBTN'>SIGN UP</Link>
+          <button className="loginBTN" onClick={() => toggleModal('login')}>LOGIN</button>
+          <button className="signupBTN" onClick={() => toggleModal('signup')}>SIGN UP</button>
           <a href="/#" className='guestBTN'>Continue as Guest</a>
         </div>
       </section>
@@ -65,32 +79,32 @@ const Home = () => {
         <h1>Our Features</h1>
         <div className='featuresContainer'> 
           <div className='leftArrow' onClick={handlePrev}><FiArrowLeftCircle className="nav-icon" /></div>
-            <div className='features-slider'>
-              {Array.from({ length: 3 }).map((_, index) => {
-                const featureIndex = (currentIndex + index) % features.length; 
-                const feature = features[featureIndex]; 
-                const isMiddleCard = index === 1; 
+          <div className='features-slider'>
+            {Array.from({ length: 3 }).map((_, index) => {
+              const featureIndex = (currentIndex + index) % features.length; 
+              const feature = features[featureIndex]; 
+              const isMiddleCard = index === 1; 
 
-                return (
-                  <div
-                    className={`features-card ${isMiddleCard ? 'active' : 'inactive'}`}
-                    key={featureIndex}
-                    style={{
-                      transform: isMiddleCard ? 'scale(1.1)' : 'scale(0.8)',
-                      opacity: isMiddleCard ? 1 : 0.5,
-                    }}
-                  >
-                    {isMiddleCard && (
-                      <>
-                        <h2>{feature.title}</h2>
-                        <p>{feature.description}</p>
-                      </>
-                    )}
-                    <img src={featuresCard} alt={feature.title} />
-                  </div>
-                );
-              })}
-            </div> 
+              return (
+                <div
+                  className={`features-card ${isMiddleCard ? 'active' : 'inactive'}`}
+                  key={featureIndex}
+                  style={{
+                    transform: isMiddleCard ? 'scale(1.1)' : 'scale(0.8)',
+                    opacity: isMiddleCard ? 1 : 0.5,
+                  }}
+                >
+                  {isMiddleCard && (
+                    <>
+                      <h2>{feature.title}</h2>
+                      <p>{feature.description}</p>
+                    </>
+                  )}
+                  <img src={featuresCard} alt={feature.title} />
+                </div>
+              );
+            })}
+          </div> 
           <div className='rightArrow' onClick={handleNext}><FiArrowRightCircle className="nav-icon" /> </div>
         </div>
 
@@ -107,7 +121,15 @@ const Home = () => {
         <img src={aboutIMG} className='aboutIMG' alt="" />  
       </section> 
       <ScrollToTop/>
-      <Footer /> 
+      <Footer />
+
+      {showModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <LoginSignup closeModal={() => toggleModal('')} formType={modalType} />
+          </div>
+        </div>
+      )}
     </>
   );
 };

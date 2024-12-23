@@ -4,11 +4,13 @@ import { TbLayoutSidebarInactive } from "react-icons/tb";
 import { MdOutlineHistoryEdu } from "react-icons/md"; 
 import { IoSearch } from "react-icons/io5";
 import logo from '../../assets/logo.png';
-import insidebanner from '../../assets/banner.svg';
+import insidebanner from '../../assets/banner.svg';  
+import modalLine from '../../assets/modal-line.svg'; 
 import '../Sidebar/Sidebar.css';
 
 const InsideNavbar = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [showLogoutConfirmation, setShowLogoutConfirmation] = useState(false); 
     const navigate = useNavigate();
 
     const toggleSidebar = () => {
@@ -20,39 +22,61 @@ const InsideNavbar = () => {
     };
 
     const handleLogout = () => {
-        localStorage.removeItem('token');  // Clear JWT token
-        alert('Logged out successfully!');
+        localStorage.removeItem('token'); // Clear JWT token
+        setShowLogoutConfirmation(false); 
         navigate('/'); 
     };
-    
-    
+
+    const cancelLogout = () => {
+        setShowLogoutConfirmation(false); 
+    };
 
     return (
         <>
             <img src={insidebanner} className="inside-banner" alt="Banner" />
-        <div id='navbar'>   		
-            <div className="logo">
-                <Link to="/">
-                    <img src={logo} className="logo-image" alt="Logo" />
-                </Link>
-            </div>
-            <div className="inside-navbar1">
-                <ul>
-                    <li>
-                        <Link to="/main" className="nav-left">Home</Link>
-                    </li>
-                    <li>
-                        <a href="" className="nav-left nav-space" >Settings</a>
-                    </li>
-                    <li>
-                        <Link to="" className="nav-right">Contact Us</Link>
-                    </li>
-                    <li>
-                        <button onClick={handleLogout} className="nav-right">Logout</button>
-                    </li>
-                </ul>
+            <div id='navbar'>   		
+                <div className="logo">
+                    <Link to="/">
+                        <img src={logo} className="logo-image" alt="Logo" />
+                    </Link>
+                </div>
+                <div className="inside-navbar1">
+                    <ul>
+                        <li>
+                            <Link to="/main" className="nav-left">Home</Link>
+                        </li>
+                        <li>
+                            <a href="" className="nav-left nav-space" >Settings</a>
+                        </li>
+                        <li>
+                            <Link to="" className="nav-right">Contact Us</Link>
+                        </li>
+                        <li>
+                            <button 
+                                onClick={() => setShowLogoutConfirmation(true)} 
+                                className="nav-right"
+                            >
+                                Logout
+                            </button>
+                        </li>
+                    </ul>
+                </div> 
             </div> 
-        </div> 
+
+            {/* Logout Confirmation Modal */}
+            {showLogoutConfirmation && (
+                <div className="modal-container">
+                    <div className="modal-logout"> 
+                        <h2>Logout</h2> 
+                        <img src={modalLine} alt="Modal Line" className="modal-line" /> {/* Replaced div with an image */}
+                        <p>Are you sure you want to log out?</p>
+                        <div className="modal-buttons">
+                            <button onClick={handleLogout} className="confirm-btn">Logout</button>
+                            <button onClick={cancelLogout} className="cancel-btn">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {/* Sidebar Component */}
             <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
@@ -94,7 +118,6 @@ const InsideNavbar = () => {
                         <TbLayoutSidebarInactive />
                     </button>
                 </div>
-
             </div> 
         </>
     );
