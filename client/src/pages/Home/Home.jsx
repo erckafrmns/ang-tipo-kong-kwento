@@ -10,7 +10,7 @@ import featuresCard from '../../assets/features-card.png';
 import bottomBanner from '../../assets/bottomBanner.svg'; 
 import {Link, useLocation } from "react-router-dom";
 import './Home.css'; 
-
+import { useNavigate } from 'react-router-dom';
 import LoginSignup from '../LoginSignup/LoginSignup';   
 import ForgotPassword from '../ForgotPassword/ForgotPassword';   
 
@@ -23,6 +23,12 @@ const Home = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState('login'); 
+
+  const navigate = useNavigate();
+
+  const handleGuestAccess = () => {
+    navigate('/main', { state: { isGuest: true } });
+  };
 
   useEffect(() => {
     // Check if state indicates to open a modal
@@ -80,7 +86,7 @@ const Home = () => {
         <div className='heroContainer'>
           <button className="loginBTN" onClick={() => toggleModal('login')}>LOGIN</button>
           <button className="signupBTN" onClick={() => toggleModal('signup')}>SIGN UP</button>
-          <a href="/#" className='guestBTN'>Continue as Guest</a>
+          <button className="guestBTN" onClick={handleGuestAccess}>Continue as Guest</button>
         </div>
       </section>
 
