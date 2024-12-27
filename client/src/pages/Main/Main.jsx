@@ -8,11 +8,11 @@ import frame from '../../assets/frame.svg';
 import Custom from '../CustomGenerate/Custom.jsx';
 import '../CustomGenerate/Main-Custom.css';
 
-const Main = ({isGuest}) => {
+const Main = () => {
   const [isModalOpen, setIsModalOpen] = useState(false); 
   const navigate = useNavigate();
   const location = useLocation();
-  // const isGuest = location.state?.isGuest || false;
+  const isGuest = location.state?.isGuest || false;
 
   const handleGenerateStory = () => {
 
@@ -66,7 +66,7 @@ const Main = ({isGuest}) => {
         </div>
       </section> 
       <Footer isAlternative={true} />
-      {isModalOpen && <Custom closeModal={toggleModal} />} {/* Modal rendering */}
+      {isModalOpen && <Custom closeModal={toggleModal} isGuest={isGuest}/>} {/* Modal rendering */}
     </div>
   );
 };
