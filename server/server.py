@@ -124,6 +124,65 @@ def verify_email(token):
         return redirect(f"http://localhost:3000/verified-email?status=failure")
 
 
+# SEND MESSAGE FROM CONTACT US TO EMAIL
+@app.route('/send-email', methods=['POST'])
+def send_email():
+    try:
+        data = request.json
+        user_name = data.get('fullname')
+        user_email = data.get('email')
+        message_body = data.get('message')
+
+        if not all([user_name, user_email, message_body]):
+            return jsonify({"error": "All fields are required."}), 400
+
+        # Send the email
+        send_contact_email(user_name, user_email, message_body)
+        return jsonify({"success": "Message sent successfully."}), 200
+    
+    except Exception as e:
+        logging.error(f"Error in contact_us endpoint: {str(e)}")
+        return jsonify({"error": "Failed to send message."}), 500
+
+
+def send_contact_email(user_name, user_email, message_body):
+    try:
+        smtp_server = Config.MAIL_SERVER
+        smtp_port = Config.MAIL_PORT
+        email_address = Config.MAIL_USERNAME  
+        app_password = Config.MAIL_PASSWORD 
+
+        if not email_address or not app_password:
+            raise ValueError("Missing email or app password configuration.")
+
+        subject_line = "Contact Us Submission"
+        body = f"""
+        You have received a new message from the Contact Us page:
+
+        Name: {user_name}
+        Email: {user_email}
+
+        Message:
+        {message_body}
+        """
+
+        message = MIMEMultipart()
+        message['From'] = email_address  
+        message['To'] = email_address    
+        message['Reply-To'] = user_email 
+        message['Subject'] = subject_line
+        message.attach(MIMEText(body, 'plain'))
+
+        with smtplib.SMTP(smtp_server, smtp_port) as server:
+            server.set_debuglevel(1)  
+            server.starttls()  
+            server.login(email_address, app_password)
+            server.send_message(message)
+
+        logging.info(f"Contact email successfully sent from {user_email} to {email_address}.")
+    except Exception as e:
+        logging.error(f"Failed to send contact email: {str(e)}")
+
 # LOGIN API
 @app.route('/login', methods=['POST'])
 def login():
