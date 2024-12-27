@@ -11,12 +11,8 @@ const PrivacyPolicy = () => {
       window.scrollTo(0, 0); // Scroll to the top of the page
     }, []); 
 
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const isLoggedIn = localStorage.getItem('authToken'); 
     
-        useEffect(() => {
-            const token = localStorage.getItem('token');
-            setIsLoggedIn(!!token);
-        }, []);
   return (
     <> 
       {isLoggedIn ? <InsideNavbar /> : <Navbar />}

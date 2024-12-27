@@ -29,7 +29,7 @@ const InsideNavbar = () => {
             <img src={insidebanner} className="inside-banner" alt="Banner" />
             <div id='navbar'>   		
                 <div className="logo">
-                    <Link to="/">
+                    <Link to="/main">
                         <img src={logo} className="logo-image" alt="Logo" />
                     </Link>
                 </div>
@@ -42,7 +42,7 @@ const InsideNavbar = () => {
                             <a href="" className="nav-left nav-space" >Settings</a>
                         </li>
                         <li>
-                            <Link to="" className="nav-right">Contact Us</Link>
+                            <Link to="/contact-us" className="nav-right">Contact Us</Link>
                         </li>
                         <li>
                             <button 
