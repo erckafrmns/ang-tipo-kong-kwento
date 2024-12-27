@@ -12,6 +12,7 @@ import random
 import string
 import smtplib
 import os
+import re
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 
 
@@ -42,12 +43,16 @@ def signup():
     email = data.get('signup_email')
     password = data.get('signup_password')
 
+
     if not first_name or not last_name or not email or not password:
         return jsonify({"message": "Missing required fields"}), 400
     
     if User.query.filter_by(email=email).first(): # Check if email already exists
         return jsonify({"message": "Email already exists!"}), 400
 
+    valPass_error = validate_password(password)
+    if valPass_error:
+        return jsonify(valPass_error[0]), valPass_error[1]
 
     hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
     verification_token = generate_verification_token() 
@@ -146,6 +151,17 @@ def login():
         }), 200
     
     return jsonify({"message": "Invalid credentials"}), 401
+
+
+# VALIDATE PASSWORD IF IT PASSED THE MIN REQUIREMENT
+def validate_password(password):
+    if len(password) < 8:
+        return {"message": "Password must be at least 8 characters long."}, 400
+    
+    if not re.search(r'\d', password): 
+        return {"message": "Password must contain at least one number."}, 400
+    
+    return None
 
 
 # LOGOUT ROUTE, though this will not be needed
