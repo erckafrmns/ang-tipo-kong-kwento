@@ -112,7 +112,7 @@ const LoginSignup = ({ closeModal, formType, toggleModal  }) => {
                 <div className="form-content login-form">
                   <h2>Login your account</h2> 
                   {errorMessage && <p className="error-message">{errorMessage}</p>} 
-                  <input type="text" placeholder="email" value={login_email} onChange={(e) => setLoginEmail(e.target.value)}  />
+                  <input type="text" placeholder="email" value={login_email} onChange={(e) => setLoginEmail(e.target.value)} />
                   <input type="password" placeholder="password" value={login_password} onChange={(e) => setLoginPassword(e.target.value)} />
                   <button className='forgotPassBtn' onClick={() => toggleModal('forgotpassword')}>Forgot password?</button>
                   <div className='loginSignup-buttons'>
