@@ -365,6 +365,7 @@ def generate_story():
             logging.info("RANDOM STORY WAS SUCCESSFULLY GENERATED.")
             end_time = time.time()
             logging.info(f"STORY GENERATION TOOK {end_time - start_time} SECONDS")
+            logging.info(f"Story: {result}")
             return jsonify(result)
         else:
             logging.error(f"FAILED TO GENERATE STORY. MODEL SERVICE RETURNED STATUS CODE: {response.status_code}")
@@ -377,24 +378,28 @@ def generate_story():
 
 # GENERATE CUSTOM STORY API
 @app.route('/generate-custom-story', methods=['POST'])
-def generate_custom_story_endpoint():
+def generate_custom_story():
     try:
         data = request.get_json()
-        title = data.get('title', "Default Title")
-        logging.info(f"RECEIVED REQUEST FOR CUSTOM STORY: {title}")
+        title = data.get('title')
+        genre = data.get('genre')
+        logging.info(f"RECEIVED REQUEST FOR CUSTOM STORY: '{genre}: {title}'")
         start_time = time.time() #TO TRACK GENERATION TIME
 
         # REQUEST TO MODEL SERVICE
         response = requests.post(
             f"{MODEL_SERVICE_URL}/model-generate-custom",
-            json={"title": title},
+            json={"title": title, "genre": genre},
         )
 
         if response.status_code == 200:
             story = response.json().get("story", "No story generated.")
             logging.info("CUSTOM STORY WAS SUCCESSFULLY GENERATED.")
+            logging.info(f"Story: {story}")
+
             end_time = time.time()
             logging.info(f"STORY GENERATION TOOK {end_time - start_time} SECONDS")
+            
             return jsonify({"story": story})
         else:
             logging.error(f"FAILED TO GENERATE STORY. MODEL SERVICE RETURNED STATUS CODE: {response.status_code}")
