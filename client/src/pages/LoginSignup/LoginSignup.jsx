@@ -53,7 +53,7 @@ const LoginSignup = ({ closeModal, formType, toggleModal  }) => {
       const data = await response.json();
 
       if (response.ok) {
-        localStorage.setItem('token', data.token); // Store JWT token
+        localStorage.setItem('authToken', data.token); // Store JWT token
         setLoginEmail('');
         setLoginPassword('');
         setErrorMessage('');
