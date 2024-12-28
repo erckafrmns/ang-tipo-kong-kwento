@@ -11,12 +11,7 @@ const TermsOfUse = () => {
       window.scrollTo(0, 0); // Scroll to the top of the page
     }, []); 
 
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        setIsLoggedIn(!!token);
-    }, []);
+    const isLoggedIn = localStorage.getItem('authToken'); 
   
   return (
     <> 

@@ -12,6 +12,8 @@ import random
 import string
 import smtplib
 import os
+import re
+import csv
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 
 
@@ -42,12 +44,16 @@ def signup():
     email = data.get('signup_email')
     password = data.get('signup_password')
 
+
     if not first_name or not last_name or not email or not password:
         return jsonify({"message": "Missing required fields"}), 400
     
     if User.query.filter_by(email=email).first(): # Check if email already exists
         return jsonify({"message": "Email already exists!"}), 400
 
+    valPass_error = validate_password(password)
+    if valPass_error:
+        return jsonify(valPass_error[0]), valPass_error[1]
 
     hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
     verification_token = generate_verification_token() 
@@ -119,6 +125,65 @@ def verify_email(token):
         return redirect(f"http://localhost:3000/verified-email?status=failure")
 
 
+# SEND MESSAGE FROM CONTACT US TO EMAIL
+@app.route('/send-email', methods=['POST'])
+def send_email():
+    try:
+        data = request.json
+        user_name = data.get('fullname')
+        user_email = data.get('email')
+        message_body = data.get('message')
+
+        if not all([user_name, user_email, message_body]):
+            return jsonify({"error": "All fields are required."}), 400
+
+        # Send the email
+        send_contact_email(user_name, user_email, message_body)
+        return jsonify({"success": "Message sent successfully."}), 200
+    
+    except Exception as e:
+        logging.error(f"Error in contact_us endpoint: {str(e)}")
+        return jsonify({"error": "Failed to send message."}), 500
+
+
+def send_contact_email(user_name, user_email, message_body):
+    try:
+        smtp_server = Config.MAIL_SERVER
+        smtp_port = Config.MAIL_PORT
+        email_address = Config.MAIL_USERNAME  
+        app_password = Config.MAIL_PASSWORD 
+
+        if not email_address or not app_password:
+            raise ValueError("Missing email or app password configuration.")
+
+        subject_line = "Contact Us Submission"
+        body = f"""
+        You have received a new message from the Contact Us page:
+
+        Name: {user_name}
+        Email: {user_email}
+
+        Message:
+        {message_body}
+        """
+
+        message = MIMEMultipart()
+        message['From'] = email_address  
+        message['To'] = email_address    
+        message['Reply-To'] = user_email 
+        message['Subject'] = subject_line
+        message.attach(MIMEText(body, 'plain'))
+
+        with smtplib.SMTP(smtp_server, smtp_port) as server:
+            server.set_debuglevel(1)  
+            server.starttls()  
+            server.login(email_address, app_password)
+            server.send_message(message)
+
+        logging.info(f"Contact email successfully sent from {user_email} to {email_address}.")
+    except Exception as e:
+        logging.error(f"Failed to send contact email: {str(e)}")
+
 # LOGIN API
 @app.route('/login', methods=['POST'])
 def login():
@@ -146,6 +211,17 @@ def login():
         }), 200
     
     return jsonify({"message": "Invalid credentials"}), 401
+
+
+# VALIDATE PASSWORD IF IT PASSED THE MIN REQUIREMENT
+def validate_password(password):
+    if len(password) < 8:
+        return {"message": "Password must be at least 8 characters long."}, 400
+    
+    if not re.search(r'\d', password): 
+        return {"message": "Password must contain at least one number."}, 400
+    
+    return None
 
 
 # LOGOUT ROUTE, though this will not be needed
@@ -334,22 +410,45 @@ def reset_password(token):
 
 
 # GENERATE RANDOM STORY API
-@app.route('/generate-story', methods=['POST'])
-def generate_story():
+@app.route('/generate-random-story', methods=['POST'])
+def generate_random_story():
     try:
         logging.info("RECEIVED REQUEST FOR RANDOM STORY.")
         
         start_time = time.time() #TO TRACK GENERATION TIME
         
+        try:
+            with open('predef_titles.csv', mode='r') as csvfile:
+                reader = csv.DictReader(csvfile)
+                rows = list(reader)
+                if not rows:
+                    raise ValueError("The CSV file is empty.")
+                
+                selected_row = random.choice(rows)  
+                title = selected_row['Title']
+                genre = selected_row['Genre']
+            
+        except Exception as csv_error:
+            logging.error(f"Failed to read or process titles.csv: {csv_error}")
+            return jsonify({"error": "Failed to read titles.csv"}), 500
+
         # REQUEST TO MODEL SERVICE
-        response = requests.post(f"{MODEL_SERVICE_URL}/model-generate-random")
+        response = requests.post(
+            f"{MODEL_SERVICE_URL}/model-generate-story",
+            json={"title": title, "genre": genre},
+        )
 
         if response.status_code == 200:
-            result = response.json()
+            story = response.json().get("story", "No story generated.")
             logging.info("RANDOM STORY WAS SUCCESSFULLY GENERATED.")
             end_time = time.time()
             logging.info(f"STORY GENERATION TOOK {end_time - start_time} SECONDS")
-            return jsonify(result)
+            
+            return jsonify({
+                "title": title,
+                "genre": genre,
+                "story": story
+            })
         else:
             logging.error(f"FAILED TO GENERATE STORY. MODEL SERVICE RETURNED STATUS CODE: {response.status_code}")
             return jsonify({"error": "Failed to generate story."}), response.status_code
@@ -361,24 +460,27 @@ def generate_story():
 
 # GENERATE CUSTOM STORY API
 @app.route('/generate-custom-story', methods=['POST'])
-def generate_custom_story_endpoint():
+def generate_custom_story():
     try:
         data = request.get_json()
-        title = data.get('title', "Default Title")
-        logging.info(f"RECEIVED REQUEST FOR CUSTOM STORY: {title}")
+        title = data.get('title')
+        genre = data.get('genre')
+        logging.info(f"RECEIVED REQUEST FOR CUSTOM STORY: '{genre}: {title}'")
         start_time = time.time() #TO TRACK GENERATION TIME
 
         # REQUEST TO MODEL SERVICE
         response = requests.post(
-            f"{MODEL_SERVICE_URL}/model-generate-custom",
-            json={"title": title},
+            f"{MODEL_SERVICE_URL}/model-generate-story",
+            json={"title": title, "genre": genre},
         )
 
         if response.status_code == 200:
             story = response.json().get("story", "No story generated.")
             logging.info("CUSTOM STORY WAS SUCCESSFULLY GENERATED.")
+
             end_time = time.time()
             logging.info(f"STORY GENERATION TOOK {end_time - start_time} SECONDS")
+            
             return jsonify({"story": story})
         else:
             logging.error(f"FAILED TO GENERATE STORY. MODEL SERVICE RETURNED STATUS CODE: {response.status_code}")

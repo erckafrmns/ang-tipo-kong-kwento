@@ -3,7 +3,9 @@ import HTMLFlipBook from "react-pageflip";
 import { useLocation } from "react-router-dom";
 import jsPDF from "jspdf"; // Import jsPDF
 import InsideNavbar from '../../components/Navbar/InsideNavbar';  
+import GuestNavbar from '../../components/Navbar/Navbar';
 import Footer from "../../components/Footer/Footer"; 
+import Sidebar from '../../components/Sidebar/Sidebar';
 import "./StoryPage.css";
 
 import Paper from "../../assets/paper-mode.svg";
@@ -137,6 +139,7 @@ const StoryPage = () => {
         doc.save(`${cleanTitle}.pdf`);
     };
     
+    const isGuest = location.state?.isGuest || false;
     
     return (
         <>
@@ -147,7 +150,14 @@ const StoryPage = () => {
                 </div>
             )}
             <div className="storyContainer">
-                <InsideNavbar />
+                {isGuest ? (
+                    <>
+                    <GuestNavbar />
+                    <Sidebar />
+                    </>
+                ) : (
+                    <InsideNavbar />
+                )}
                 <section className="story-page-container">
                     {!loading && (
                         <>

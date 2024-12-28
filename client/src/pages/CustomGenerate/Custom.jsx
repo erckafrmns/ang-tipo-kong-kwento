@@ -4,7 +4,7 @@ import axios from 'axios';
 import { ImCross } from "react-icons/im";
 import './Main-Custom.css';
 
-const Custom = ({ closeModal }) => {
+const Custom = ({ closeModal, isGuest }) => {
   const [title, setTitle] = useState('');
   const [genre, setGenre] = useState('');
   const [isShortStory, setIsShortStory] = useState(true); 
@@ -22,19 +22,35 @@ const Custom = ({ closeModal }) => {
 
     const storyLength = isShortStory ? 'short' : 'long';
 
-    navigate('/story', { state: { loading: true } });
+    if (isGuest) {
+      navigate('/story', { state: { loading: true, isGuest: true } });
+      axios
+        .post('http://localhost:5000/generate-custom-story', { title, genre, storyLength })
+        .then((response) => {
+          const generatedStory = response.data.story;
+          navigate('/story', { state: { title, genre, story: generatedStory, isGuest: true } });
+          closeModal();
+        })
+        .catch((error) => {
+          console.error('Error generating the story for guest!', error);
+          alert('There was an error generating your story. Please try again.');
+        });
+    } else {
+      navigate('/story', { state: { loading: true } });
+      axios
+        .post('http://localhost:5000/generate-custom-story', { title, genre, storyLength })
+        .then((response) => {
+          const generatedStory = response.data.story;
+          navigate('/story', { state: { title, genre, story: generatedStory } });
+          closeModal();
+        })
+        .catch((error) => {
+          console.error('Error generating the story!', error);
+          alert('There was an error generating your story. Please try again.');
+        });
+    }
+  }, [title, genre, isShortStory, isGuest, navigate, closeModal]);
 
-    axios.post('http://localhost:5000/generate-custom-story', { title, genre, storyLength })
-      .then((response) => {
-        const generatedStory = response.data.story;
-        navigate('/story', { state: { title, genre, story: generatedStory } });
-        closeModal();
-      })
-      .catch((error) => {
-        console.error('Error generating the story!', error);
-        alert('There was an error generating your story. Please try again.');
-      });
-  }, [title, genre, isShortStory, navigate, closeModal]);
 
   const handleKeyPress = useCallback((event) => {
     if (event.key === 'Enter') {

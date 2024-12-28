@@ -76,7 +76,7 @@ h1, h2, p{
     display: flex;
     flex-direction: row;
     align-items: center;
-    background-color: #202f1b;
+    background-color: var(--green);
     margin: 10px;
     padding: 20px;
     width: 80%;
@@ -103,7 +103,7 @@ h1, h2, p{
     border-radius: 5px;
     padding: 15px 10px;
     color: var(--beige);
-    background-color: #202f1b;
+    background-color: var(--green);
     margin: 10px;
     border: none;
     outline: none;
@@ -118,8 +118,9 @@ h1, h2, p{
 .contactForm textarea::placeholder{
     color: var(--beige);
     letter-spacing: 0; 
-    font-family: "EfcoBrookshire", sans-serif; 
+    font-family: "Lora", sans-serif; 
     font-size: 14px; 
+    text-transform: capitalize;
 } 
 
 .contactForm button{

@@ -1,9 +1,19 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 
 const ProtectedRoute = ({ children }) => {
-  const token = localStorage.getItem('token');
-  return token ? children : <Navigate to="/" />;
+  
+  // Check if the user is authenticated or accessing as a guest
+  const token = localStorage.getItem('authToken');
+  const location = useLocation();
+  const isGuest = location.state?.isGuest || false;
+
+  // Redirect to home if not authenticated and not a guest
+  if (!token && !isGuest) {
+    return <Navigate to="/" />; 
+  }
+
+  return children;
 };
 
 export default ProtectedRoute;

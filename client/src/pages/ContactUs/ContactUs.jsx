@@ -8,6 +8,8 @@ import InsideNavbar from '../../components/Navbar/InsideNavbar';
 import Footer from '../../components/Footer/Footer';
 
 const ContactUs = () => { 
+    const isLoggedIn = localStorage.getItem('authToken'); 
+
     useEffect(() => {
         window.scrollTo(0, 0); // Scroll to the top of the page
       }, []);
@@ -28,18 +30,29 @@ const ContactUs = () => {
     };
 
     // Handle form submission
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Form submitted:', formData);
-        // You can make an API call to send the form data to your backend here
-    }; 
+        try {
+            const response = await fetch('http://localhost:5000/send-email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
 
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    
-        useEffect(() => {
-            const token = localStorage.getItem('token');
-            setIsLoggedIn(!!token);
-        }, []);
+            if (response.ok) {
+                alert('Message sent successfully!');
+                setFormData({ fullname: '', email: '', message: '' }); 
+            } else {
+                const errorData = await response.json();
+                alert(`Failed to send message: ${errorData.error}`);
+            }
+        } catch (error) {
+            console.error('Error sending message:', error);
+            alert('An error occurred while sending your message.');
+        }
+    }; 
 
   return ( 
     <> 

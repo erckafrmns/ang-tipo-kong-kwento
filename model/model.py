@@ -2,11 +2,13 @@ from flask import Flask, request, jsonify
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
 import os
 import torch
+import logging
 
 app = Flask(__name__)
 
 # LOAD MODEL AND TOKENIZER
 model, tokenizer = None, None
+logging.basicConfig(level=logging.INFO)
 
 # LOAD MODEL
 def load_model():
@@ -30,27 +32,37 @@ def load_model():
 
 
 # ENDPOINT FOR SERVER TO MODEL - CUSTOM STORY
-@app.route('/model-generate-custom', methods=['POST'])
-def generate_custom_story():
-    title = request.json.get("title", "Default Title")
-    prompt = f"Title: {title} [SEP]"
+@app.route('/model-generate-story', methods=['POST'])
+def generate_story():
+    data = request.json
+    title = data.get("title", "Default Title")
+    genre = data.get("genre", "Default Genre")
+
+    prompt = f"Type of Literature: {genre} Title: {title} [SEP]"
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.to(device)
 
     inputs = tokenizer(prompt, return_tensors="pt", truncation=True, max_length=1024).to(device)
+    
     outputs = model.generate(
         inputs.input_ids,
         do_sample=True,
-        max_length=700,
+        max_length=500,
         num_return_sequences=1,
         top_k=50,
         top_p=0.95,
         temperature=0.7,
         pad_token_id=tokenizer.eos_token_id,
     )
-    story = tokenizer.decode(outputs[0], skip_special_tokens=False)
-    story = story.split('[END]')[0].strip() if '[END]' in story else story.strip()
-    return jsonify({"story": story})
+
+    story = tokenizer.decode(outputs[0], skip_special_tokens=True)
+    story = story.split("[SEP]")[-1].strip()  # get part after SEP
+
+    return jsonify({
+        "genre": genre,
+        "title": title,
+        "story": story
+    })
 
 
 # ENDPOINT FOR SERVER TO MODEL - RANDOM STORY

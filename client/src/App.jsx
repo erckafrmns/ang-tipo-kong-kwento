@@ -28,20 +28,20 @@ const AppContent = () => {
       <Route path="/forgot-password" element={<ForgotPassword />} />   
       <Route path="/reset-password/" element={<ResetPassword />} /> 
 
-   {/*<Route path="/reset-password/:token" element={<ResetPassword />} /> */}   
+      <Route path="/reset-password/:token" element={<ResetPassword />} /> 
       <Route path="/contact-us" element={<ContactUs />} /> 
       <Route path="/terms-of-use" element={<TermsOfUse />} /> 
       <Route path="/privacy-policy" element={<PrivacyPolicy />} /> 
       <Route path="/guidelines" element={<Guidelines />} /> 
       <Route path="/other-policies" element={<OtherPolicies />} /> 
        
-      <Route path="/main" element={<Main />} />
+      {/* <Route path="/main" element={<Main />} />
       <Route path="/custom" element={<Custom />} />
-      <Route path="/story" element={<StoryPage />} /> 
-      {/*
+      <Route path="/story" element={<StoryPage />} />  */} 
+      
       <Route path="/main" element={<ProtectedRoute><Main /></ProtectedRoute>} />
       <Route path="/custom" element={<ProtectedRoute><Custom /></ProtectedRoute>} />
-      <Route path="/story" element={<ProtectedRoute><StoryPage /></ProtectedRoute>} /> */}
+      <Route path="/story" element={<ProtectedRoute><StoryPage /></ProtectedRoute>} /> 
 
     </Routes>
   );
