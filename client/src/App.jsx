@@ -33,13 +33,13 @@ const AppContent = () => {
       <Route path="/guidelines" element={<Guidelines />} /> 
       <Route path="/other-policies" element={<OtherPolicies />} /> 
        
-      <Route path="/main" element={<Main />} />
+      {/* <Route path="/main" element={<Main />} />
       <Route path="/custom" element={<Custom />} />
-      <Route path="/story" element={<StoryPage />} /> 
-      {/*
+      <Route path="/story" element={<StoryPage />} />  */}
+      
       <Route path="/main" element={<ProtectedRoute><Main /></ProtectedRoute>} />
       <Route path="/custom" element={<ProtectedRoute><Custom /></ProtectedRoute>} />
-      <Route path="/story" element={<ProtectedRoute><StoryPage /></ProtectedRoute>} /> */}
+      <Route path="/story" element={<ProtectedRoute><StoryPage /></ProtectedRoute>} />
 
     </Routes>
   );

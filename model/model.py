@@ -32,8 +32,8 @@ def load_model():
 
 
 # ENDPOINT FOR SERVER TO MODEL - CUSTOM STORY
-@app.route('/model-generate-custom', methods=['POST'])
-def generate_custom_story():
+@app.route('/model-generate-story', methods=['POST'])
+def generate_story():
     data = request.json
     title = data.get("title", "Default Title")
     genre = data.get("genre", "Default Genre")

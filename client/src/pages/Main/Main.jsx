@@ -20,11 +20,12 @@ const Main = () => {
     if (isGuest) {
       navigate('/story', { state: { loading: true, isGuest: true } });
       axios
-        .post('http://localhost:5000/generate-story', {})
+        .post('http://localhost:5000/generate-random-story', {})
         .then((response) => {
           const generatedTitle = response.data.title;
+          const generatedGenre = response.data.genre;
           const generatedStory = response.data.story;
-          navigate('/story', { state: { title: generatedTitle, story: generatedStory, isGuest: true } });
+          navigate('/story', { state: { title: generatedTitle, genre: generatedGenre, story: generatedStory, isGuest: true } });
         })
         .catch((error) => {
           console.error('Error generating the story without prompt!', error);
@@ -32,11 +33,12 @@ const Main = () => {
     } else {
       navigate('/story', { state: { loading: true } });
       axios
-        .post('http://localhost:5000/generate-story', {})
+        .post('http://localhost:5000/generate-random-story', {})
         .then((response) => {
           const generatedTitle = response.data.title;
+          const generatedGenre = response.data.genre;
           const generatedStory = response.data.story;
-          navigate('/story', { state: { title: generatedTitle, story: generatedStory } });
+          navigate('/story', { state: { title: generatedTitle, genre: generatedGenre, story: generatedStory } });
         })
         .catch((error) => {
           console.error('Error generating the story without prompt!', error);

@@ -13,6 +13,7 @@ import string
 import smtplib
 import os
 import re
+import csv
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 
 
@@ -409,23 +410,45 @@ def reset_password(token):
 
 
 # GENERATE RANDOM STORY API
-@app.route('/generate-story', methods=['POST'])
-def generate_story():
+@app.route('/generate-random-story', methods=['POST'])
+def generate_random_story():
     try:
         logging.info("RECEIVED REQUEST FOR RANDOM STORY.")
         
         start_time = time.time() #TO TRACK GENERATION TIME
         
+        try:
+            with open('predef_titles.csv', mode='r') as csvfile:
+                reader = csv.DictReader(csvfile)
+                rows = list(reader)
+                if not rows:
+                    raise ValueError("The CSV file is empty.")
+                
+                selected_row = random.choice(rows)  
+                title = selected_row['Title']
+                genre = selected_row['Genre']
+            
+        except Exception as csv_error:
+            logging.error(f"Failed to read or process titles.csv: {csv_error}")
+            return jsonify({"error": "Failed to read titles.csv"}), 500
+
         # REQUEST TO MODEL SERVICE
-        response = requests.post(f"{MODEL_SERVICE_URL}/model-generate-random")
+        response = requests.post(
+            f"{MODEL_SERVICE_URL}/model-generate-story",
+            json={"title": title, "genre": genre},
+        )
 
         if response.status_code == 200:
-            result = response.json()
+            story = response.json().get("story", "No story generated.")
             logging.info("RANDOM STORY WAS SUCCESSFULLY GENERATED.")
             end_time = time.time()
             logging.info(f"STORY GENERATION TOOK {end_time - start_time} SECONDS")
-            logging.info(f"Story: {result}")
-            return jsonify(result)
+            
+            return jsonify({
+                "title": title,
+                "genre": genre,
+                "story": story
+            })
         else:
             logging.error(f"FAILED TO GENERATE STORY. MODEL SERVICE RETURNED STATUS CODE: {response.status_code}")
             return jsonify({"error": "Failed to generate story."}), response.status_code
@@ -447,14 +470,13 @@ def generate_custom_story():
 
         # REQUEST TO MODEL SERVICE
         response = requests.post(
-            f"{MODEL_SERVICE_URL}/model-generate-custom",
+            f"{MODEL_SERVICE_URL}/model-generate-story",
             json={"title": title, "genre": genre},
         )
 
         if response.status_code == 200:
             story = response.json().get("story", "No story generated.")
             logging.info("CUSTOM STORY WAS SUCCESSFULLY GENERATED.")
-            logging.info(f"Story: {story}")
 
             end_time = time.time()
             logging.info(f"STORY GENERATION TOOK {end_time - start_time} SECONDS")
