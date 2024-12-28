@@ -25,8 +25,10 @@ const AppContent = () => {
       <Route path="/developers" element={<Developers />} /> 
       <Route path="/verify-email" element={<VerifyEmail />} /> 
       <Route path="/verified-email" element={<VerifiedEmail />} />
-      <Route path="/forgot-password" element={<ForgotPassword />} /> 
-      <Route path="/reset-password/:token" element={<ResetPassword />} /> 
+      <Route path="/forgot-password" element={<ForgotPassword />} />   
+      <Route path="/reset-password/" element={<ResetPassword />} /> 
+
+   {/*<Route path="/reset-password/:token" element={<ResetPassword />} /> */}   
       <Route path="/contact-us" element={<ContactUs />} /> 
       <Route path="/terms-of-use" element={<TermsOfUse />} /> 
       <Route path="/privacy-policy" element={<PrivacyPolicy />} /> 

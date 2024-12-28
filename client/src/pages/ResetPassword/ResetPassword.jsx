@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import './ResetPassword.css';
+import './ResetPassword.css'; 
+import Navbar from '../../components/Navbar/Navbar'; 
 import { useParams, useNavigate } from 'react-router-dom';
 
 const ResetPassword = () => {
@@ -45,20 +46,22 @@ const ResetPassword = () => {
 
   return (
     <>
-      <div className="resetPassword">
-        <div className="rp-container">
-
-          <form onSubmit={handleResetPassword}>
+      <Navbar hideInsideNavbar={true} />
+      <div className="reset-password-overlay">
+        <div className="reset-password-modal">
+          <div className="rp-inputs">
             <h1>Reset Password</h1>
-            <p>Enter your new password below.</p>
-
             {message && <p className="success-message">{message}</p>}
             {error && <p className="error-message">{error}</p>}
-
-            <input type="password" placeholder="New Password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required/>
-            <input type="password" placeholder="Confirm New Password" value={confirmNewPassword} onChange={(e) => setConfirmNewPassword(e.target.value)} required/>
-            <button type="submit">Reset Password</button>
-          </form>
+            <p>Enter your new password below.</p> 
+            <div className="password-input-container">
+            <form onSubmit={handleResetPassword}>
+              <input type="password" placeholder="New Password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required className="password-input"/>
+              <input type="password" placeholder="Confirm New Password" value={confirmNewPassword} onChange={(e) => setConfirmNewPassword(e.target.value)} required className="password-input"/>
+              <button type="submit" className="reset-btn">Reset Password</button>
+            </form> 
+            </div>
+          </div>
         </div>
       </div>
     </>
