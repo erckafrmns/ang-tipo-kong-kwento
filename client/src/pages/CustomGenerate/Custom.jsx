@@ -7,6 +7,7 @@ import './Main-Custom.css';
 const Custom = ({ closeModal, isGuest }) => {
   const [title, setTitle] = useState('');
   const [genre, setGenre] = useState('');
+  const authToken = localStorage.getItem('authToken');
   const [isShortStory, setIsShortStory] = useState(true); 
   const navigate = useNavigate();
 
@@ -27,8 +28,9 @@ const Custom = ({ closeModal, isGuest }) => {
       axios
         .post('http://localhost:5000/generate-custom-story', { title, genre, storyLength })
         .then((response) => {
+          const story_id = response.data.story_id;
           const generatedStory = response.data.story;
-          navigate('/story', { state: { title, genre, story: generatedStory, isGuest: true } });
+          navigate(`/story/${story_id}`, { state: { title, genre, story: generatedStory, isGuest: true } });
           closeModal();
         })
         .catch((error) => {
@@ -38,10 +40,18 @@ const Custom = ({ closeModal, isGuest }) => {
     } else {
       navigate('/story', { state: { loading: true } });
       axios
-        .post('http://localhost:5000/generate-custom-story', { title, genre, storyLength })
+        .post('http://localhost:5000/generate-custom-story', 
+          { title, genre, storyLength }, 
+          {
+            headers: {
+              'Authorization': `Bearer ${authToken}`,
+            }
+          }
+        )
         .then((response) => {
+          const story_id = response.data.story_id;
           const generatedStory = response.data.story;
-          navigate('/story', { state: { title, genre, story: generatedStory } });
+          navigate(`/story/${story_id}`, { state: { title, genre, story: generatedStory } });
           closeModal();
         })
         .catch((error) => {
