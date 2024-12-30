@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios';
 import '../Sidebar/Sidebar.css';
 import { TbLayoutSidebarInactive } from "react-icons/tb";
 import { MdOutlineHistoryEdu } from "react-icons/md"; 
@@ -8,9 +9,41 @@ import logo from '../../assets/logo.png';
 
 const Sidebar = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [stories, setStories] = useState([]);
     const authToken = localStorage.getItem('authToken'); 
     const navigate = useNavigate();
 
+
+    // Fetch the stories 
+    useEffect(() => {
+        if (authToken) {
+            axios.get('http://localhost:5000/retrieve-user-stories', {
+                headers: {
+                    'Authorization': `Bearer ${authToken}`,
+                }
+            })
+            .then(response => {
+                setStories(response.data);  
+            })
+            .catch(error => {
+                console.error('Error fetching stories:', error);
+            });
+
+        } else {
+            const temporaryStory = sessionStorage.getItem('temporary_stories');
+            if (temporaryStory) {
+                console.log(temporaryStory);
+                setStories([JSON.parse(temporaryStory)]); 
+            }
+        }
+    }, [authToken]);
+
+
+    // Handle story click to go to story page
+    const handleStoryClick = (story_id) => {
+        navigate(`/story/${story_id}`);
+    };
+    
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
     };
@@ -60,6 +93,24 @@ const Sidebar = () => {
                     <button className="new-chat-btn" onClick={handleNewStoryClick}>New Story</button> 
                     <MdOutlineHistoryEdu className="new-chat-icon" />
                 </div>
+
+                <div className="story-list-container">
+                    {stories.length > 0 ? (
+                        stories.map((story, index) => (
+                            <div 
+                                key={index} 
+                                className="story-container" 
+                                onClick={() => handleStoryClick(story.story_id)}
+                            >
+                                <span className="story-title">{story.title}</span>
+                            </div>
+                        ))
+                    ) : (
+                        <p>No stories available</p>
+                    )}
+                </div>
+
+
             </div>
         </div>
 

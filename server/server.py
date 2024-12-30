@@ -1,20 +1,13 @@
-from flask import Flask, request, jsonify, render_template, url_for, redirect
+from flask import Flask, request, jsonify, render_template, url_for, redirect, session
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, verify_jwt_in_request
 from flask_cors import CORS
+from flask_migrate import Migrate
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from db_models import db, User, Story
 from config import Config
-import requests
-import logging
-import time
-import random
-import string
-import smtplib
-import os
-import re
-import csv
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+import requests, logging, time, random, string, smtplib, os, re, csv, uuid
 
 
 
@@ -25,6 +18,7 @@ app.config.from_object(Config)
 db.init_app(app)
 app.config['JWT_SECRET_KEY'] = Config.JWT_SECRET_KEY
 jwt = JWTManager(app)
+migrate = Migrate(app, db)
 
 MODEL_SERVICE_URL = "http://model:5001"
 
@@ -204,7 +198,7 @@ def login():
 
     # Else all checks out
     if user and check_password_hash(user.password, password):
-        access_token = create_access_token(identity=user.user_id)
+        access_token = create_access_token(identity=str(user.user_id))
         return jsonify({
             #"message": "Logged in successfully!",
             "access_token": access_token
@@ -247,7 +241,8 @@ def get_user_info():
             "user_id": user.user_id,
             "first_name": user.first_name,
             "last_name": user.last_name,
-            "email": user.email
+            "email": user.email,
+            "password": user.password
         }
         return jsonify(user_info), 200
         
@@ -264,10 +259,9 @@ def retrieve_user_stories():
         user_id = get_jwt_identity()
         stories = Story.query.filter_by(user_id=user_id).all()
         
-        
         user_stories = [
             {
-                "story_id": story.story_id,
+                "story_id": story.story_id, 
                 "title": story.title,
                 "genre": story.genre,
                 "content": story.content,
@@ -283,20 +277,14 @@ def retrieve_user_stories():
 
 
 # SAVE GENERATED STORY TO CURRENT USER ACCOUNT
-@app.route('/save-user-story', methods=['POST'])
 @jwt_required()
-def save_user_story():
+def save_user_story(user_id, title, genre, story):
     try:
-        user_id = get_jwt_identity()
-        data = request.get_json()
-        title = data.get('title')
-        genre = data.get('genre')
-        content = data.get('content')
         
-        if not all([title, genre, content]):
-            return jsonify({"error": "All fields (title, genre, content) are required."}), 400
+        if not all([title, genre, story]):
+            return jsonify({"error": "All fields (title, genre, story) are required."}), 400
         
-        new_story = Story(user_id=user_id, title=title, genre=genre, content=content)
+        new_story = Story(title=title, genre=genre, content=story, user_id=user_id)
         db.session.add(new_story)
         db.session.commit()
 
@@ -307,6 +295,21 @@ def save_user_story():
     except Exception as e:
         logging.error(f"Error saving user story: {str(e)}")
         return jsonify({"error": "An error occurred while saving the story."}), 500
+
+
+# GENERATE UNIQUE STORY ID
+def generate_storyID():
+    while True:
+        story_id = str(uuid.uuid4())
+
+        existing_story = Story.query.filter_by(story_id=story_id).first()
+        if existing_story:
+            continue 
+        # else if
+        if 'temporary_stories' in session and any(story['story_id'] == story_id for story in session['temporary_stories']):
+            continue 
+
+        return story_id
 
 
 # CHANGE PASSWORD API
@@ -411,28 +414,33 @@ def reset_password(token):
 
 # GENERATE RANDOM STORY API
 @app.route('/generate-random-story', methods=['POST'])
+@jwt_required(optional=True)
 def generate_random_story():
     try:
         logging.info("RECEIVED REQUEST FOR RANDOM STORY.")
-        
-        start_time = time.time() #TO TRACK GENERATION TIME
-        
+        start_time = time.time() 
+
+        user_id = get_jwt_identity()  
+        if user_id:
+            logging.info(f"Authenticated user: {user_id}")
+        else:
+            logging.info("Guest user (no authentication).")
+
+        # Process CSV
         try:
             with open('predef_titles.csv', mode='r') as csvfile:
                 reader = csv.DictReader(csvfile)
                 rows = list(reader)
                 if not rows:
                     raise ValueError("The CSV file is empty.")
-                
-                selected_row = random.choice(rows)  
+                selected_row = random.choice(rows)
                 title = selected_row['Title']
                 genre = selected_row['Genre']
-            
         except Exception as csv_error:
             logging.error(f"Failed to read or process titles.csv: {csv_error}")
             return jsonify({"error": "Failed to read titles.csv"}), 500
 
-        # REQUEST TO MODEL SERVICE
+        # Request to model service
         response = requests.post(
             f"{MODEL_SERVICE_URL}/model-generate-story",
             json={"title": title, "genre": genre},
@@ -440,22 +448,44 @@ def generate_random_story():
 
         if response.status_code == 200:
             story = response.json().get("story", "No story generated.")
-            logging.info("RANDOM STORY WAS SUCCESSFULLY GENERATED.")
             end_time = time.time()
+            logging.info("RANDOM STORY WAS SUCCESSFULLY GENERATED.")
             logging.info(f"STORY GENERATION TOOK {end_time - start_time} SECONDS")
-            
+
+            story_id = None
+            if user_id:
+                logging.info(f"INSIDE USER WITH USER ID: {user_id}.")
+                save_story_response = save_user_story(user_id, title, genre, story)
+                if save_story_response.status_code == 201:
+                    story_id = save_story_response.json().get('story_id')
+                    logging.info(f"Story saved successfully for user {user_id}.")
+                else:
+                    logging.error(f"Failed to save story for user {user_id}.")
+            else:
+                story_id = generate_storyID()
+                # session['temporary_stories'] = {
+                #     'story_id': story_id,
+                #     'title': title,
+                #     'genre': genre,
+                #     'content': story,
+                # }
+                # logging.info("Story stored in session for guest.")
+ 
             return jsonify({
+                "story_id": story_id,
                 "title": title,
                 "genre": genre,
-                "story": story
+                "story": story,
             })
+            
         else:
             logging.error(f"FAILED TO GENERATE STORY. MODEL SERVICE RETURNED STATUS CODE: {response.status_code}")
             return jsonify({"error": "Failed to generate story."}), response.status_code
-    
+
     except Exception as e:
         logging.error(f"ERROR GENERATING RANDOM STORY: {str(e)}")
         return jsonify({"error": str(e)}), 500
+
 
 
 # GENERATE CUSTOM STORY API
@@ -465,8 +495,8 @@ def generate_custom_story():
         data = request.get_json()
         title = data.get('title')
         genre = data.get('genre')
-        logging.info(f"RECEIVED REQUEST FOR CUSTOM STORY: '{genre}: {title}'")
         start_time = time.time() #TO TRACK GENERATION TIME
+        logging.info(f"RECEIVED REQUEST FOR CUSTOM STORY: '{genre}: {title}'")
 
         # REQUEST TO MODEL SERVICE
         response = requests.post(
@@ -476,12 +506,32 @@ def generate_custom_story():
 
         if response.status_code == 200:
             story = response.json().get("story", "No story generated.")
-            logging.info("CUSTOM STORY WAS SUCCESSFULLY GENERATED.")
-
             end_time = time.time()
+            logging.info("CUSTOM STORY WAS SUCCESSFULLY GENERATED.")
             logging.info(f"STORY GENERATION TOOK {end_time - start_time} SECONDS")
+
+            # SAVE STORY ACCORDINGLY
+            user_id = get_jwt_identity()  
+            story_id = None
+            if user_id:
+                logging.info(f"INSIDE USER WITH USER ID: {user_id}.")
+                save_story_response = save_user_story(user_id, title, genre, story)
+                if save_story_response.status_code == 201:
+                    story_id = save_story_response.json().get('story_id')
+                    logging.info(f"Story saved successfully for user {user_id}.")
+                else:
+                    logging.error(f"Failed to save story for user {user_id}.")
+            else:
+                story_id = generate_storyID()
+                session['temporary_stories'] = {
+                    'story_id': story_id,
+                    'title': title,
+                    'genre': genre,
+                    'content': story
+                }
+                logging.info("Story stored in session for guest.")
             
-            return jsonify({"story": story})
+            return jsonify({"story_id": story_id, "story": story})
         else:
             logging.error(f"FAILED TO GENERATE STORY. MODEL SERVICE RETURNED STATUS CODE: {response.status_code}")
             return jsonify({"error": "Failed to generate story."}), response.status_code

@@ -39,10 +39,10 @@ const InsideNavbar = () => {
                             <Link to="/main" className="nav-left">Home</Link>
                         </li>
                         <li>
-                            <a href="" className="nav-left nav-space" >Settings</a>
+                            <Link to="/contact-us" className="nav-left nav-space">Contact Us</Link>
                         </li>
                         <li>
-                            <Link to="/contact-us" className="nav-right">Contact Us</Link>
+                            <Link to="/account" className="nav-right" >Account</Link>
                         </li>
                         <li>
                             <button 
