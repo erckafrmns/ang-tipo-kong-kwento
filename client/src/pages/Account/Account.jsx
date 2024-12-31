@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
-import axios from 'axios';
+import axios from 'axios';  
+ 
+import modalLine from '../../assets/modal-line.svg'; 
+import InsideNavbar from '../../components/Navbar/InsideNavbar';
+import Footer from '../../components/Footer/Footer'; 
+
+import './Account.css' 
+
 
 const Account = () => {
     const [user, setUser] = useState({
@@ -99,75 +106,70 @@ const Account = () => {
 
 
     return (
-        <>
+        <> 
+        <InsideNavbar />
             <div className="account">
-                <div className="account-details">
-                    <h2>Account Details</h2>
-                    <div className="form-group">
+                <section className="account-details">
+                    <h1>Account Details</h1> 
+                    <div className="account-group">
                         <label>First Name</label>
-                        <input type="text" value={user.first_name} disabled className="form-control"/>
+                        <input type="text" value={user.first_name} disabled className="account-control"/>
                     </div>
-                    <div className="form-group">
+                    <div className="account-group">
                         <label>Last Name</label>
-                        <input type="text" value={user.last_name} disabled className="form-control"/>
+                        <input type="text" value={user.last_name} disabled className="account-control"/>
                     </div>
-                    <div className="form-group">
+                    <div className="account-group">
                         <label>Email</label>
-                        <input type="email" value={user.email} disabled className="form-control"/>
+                        <input type="email" value={user.email} disabled className="account-control"/>
                     </div>
-                    <div className="form-group">
+                    <div className="account-group">
                         <label>Password</label>
-                        <input type="password" value={user.password} disabled className="form-control"/>
-                    </div>
-                    <button onClick={handleOpenModal} className="btn btn-primary">
+                        <input type="password" value={user.password} disabled className="account-control"/>
+                    </div> 
+                    <div className="account-group account-buttons">
+                    <button onClick={handleOpenModal} className="changePass-btn">
                         Change Password
-                    </button>
-                </div>
+                    </button> 
+                    <button className="delete-btn">
+                        Delete Account
+                    </button> 
+                    </div>
+                </section>
 
-                <Modal isOpen={isModalOpen} onRequestClose={handleCloseModal} contentLabel="Change Password Modal" className="modal" overlayClassName="overlay">
-                    <h2>Change Password</h2>
-                    <form onSubmit={handlePasswordChange}>
-                        <div className="form-group">
-                            <label htmlFor="currentPassword">Current Password</label>
-                            <input
-                                type="password"
-                                id="currentPassword"
-                                value={currentPassword}
-                                onChange={(e) => setCurrentPassword(e.target.value)}
-                                required
-                                className="form-control"
-                            />
+                {isModalOpen && (
+                        <div className="account-modal-container">
+                            <div className="modal-change-password">
+                            <h2>Change Password</h2>
+                            <img src={modalLine} alt="Modal Line" className="modal-line" /> {/* Replaced div with an image */}
+                            <form onSubmit={handlePasswordChange}>
+                                <div className="form-group">
+                                <input type="password" id="currentPassword" placeholder="Current Password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} required className="form-control"/>
+                                </div>
+
+                                <div className="form-group">
+                                <input type="password" id="newPassword" placeholder="New Password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required className="form-control"/>
+                                </div>
+
+                                <div className="form-group">
+                                <input type="password" id="confirmPassword" placeholder="Confirm New Password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required className="form-control"/>
+                                </div>
+
+                                <div className="account-modal-buttons">
+                                <button type="submit" className="change-password-confirm-btn">
+                                    Submit
+                                </button>
+                                <button type="button" onClick={handleCloseModal} className="change-password-cancel-btn">
+                                    Cancel
+                                </button>
+                                </div>
+                            </form>
+                            </div>
                         </div>
+                        )}
 
-                        <div className="form-group">
-                            <label htmlFor="newPassword">New Password</label>
-                            <input
-                                type="password"
-                                id="newPassword"
-                                value={newPassword}
-                                onChange={(e) => setNewPassword(e.target.value)}
-                                required
-                                className="form-control"
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="confirmPassword">Confirm New Password</label>
-                            <input
-                                type="password"
-                                id="confirmPassword"
-                                value={confirmPassword}
-                                onChange={(e) => setConfirmPassword(e.target.value)}
-                                required
-                                className="form-control"
-                            />
-                        </div>
-
-                        <button type="submit" className="btn btn-success">Submit</button>
-                        <button type="button" onClick={handleCloseModal} className="btn btn-secondary">Cancel</button>
-                    </form>
-                </Modal>
-            </div>
+            </div> 
+            <Footer isAlternative={true} />
         </>
     );
 };
