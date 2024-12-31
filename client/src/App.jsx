@@ -40,8 +40,8 @@ const AppContent = () => {
       <Route path="/story" element={<StoryPage />} />  
       <Route path="/account" element={<Account />} />  
       <Route path="/reset-password/" element={<ResetPassword />} /> */}
-
-      <Route path="/account" element={<ProtectedRoute><Account /></ProtectedRoute>} />
+<Route path="/account" element={<Account />}/>
+    {/*  <Route path="/account" element={<ProtectedRoute><Account /></ProtectedRoute>} />*/}
       <Route path="/main" element={<ProtectedRoute><Main /></ProtectedRoute>} />
       <Route path="/custom" element={<ProtectedRoute><Custom /></ProtectedRoute>} />
       <Route path="/story/:story_id" element={<ProtectedRoute><StoryPage /></ProtectedRoute>} />

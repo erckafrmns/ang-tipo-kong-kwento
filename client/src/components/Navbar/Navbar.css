@@ -82,7 +82,12 @@
 
 .inside-navbar a:hover{
 	color: var(--yellow);
+} 
+
+.nav-right.active {
+    color: var(--yellow); 
 }
+
 
 
 /* NOT UPDATED */

@@ -32,16 +32,20 @@
 } 
 
 .inside-navbar1 ul{  
-	padding: 20px 460px; 
+	padding: 20px 485px; 
 	list-style: none; 
 	text-align: right;   
-	margin-left: 0.5%;  
+	margin-left: -0.8%;  
 } 
 
 .inside-navbar1 ul li{ 
-	float: none; 
+	float: none;  
 	display: inline-block;
-} 
+}   
+
+.nav-left.active {
+  color: var(--yellow);
+}
 
 .inside-navbar1 ul li:nth-child(1){ 
 	float: left;

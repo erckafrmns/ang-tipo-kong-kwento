@@ -107,8 +107,8 @@ const Account = () => {
 
     return (
         <> 
-        <InsideNavbar />
-            <div className="account">
+            <div className="account"> 
+            <InsideNavbar />
                 <section className="account-details">
                     <h1>Account Details</h1> 
                     <div className="account-group">

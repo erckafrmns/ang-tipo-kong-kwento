@@ -65,8 +65,8 @@ const Navbar = ({ hideInsideNavbar = false }) => { // Add a prop to control visi
                                 </a>
                             </li>
                             <li>
-                                <Link to="/contact-us" className="nav-right">
-                                    Contact Us
+                                <Link to="/contact-us" className={`nav-right ${location.pathname === "/contact-us" ? "active" : ""}`}>
+                                        Contact Us
                                 </Link>
                             </li>
                             <li>
