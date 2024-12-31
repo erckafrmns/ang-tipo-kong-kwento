@@ -9,16 +9,21 @@ const ResetPassword = () => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
   const [message, setMessage] = useState('');
-  const [error, setError] = useState('');
+  const [error, setError] = useState(''); 
+  const [isLoading, setIsLoading] = useState(false);
+  
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
     setMessage('');
-    setError('');
+    setError(''); 
+    setIsLoading(true);
 
     if (newPassword !== confirmNewPassword) {
-      setError('Passwords do not match.');
-      return;
+      setError('Passwords do not match.'); 
+      setIsLoading(false); 
+      return; 
+      
     }
 
     try {
@@ -41,6 +46,8 @@ const ResetPassword = () => {
     } catch (err) {
       setError('An unexpected error occurred. Please try again later.');
       console.error(err);
+    } finally {
+      setIsLoading(false); 
     }
   };
 
@@ -52,13 +59,20 @@ const ResetPassword = () => {
           <div className="rp-inputs">
             <h1>Reset Password</h1>
             {message && <p className="success-message">{message}</p>}
-            {error && <p className="error-message">{error}</p>}
+            {error && <p className="reset-error-message">{error}</p>}
             <p>Enter your new password below.</p> 
             <div className="password-input-container">
             <form onSubmit={handleResetPassword}>
               <input type="password" placeholder="New Password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required className="password-input"/>
               <input type="password" placeholder="Confirm New Password" value={confirmNewPassword} onChange={(e) => setConfirmNewPassword(e.target.value)} required className="password-input"/>
-              <button type="submit" className="reset-btn">Reset Password</button>
+              
+              <button type="submit" className={`reset-btn ${isLoading ? 'loading' : ''}`} disabled={isLoading}>
+              {isLoading ? (
+                <div className="reset-button-spinner"></div>
+              ) : (
+                'Reset Password'
+              )}
+            </button>
             </form> 
             </div>
           </div>

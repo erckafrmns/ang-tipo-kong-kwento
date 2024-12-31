@@ -5,12 +5,15 @@ import { ImCross } from "react-icons/im";
 const ForgotPassword = ({ closeModal, toggleModal }) => {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
-  const [error, setError] = useState('');
+  const [error, setError] = useState(''); 
+  const [isLoading, setIsLoading] = useState(false); 
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage('');
-    setError('');
+    setError(''); 
+    setIsLoading(true); 
 
     try {
       const response = await fetch('http://localhost:5000/forgot-password', {
@@ -31,6 +34,8 @@ const ForgotPassword = ({ closeModal, toggleModal }) => {
     } catch (err) {
       setError('An unexpected error occurred. Please try again later.');
       console.error(err);
+    } finally {
+      setIsLoading(false); 
     }
   };
 
@@ -39,13 +44,20 @@ const ForgotPassword = ({ closeModal, toggleModal }) => {
       <div className="forgot-password-modal">
         <button onClick={closeModal} className="close-icon"> <ImCross /> </button>
         <div className="fp-inputs">
-          <h1>Forgot Password</h1>
-          {message && <p className="success-message">{message}</p>}
-          {error && <p className="error-message">{error}</p>}
+          <h1>Forgot Password</h1>  
+          {message && <p className="fp-success-message">{message}</p>}
+          {error && <p className="fp-error-message">{error}</p>}
           <p>Enter your email address to get instructions to reset your password.</p>
           <form onSubmit={handleSubmit}>
             <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required className="email-input"/>
-            <button type="submit" className="submit-btn">Submit</button>
+            <button type="submit" className={`submit-btn ${isLoading ? 'loading' : ''}`} disabled={isLoading}>
+              {isLoading ? (
+                <div className="fp-button-spinner"></div>
+              ) : (
+                'Submit'
+              )}
+            </button>
+
             <button type="button" onClick={() => toggleModal('login')} className="back-to-login-btn">
               Back to Login
             </button>

@@ -38,10 +38,10 @@ const AppContent = () => {
       {/* <Route path="/main" element={<Main />} />
       <Route path="/custom" element={<Custom />} />
       <Route path="/story" element={<StoryPage />} />  
+      <Route path="/account" element={<Account />} />  
       <Route path="/reset-password/" element={<ResetPassword />} /> */}
-      <Route path="/account" element={<Account />} /> 
 
-      {/*<Route path="/account" element={<ProtectedRoute><Account /></ProtectedRoute>} />*/}
+      <Route path="/account" element={<ProtectedRoute><Account /></ProtectedRoute>} />
       <Route path="/main" element={<ProtectedRoute><Main /></ProtectedRoute>} />
       <Route path="/custom" element={<ProtectedRoute><Custom /></ProtectedRoute>} />
       <Route path="/story/:story_id" element={<ProtectedRoute><StoryPage /></ProtectedRoute>} />

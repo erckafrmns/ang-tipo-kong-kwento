@@ -35,7 +35,7 @@
 	padding: 20px 460px; 
 	list-style: none; 
 	text-align: right;   
-	margin-left: 2%;  
+	margin-left: 0.5%;  
 } 
 
 .inside-navbar1 ul li{ 
@@ -280,7 +280,7 @@
     align-items: center;
     justify-content: center;
     background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
+    z-index: 1002;
 }
 
 /* Modal Content */ 
