@@ -108,7 +108,7 @@
   z-index: 1000; 
   display: none; 
   flex-direction: column; 
-  overflow: hidden; 
+  overflow: visible; 
   border: 2px solid var(--green);  
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
@@ -147,14 +147,59 @@
   border: none;  
   padding: 8px 8px 0 8px; 
   cursor: pointer; 
-  border-radius: 10px; 
-  transition: background-color 0.3s;  
+  border-radius: 8px;    
+  position: relative;
+  transition: background-color 0.3s;   
+
+} 
+
+/* Tooltip bubble for .close-btn */
+.close-btn::after {
+  content: "Close sidebar"; 
+  position: absolute;
+  top: 50%; 
+  left: 100%; 
+  margin-top: 6px;
+  transform: translateX(8px) translateY(-50%); 
+  padding: 8px 12px; 
+  background-color: var(--green); 
+  color: var(--yellow); 
+  font-size: 14px; 
+  border-radius: 5px; 
+  visibility: hidden; 
+  opacity: 0; 
+  transition: opacity 0.3s ease; 
+  white-space: nowrap; 
+  z-index: 1;
+}
+
+/* Arrow pointing to the left for .close-btn */
+.close-btn::before {
+  content: ""; 
+  position: absolute;
+  top: 50%;
+  left: 100%; 
+  margin-left: 17px;
+  transform: translateX(-12px) translateY(-50%) rotate(45deg);
+  width: 10px; 
+  height: 10px; 
+  background-color: var(--green); 
+  visibility: hidden; 
+  opacity: 0; 
+  transition: opacity 0.3s ease;  
+}
+
+/* Show tooltip and arrow on hover */
+.close-btn:hover::after, 
+.close-btn:hover::before {
+  visibility: visible; 
+  opacity: 1; 
 }
 
 .close-btn:hover, .new-chat-container:hover { 
   background-color: var(--hoverColor); 
   z-index:1001;   
-}   
+}    
 
 .search-container {
   position: relative;
@@ -166,7 +211,7 @@
   width: 100%; 
   padding: 12px 40px 12px 12px;
   border: 2px solid var(--green);   
-  border-radius: 10px; 
+  border-radius: 8px; 
   outline: none; 
   background-color: var(--beige);  
   font-size: 14px;
@@ -257,20 +302,66 @@
   opacity: 1;
 }
 
-.open-btn {
+.open-btn { 
   background-color: transparent;
   color: var(--green); 
   padding: 8px 8px 0 8px; 
   border: none; 
   cursor: pointer;  
-  font-size: 25px; 
+  font-size: 25px;   
+  border-radius: 8px;  
   transition: background-color 0.3s ease;  
+  position: relative; /* Required to position the tooltip relative to this element */
 }   
 
+.open-btn:hover {
+  background-color: var(--hoverColor); 
+}
+
+/* Tooltip bubble for .open-btn */
+.open-btn::after {
+  content: "Open sidebar"; 
+  position: absolute;
+  top: 100%; 
+  left: 0; 
+  transform: translateY(8px); 
+  padding: 8px 12px; 
+  background-color: var(--green); 
+  color: var(--yellow);
+  font-size: 14px; 
+  border-radius: 5px; 
+  visibility: hidden; 
+  opacity: 0; 
+  transition: opacity 0.3s ease; 
+  white-space: nowrap;
+  margin-top: 5px;
+}
+
+/* Arrow pointing to the upper left for .open-btn */
+.open-btn::before {
+  content: ""; 
+  position: absolute;
+  top: 100%; 
+  left: 10px; 
+  margin-top: 5px;
+  transform: translateY(5px) rotate(45deg); 
+  width: 8px; 
+  height: 8px; 
+  background-color: var(--green); 
+  visibility: hidden; 
+  opacity: 0; 
+  transition: opacity 0.3s ease; 
+  z-index: 10000; 
+}
+
+.open-btn:hover::after, 
+.open-btn:hover::before {
+  visibility: visible; 
+  opacity: 1; 
+}
 
 .open-btn:hover{
   background-color: var(--hoverColor); 
-  border-radius: 10px;  
 }  
 
 /* Modal Container */

@@ -238,9 +238,10 @@ const StoryPage = () => {
                                     onChange={handleProgressBarChange}
                                 />
                             )}
-                            <div className="paper-icon" onClick={() => setIsPaperMode(!isPaperMode)}>
+                            <div className={`paper-icon ${isPaperMode ? "book-view" : "formal-view"}`} onClick={() => setIsPaperMode(!isPaperMode)} >
                                 {isPaperMode ? <VscBook /> : <TiDocumentText />}
                             </div>
+
 
                             <div className="download-btn" onClick={handleDownloadPDF}>
                                 <IoMdDownload />

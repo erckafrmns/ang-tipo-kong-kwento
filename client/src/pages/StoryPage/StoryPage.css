@@ -89,7 +89,7 @@ body {
     align-items: center;
     justify-content: center;
     position: relative;
-    padding: 20px 31%; 
+    padding: 20px 600px; 
     min-height: 100vh;  
 }
 
@@ -144,25 +144,80 @@ body {
     align-items: center; 
     background-color: var(--green);
     justify-content: center;
-    color: var(--yellow); 
+    color: var(--beige); 
     font-size: 24px; 
     border-radius: 5px;   
     padding: 1.5px 3.5px;  
     position: absolute; 
     right: 10px; 
-    transition: all 0.3s ease; 
+    transition: all 0.3s ease;  
 } 
 
 .paper-icon {
-    top: 0;
-}
+    top: 5px;
+} 
 
 .download-btn { 
-    top: 35px;
+    top: 40px;
+}
+
+/* Tooltip bubble for .paper-icon */
+.paper-icon::after, .download-btn::after {
+    position: absolute;
+    left: -50%;  
+    margin-left: 5px;
+    transform: translateX(-100%); 
+    padding: 8px 12px; 
+    background-color: var(--green);
+    color: var(--yellow);
+    font-size: 14px;
+    border-radius: 5px;
+    visibility: hidden; 
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    white-space: nowrap;  
+}
+
+/* Arrow pointing to the right */
+.paper-icon::before, .download-btn::before {
+    content: ""; 
+    position: absolute;
+    left: -33%; 
+    top: 50%;  
+    margin-left: 5px;
+    transform: translateX(-100%) translateY(-50%); 
+    width: 0; 
+    height: 0; 
+    border-style: solid;
+    border-width: 7px 0 7px 10px; 
+    border-color: transparent transparent transparent var(--green); 
+    visibility: hidden; 
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.paper-icon.book-view::after {
+    content: "Book view";
+}
+
+.paper-icon.formal-view::after {
+    content: "Paper view";
+} 
+
+.download-btn::after {
+    content: "Download file"; 
+}
+
+.paper-icon:hover::after, 
+.paper-icon:hover::before, 
+.download-btn:hover::after, 
+.download-btn:hover::before {
+    visibility: visible;
+    opacity: 1;
 }
 
 .paper-icon:hover, .download-btn:hover{ 
-    transform: scale(0.98);
+    color: var(--yellow);
 }
 
 /* Trail */
