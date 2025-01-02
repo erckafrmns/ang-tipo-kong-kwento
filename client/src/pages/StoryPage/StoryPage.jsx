@@ -59,27 +59,40 @@ const StoryPage = () => {
 
     const handlePageChange = (e) => {
         setCurrentPage(e.data);
-
+    
         const progressBar = document.querySelector(".progress-bar");
         const totalPages = storyPages.length + 4; // Including covers
         const progressValue = e.data / (totalPages - 1);
-
+    
         const progressWidth = progressValue === 0 ? 0 : Math.max(3, Math.min(97, progressValue * 100));
         progressBar.style.setProperty("--progress-width", `${progressWidth}%`);
+        progressBar.value = progressWidth; // Ensure thumb matches trail
     };
+    
 
     const handleProgressBarChange = (event) => {
+        const progressBar = event.target; // Get the progress bar element
         const totalPages = storyPages.length + 4; // Including covers
-        const progressValue = parseFloat(event.target.value) / 100;
-
+    
+        // Calculate progress based on slider value
+        const progressValue = parseFloat(progressBar.value) / 100;
+    
+        // Constrain progress within limits (to avoid overshooting)
         const progressValueAdjusted = Math.max(0.10, Math.min(0.90, progressValue));
         const newPage = Math.round(progressValueAdjusted * (totalPages - 1));
-
+    
+        // Turn to the calculated page
         bookRef.current.pageFlip().turnToPage(newPage);
-
+    
+        // Update trail width to match progress
         const progressWidth = progressValueAdjusted * 100;
-        event.target.style.setProperty("--progress-width", `${progressWidth}%`);
+        progressBar.style.setProperty("--progress-width", `${progressWidth}%`);
+    
+        // Ensure thumb matches the trail (redundant but guarantees sync)
+        progressBar.value = progressWidth;
     };
+    
+    
 
     const handleDownloadPDF = () => {
         const doc = new jsPDF();
@@ -212,7 +225,8 @@ const StoryPage = () => {
                                 </div>
                             )}
 
-                            <div className="progress-bar-container">
+                        <div className="progress-bar-container">
+                            {!isPaperMode && (
                                 <input
                                     type="range"
                                     className="progress-bar"
@@ -223,14 +237,16 @@ const StoryPage = () => {
                                     onInput={handleProgressBarChange}
                                     onChange={handleProgressBarChange}
                                 />
-                                <div className="paper-icon" onClick={() => setIsPaperMode(!isPaperMode)}>
-                                    {isPaperMode ? <VscBook /> : <TiDocumentText />}
-                                </div>
-
-                                <div className="download-btn" onClick={handleDownloadPDF}>
-                                    <IoMdDownload /> 
-                                </div>
+                            )}
+                            <div className="paper-icon" onClick={() => setIsPaperMode(!isPaperMode)}>
+                                {isPaperMode ? <VscBook /> : <TiDocumentText />}
                             </div>
+
+                            <div className="download-btn" onClick={handleDownloadPDF}>
+                                <IoMdDownload />
+                            </div>
+                        </div>
+
                         </>
                     )}
                 </section>
