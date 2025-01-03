@@ -31,6 +31,9 @@ const Home = () => {
   };
 
   useEffect(() => {
+    // Clear sessionStorage when the Home component renders
+    sessionStorage.clear();
+
     // Check if state indicates to open a modal
     if (location.state?.openModal) {
       setModalType(location.state.openModal);

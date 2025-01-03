@@ -45,10 +45,11 @@ const AppContent = () => {
       <Route path="/story" element={<StoryPage />} />  
       <Route path="/main" element={<Main />} /> */}
 
-     <Route path="/account" element={<ProtectedRoute><Account /></ProtectedRoute>} />
+      <Route path="/account" element={<ProtectedRoute><Account /></ProtectedRoute>} />
       <Route path="/main" element={<ProtectedRoute><Main /></ProtectedRoute>} />
       <Route path="/custom" element={<ProtectedRoute><Custom /></ProtectedRoute>} />
      <Route path="/story/:story_id" element={<ProtectedRoute><StoryPage /></ProtectedRoute>} />
+
 
     </Routes>
   );

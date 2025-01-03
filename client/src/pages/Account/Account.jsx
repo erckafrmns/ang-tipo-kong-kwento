@@ -30,8 +30,6 @@ const Account = () => {
                     return;
                 }
 
-                console.log("Authorization Token:", token);
-
                 const response = await axios.get("http://localhost:5000/get-user-info", {
                     headers: {
                         Authorization: `Bearer ${token}`,

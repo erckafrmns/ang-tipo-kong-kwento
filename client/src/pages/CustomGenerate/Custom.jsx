@@ -30,7 +30,22 @@ const Custom = ({ closeModal, isGuest }) => {
         .then((response) => {
           const story_id = response.data.story_id;
           const generatedStory = response.data.story;
-          navigate(`/story/${story_id}`, { state: { title, genre, story: generatedStory, isGuest: true } });
+
+          // Save the story in sessionStorage for guest users
+          const storyData = {
+            story_id,
+            title,
+            genre,
+            story: generatedStory,
+          };
+          sessionStorage.setItem(`guestStory_${story_id}`, JSON.stringify(storyData));
+
+          navigate(`/story/${story_id}`, {
+              state: { ...storyData, isGuest: true },
+          });
+
+
+          // navigate(`/story/${story_id}`, { state: { title, genre, story: generatedStory, isGuest: true } });
           closeModal();
         })
         .catch((error) => {

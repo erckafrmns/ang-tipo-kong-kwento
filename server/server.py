@@ -463,13 +463,6 @@ def generate_random_story():
                     logging.error(f"Failed to save story for user {user_id}.")
             else:
                 story_id = generate_storyID()
-                # session['temporary_stories'] = {
-                #     'story_id': story_id,
-                #     'title': title,
-                #     'genre': genre,
-                #     'content': story,
-                # }
-                # logging.info("Story stored in session for guest.")
  
             return jsonify({
                 "story_id": story_id,
@@ -490,6 +483,7 @@ def generate_random_story():
 
 # GENERATE CUSTOM STORY API
 @app.route('/generate-custom-story', methods=['POST'])
+@jwt_required(optional=True)
 def generate_custom_story():
     try:
         data = request.get_json()
@@ -523,13 +517,6 @@ def generate_custom_story():
                     logging.error(f"Failed to save story for user {user_id}.")
             else:
                 story_id = generate_storyID()
-                session['temporary_stories'] = {
-                    'story_id': story_id,
-                    'title': title,
-                    'genre': genre,
-                    'content': story
-                }
-                logging.info("Story stored in session for guest.")
             
             return jsonify({"story_id": story_id, "story": story})
         else:

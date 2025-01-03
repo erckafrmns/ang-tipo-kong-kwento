@@ -27,7 +27,21 @@ const Main = () => {
           const generatedTitle = response.data.title;
           const generatedGenre = response.data.genre;
           const generatedStory = response.data.story;
-          navigate(`/story/${story_id}`, { state: { title: generatedTitle, genre: generatedGenre, story: generatedStory, isGuest: true } });
+          
+          // Save the story in sessionStorage for guest users
+          const storyData = {
+            story_id,
+            title: generatedTitle,
+            genre: generatedGenre,
+            story: generatedStory,
+          };
+          sessionStorage.setItem(`guestStory_${story_id}`, JSON.stringify(storyData));
+
+          navigate(`/story/${story_id}`, {
+              state: { ...storyData, isGuest: true },
+          });
+          
+          // navigate(`/story/${story_id}`, { state: { title: generatedTitle, genre: generatedGenre, story: generatedStory, isGuest: true } });
         })
         .catch((error) => {
           console.error('Error generating the story without prompt!', error);
