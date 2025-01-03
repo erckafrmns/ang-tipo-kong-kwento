@@ -264,8 +264,8 @@ def retrieve_user_stories():
                 "story_id": story.story_id, 
                 "title": story.title,
                 "genre": story.genre,
-                "content": story.content,
-                "created_at": story.created_at.strftime('%Y-%m-%d %H:%M:%S')
+                "story": story.content,
+                "created_at": story.created_at
             }
             for story in stories
         ]
@@ -280,7 +280,6 @@ def retrieve_user_stories():
 @jwt_required()
 def save_user_story(user_id, title, genre, story):
     try:
-        
         if not all([title, genre, story]):
             return jsonify({"error": "All fields (title, genre, story) are required."}), 400
         
@@ -288,9 +287,7 @@ def save_user_story(user_id, title, genre, story):
         db.session.add(new_story)
         db.session.commit()
 
-        return jsonify({
-            "message": "Story saved successfully.",
-        }), 201
+        return new_story.story_id, 201
     
     except Exception as e:
         logging.error(f"Error saving user story: {str(e)}")
@@ -454,10 +451,10 @@ def generate_random_story():
 
             story_id = None
             if user_id:
-                logging.info(f"INSIDE USER WITH USER ID: {user_id}.")
-                save_story_response = save_user_story(user_id, title, genre, story)
-                if save_story_response.status_code == 201:
-                    story_id = save_story_response.json().get('story_id')
+                story_id, status_code = save_user_story(user_id, title, genre, story)  # Now story_id is directly returned
+                logging.info(f"Save story response: {story_id}, Status code: {status_code}")
+
+                if status_code == 201:
                     logging.info(f"Story saved successfully for user {user_id}.")
                 else:
                     logging.error(f"Failed to save story for user {user_id}.")
@@ -486,6 +483,13 @@ def generate_random_story():
 @jwt_required(optional=True)
 def generate_custom_story():
     try:
+
+        user_id = get_jwt_identity()  
+        if user_id:
+            logging.info(f"Authenticated user: {user_id}")
+        else:
+            logging.info("Guest user (no authentication).")
+
         data = request.get_json()
         title = data.get('title')
         genre = data.get('genre')
@@ -505,13 +509,12 @@ def generate_custom_story():
             logging.info(f"STORY GENERATION TOOK {end_time - start_time} SECONDS")
 
             # SAVE STORY ACCORDINGLY
-            user_id = get_jwt_identity()  
             story_id = None
             if user_id:
-                logging.info(f"INSIDE USER WITH USER ID: {user_id}.")
-                save_story_response = save_user_story(user_id, title, genre, story)
-                if save_story_response.status_code == 201:
-                    story_id = save_story_response.json().get('story_id')
+                story_id, status_code = save_user_story(user_id, title, genre, story) 
+                logging.info(f"Save story response: {story_id}, Status code: {status_code}")
+
+                if status_code == 201:
                     logging.info(f"Story saved successfully for user {user_id}.")
                 else:
                     logging.error(f"Failed to save story for user {user_id}.")

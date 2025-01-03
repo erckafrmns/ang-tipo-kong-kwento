@@ -49,7 +49,13 @@ const Main = () => {
     } else {
       navigate(`/story`, { state: { loading: true } });
       axios
-        .post('http://localhost:5000/generate-random-story', {})
+        .post('http://localhost:5000/generate-random-story', {},
+          {
+            headers: {
+              Authorization: `Bearer ${authToken}`, 
+            },
+          }
+        )
         .then((response) => {
           const story_id = response.data.story_id
           const generatedTitle = response.data.title;

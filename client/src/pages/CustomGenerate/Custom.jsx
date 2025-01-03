@@ -44,8 +44,6 @@ const Custom = ({ closeModal, isGuest }) => {
               state: { ...storyData, isGuest: true },
           });
 
-
-          // navigate(`/story/${story_id}`, { state: { title, genre, story: generatedStory, isGuest: true } });
           closeModal();
         })
         .catch((error) => {
