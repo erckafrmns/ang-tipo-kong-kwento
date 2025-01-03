@@ -23,10 +23,41 @@ body {
     justify-content: flex-start;
     overflow: hidden;
     position: relative;
-    min-height: 100vh; 
-    padding-top: 4.5%;  
+    min-height: 100vh;
+    padding-top: 4.5%;
     z-index: 1;
+} 
+
+.flipbook {
+    transform: translateX(0);
 }
+
+@keyframes glideToLeft {
+    0% {
+        transform: translateX(0); 
+    }
+    100% {
+        transform: translateX(-25%);
+    }
+}
+
+@keyframes glideToRight {
+    0% {
+        transform: translateX(-25%); 
+    }
+    100% {
+        transform: translateX(0); 
+    }
+}
+
+.flipbook.shift-left {
+    animation: glideToLeft 0.8s ease-in-out forwards;
+}
+
+.flipbook.shift-right {
+    animation: glideToRight 0.8s ease-in-out forwards; 
+}
+
 
 .story-page {
     margin: 50px auto;

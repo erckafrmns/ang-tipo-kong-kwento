@@ -17,9 +17,9 @@ import RightPageImg from "../../assets/book-right-page.png";
 
 import { TiDocumentText } from "react-icons/ti"; 
 import { IoMdDownload } from "react-icons/io"; 
-import { VscBook } from "react-icons/vsc";
-
-const Page = React.forwardRef((props, ref) => (
+import { VscBook } from "react-icons/vsc"; 
+ 
+const Page = React.forwardRef((props, ref) => ( 
     <div className="page" ref={ref}>
         <div className="page-content">
             <img className="PageImage" src={props.image} alt="Page" />
@@ -33,14 +33,42 @@ const StoryPage = () => {
     const { title = "Generated Story", story = "", loading = false } = location.state || {};
     const [storyPages, setStoryPages] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
-    const [isPaperMode, setIsPaperMode] = useState(false);
+    const [isPaperMode, setIsPaperMode] = useState(false);   
+    const [isShifted, setIsShifted] = useState(false);  
+    const [flipbookKey, setFlipbookKey] = useState(0);
     const bookRef = useRef();
 
     const width = window.innerWidth;
     const flipbookWidth = width >= 640 ? 350 : width / 2 - 5;
-    const flipbookHeight = width >= 640 ? 490 : width * 1.3;
+    const flipbookHeight = width >= 640 ? 490 : width * 1.3;  
 
+    const handleFrontCoverClick = () => {
+        if (currentPage === 0) {
+            if (isShifted) {
+                setIsShifted(false);
+            } else {
+                setIsShifted(true);
+            }
+        }
+    }; 
+
+    // Ensure floating effect is applied when front page (currentPage === 0) is shown
     useEffect(() => {
+        if (currentPage === 0) {
+            setIsShifted(true);  
+        } else {
+            setIsShifted(false);   // Reset shift effect
+        }
+    }, [currentPage]);
+    
+    useEffect(() => {
+        // Reset key to force re-render whenever we are on the front page
+        if (currentPage === 0) {
+            setFlipbookKey(prevKey => prevKey + 1); 
+        }
+    }, [currentPage]);
+
+    useEffect(() => { 
         if (loading) return;
 
         const cleanTitle = title.includes("[SEP]") ? title.split("[SEP]")[1].trim() : title;
@@ -55,18 +83,19 @@ const StoryPage = () => {
         }
 
         setStoryPages(pages);
-    }, [title, story, loading]);
+    }, [title, story, loading]); 
+
 
     const handlePageChange = (e) => {
         setCurrentPage(e.data);
-    
+
         const progressBar = document.querySelector(".progress-bar");
         const totalPages = storyPages.length + 4; // Including covers
         const progressValue = e.data / (totalPages - 1);
-    
+
         const progressWidth = progressValue === 0 ? 0 : Math.max(3, Math.min(97, progressValue * 100));
         progressBar.style.setProperty("--progress-width", `${progressWidth}%`);
-        progressBar.value = progressWidth; // Ensure thumb matches trail
+        progressBar.value = progressWidth;
     };
     
 
@@ -171,41 +200,47 @@ const StoryPage = () => {
                 ) : (
                     <InsideNavbar />
                 )}
-                <section className="story-page-container">
+                <section className="story-page-container"> 
+                    
                     {!loading && (
-                        <>
-                            {!isPaperMode && (
-                                <HTMLFlipBook
-                                    width={flipbookWidth}
-                                    height={flipbookHeight}
-                                    maxShadowOpacity={0.2}
-                                    showCover={true}
-                                    ref={bookRef}
-                                    onFlip={handlePageChange}
-                                >
-                                    <Page image={FrontCover} />
-                                    <Page image={BackCover} />
+                        <>  
+                            {!isPaperMode && (  
+                                <HTMLFlipBook 
+                                key={flipbookKey}  
+                                width={flipbookWidth}
+                                height={flipbookHeight}
+                                maxShadowOpacity={0.2}
+                                showCover={true}
+                                ref={bookRef}
+                                onFlip={handlePageChange} 
+                                className={`flipbook ${isShifted ? "shift-left" : ""}`}
+                                > 
+                            <div   
+                            onClick={handleFrontCoverClick}>
+                                <Page image={FrontCover}/>  
+                            </div>
+                                <Page image={BackCover} />
+                                <Page
+                                    image={RightPageImg}
+                                    content={
+                                        <>
+                                            <p className="story-subtitle">Ang tipo kong Kwento</p>
+                                            <h1 className="story-title">"{title.includes("[SEP]") ? title.split("[SEP]")[1].trim() : title}"</h1>
+                                        </>
+                                    }
+                                />
+                                <Page image={LeftPageImg} content={storyPages[0]} />
+                                {storyPages.slice(1).map((content, index) => (
                                     <Page
-                                        image={RightPageImg}
-                                        content={
-                                            <>
-                                                <p className="story-subtitle">Ang tipo kong Kwento</p>
-                                                <h1 className="story-title">"{title.includes("[SEP]") ? title.split("[SEP]")[1].trim() : title}"</h1>
-                                            </>
-                                        }
+                                        key={index}
+                                        image={index % 2 === 0 ? RightPageImg : LeftPageImg}
+                                        content={content}
                                     />
-                                    <Page image={LeftPageImg} content={storyPages[0]} />
-                                    {storyPages.slice(1).map((content, index) => (
-                                        <Page
-                                            key={index}
-                                            image={index % 2 === 0 ? RightPageImg : LeftPageImg}
-                                            content={content}
-                                        />
-                                    ))}
-                                    <Page image={BackCover1} />
-                                    <Page image={BackCover} />
-                                </HTMLFlipBook>
-                            )}
+                                ))}
+                                <Page image={BackCover1} />
+                                <Page image={BackCover} />
+                            </HTMLFlipBook>  
+                        )}
                             {isPaperMode && (
                                 <div className="paper-mode">
                                     <img src={Paper} alt="Paper Background" className="paper-image" />
@@ -227,16 +262,7 @@ const StoryPage = () => {
 
                         <div className="progress-bar-container">
                             {!isPaperMode && (
-                                <input
-                                    type="range"
-                                    className="progress-bar"
-                                    min="0"
-                                    max="100"
-                                    step="0.1"
-                                    value={(currentPage / (storyPages.length + 4 - 1)) * 100}
-                                    onInput={handleProgressBarChange}
-                                    onChange={handleProgressBarChange}
-                                />
+                                <input type="range" className="progress-bar" min="0" max="100" step="0.1" value={(currentPage / (storyPages.length + 4 - 1)) * 100} onInput={handleProgressBarChange} onChange={handleProgressBarChange}/>
                             )}
                             <div className={`paper-icon ${isPaperMode ? "book-view" : "formal-view"}`} onClick={() => setIsPaperMode(!isPaperMode)} >
                                 {isPaperMode ? <VscBook /> : <TiDocumentText />}
@@ -247,7 +273,6 @@ const StoryPage = () => {
                                 <IoMdDownload />
                             </div>
                         </div>
-
                         </>
                     )}
                 </section>
