@@ -3,7 +3,6 @@ import { FiArrowRightCircle, FiArrowLeftCircle } from "react-icons/fi";
 import Navbar from '../../components/Navbar/Navbar'; 
 import ScrollToTop from '../../components/ScrollToTop/ScrollToTop'; 
 import Footer from '../../components/Footer/Footer'; 
-import logo from '../../assets/logo.png';
 import heroBG from '../../assets/hero-bg.png';
 import aboutBG from '../../assets/about-books.gif';
 import aboutIMG from '../../assets/about-img.png';
@@ -13,9 +12,8 @@ import {Link, useLocation } from "react-router-dom";
 import './Home.css'; 
 import { useNavigate } from 'react-router-dom';
 import LoginSignup from '../LoginSignup/LoginSignup';   
-import ForgotPassword from '../ForgotPassword/ForgotPassword';    
-import Preloader from '../../components/Preloader/Preloader';
-
+import ForgotPassword from '../ForgotPassword/ForgotPassword';     
+import { DefaultPreloader } from '../../components/Preloader/Preloader';
 
 
 const Home = () => { 
@@ -93,10 +91,7 @@ const Home = () => {
       <div ref={navbarRef}> 
         <Navbar scrollToFeatures={scrollToFeatures} scrollToAbout={scrollToAbout} />
       </div>
-      {isLoading ? (
-        <div className="homePreloader">
-          <img src={logo} alt="Loading..." className="aboutBGImage" />
-        </div>) : null}
+      {isLoading ? <DefaultPreloader /> : null}
 
       <section className='hero'>
         <h1>Ang tipo kong Kwento</h1>

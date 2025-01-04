@@ -7,7 +7,9 @@ import Footer from '../../components/Footer/Footer';
 import frame from '../../assets/frame.svg';
 import Custom from '../CustomGenerate/Custom.jsx';
 import '../CustomGenerate/Main-Custom.css';
-import Sidebar from '../../components/Sidebar/Sidebar';
+import Sidebar from '../../components/Sidebar/Sidebar' 
+import { DefaultPreloader } from '../../components/Preloader/Preloader';
+;
 
 const Main = () => {
   const [isModalOpen, setIsModalOpen] = useState(false); 
@@ -70,10 +72,20 @@ const Main = () => {
     
   };
 
-  const toggleModal = () => setIsModalOpen(!isModalOpen); 
+  const toggleModal = () => setIsModalOpen(!isModalOpen);  
+
+  const [isLoading, setIsLoading] = React.useState(true);
+  
+      React.useEffect(() => {
+          const timer = setTimeout(() => setIsLoading(false), 3000);
+  
+          return () => clearTimeout(timer);
+      }, []);
 
   return (
-    <div className="main-container">
+    <div className="main-container"> 
+      {isLoading ? <DefaultPreloader /> : null}
+
       {isGuest ? (
         <>
           <GuestNavbar />
@@ -81,7 +93,7 @@ const Main = () => {
         </>
       ) : (
         <InsideNavbar />
-      )}
+      )} 
       <section className="customization-container">
         <div className="custom" onClick={toggleModal}>
           <img src={frame} className="custom-frame" alt="Frame" />

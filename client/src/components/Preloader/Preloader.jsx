@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react"; 
-import '../Preloader/Preloader.css'; 
+import '../Preloader/Preloader.css';  
+import '../Preloader/Preloader-vv.css'; 
+import logo from '../../assets/logo.png'; // Update path to logo if necessary
 
 const Preloader = ({ message }) => { 
     const [randomMessage, setRandomMessage] = useState("");
@@ -31,4 +33,12 @@ const Preloader = ({ message }) => {
     );
 };
 
-export default Preloader;
+const DefaultPreloader = () => {
+    return (
+        <div className="DefaultPreloader">
+            <img src={logo} alt="Loading..." className="preloaderLogo" />
+        </div>
+    );
+};
+
+export { Preloader, DefaultPreloader };
