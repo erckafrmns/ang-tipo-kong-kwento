@@ -5,7 +5,7 @@ import jsPDF from "jspdf"; // Import jsPDF
 import InsideNavbar from '../../components/Navbar/InsideNavbar';  
 import GuestNavbar from '../../components/Navbar/Navbar';
 import Footer from "../../components/Footer/Footer"; 
-import Sidebar from '../../components/Sidebar/Sidebar';
+import Sidebar from '../../components/Sidebar/Sidebar'; 
 import "./StoryPage.css";
 
 import Paper from "../../assets/paper-mode.svg";
@@ -30,7 +30,7 @@ const Page = React.forwardRef((props, ref) => (
 
 const StoryPage = () => {
     const location = useLocation();
-    const { title = "Generated Story", story = "", loading = false } = location.state || {};
+    const { title = "Generated Story", story = "" } = location.state || {};
     const [storyPages, setStoryPages] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
     const [isPaperMode, setIsPaperMode] = useState(false);   
@@ -69,8 +69,6 @@ const StoryPage = () => {
     }, [currentPage]);
 
     useEffect(() => { 
-        if (loading) return;
-
         const cleanTitle = title.includes("[SEP]") ? title.split("[SEP]")[1].trim() : title;
         const cleanStory = story.includes("[SEP]") ? story.split("[SEP]")[1].trim() : story;
 
@@ -83,7 +81,7 @@ const StoryPage = () => {
         }
 
         setStoryPages(pages);
-    }, [title, story, loading]); 
+    }, [title, story]); 
 
 
     const handlePageChange = (e) => {
@@ -185,12 +183,6 @@ const StoryPage = () => {
     
     return (
         <>
-            {loading && (
-                <div className="preloader">
-                    <h1>Loading your story...</h1>
-                    <div className="spinner"></div>
-                </div>
-            )}
             <div className="storyContainer">
                 {isGuest ? (
                     <>
@@ -202,7 +194,6 @@ const StoryPage = () => {
                 )}
                 <section className="story-page-container"> 
                     
-                    {!loading && (
                         <>  
                             {!isPaperMode && (  
                                 <HTMLFlipBook 
@@ -274,7 +265,6 @@ const StoryPage = () => {
                             </div>
                         </div>
                         </>
-                    )}
                 </section>
                 <Footer isAlternative={true} />
             </div>

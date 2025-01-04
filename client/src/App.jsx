@@ -14,7 +14,8 @@ import VerifiedEmail from './pages/VerifiedEmail/VerifiedEmail';
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
 import ResetPassword from './pages/ResetPassword/ResetPassword';
 import Account from './pages/Account/Account';
-import Pointer from './components/Pointer/Pointer'; 
+import Pointer from './components/Pointer/Pointer';  
+import Preloader from './components/Preloader/Preloader'; 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; 
 import ProtectedRoute from './components/ProtectedRoute'; 
 
@@ -47,8 +48,9 @@ const AppContent = () => {
 
       <Route path="/account" element={<ProtectedRoute><Account /></ProtectedRoute>} />
       <Route path="/main" element={<ProtectedRoute><Main /></ProtectedRoute>} />
-      <Route path="/custom" element={<ProtectedRoute><Custom /></ProtectedRoute>} />
-     <Route path="/story/:story_id" element={<ProtectedRoute><StoryPage /></ProtectedRoute>} />
+      <Route path="/custom" element={<ProtectedRoute><Custom /></ProtectedRoute>} /> 
+      <Route path="/story" element={<ProtectedRoute><Preloader /></ProtectedRoute>} />
+      <Route path="/story/:story_id" element={<ProtectedRoute><StoryPage /></ProtectedRoute>} />
 
 
     </Routes>

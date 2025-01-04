@@ -2,7 +2,8 @@ import React, { useRef, useState, useEffect } from 'react';
 import { FiArrowRightCircle, FiArrowLeftCircle } from "react-icons/fi";   
 import Navbar from '../../components/Navbar/Navbar'; 
 import ScrollToTop from '../../components/ScrollToTop/ScrollToTop'; 
-import Footer from '../../components/Footer/Footer';
+import Footer from '../../components/Footer/Footer'; 
+import logo from '../../assets/logo.png';
 import heroBG from '../../assets/hero-bg.png';
 import aboutBG from '../../assets/about-books.gif';
 import aboutIMG from '../../assets/about-img.png';
@@ -12,7 +13,9 @@ import {Link, useLocation } from "react-router-dom";
 import './Home.css'; 
 import { useNavigate } from 'react-router-dom';
 import LoginSignup from '../LoginSignup/LoginSignup';   
-import ForgotPassword from '../ForgotPassword/ForgotPassword';   
+import ForgotPassword from '../ForgotPassword/ForgotPassword';    
+import Preloader from '../../components/Preloader/Preloader';
+
 
 
 const Home = () => { 
@@ -75,13 +78,25 @@ const Home = () => {
 
   const handlePrev = () => {
     setCurrentIndex((prevIndex) => (prevIndex - 1 + features.length) % features.length);
-  };
+  }; 
+
+  const [isLoading, setIsLoading] = React.useState(true);
+
+    React.useEffect(() => {
+        const timer = setTimeout(() => setIsLoading(false), 3000);
+
+        return () => clearTimeout(timer);
+    }, []);
 
   return (
-    <>
-      <div ref={navbarRef}>
+    <> 
+      <div ref={navbarRef}> 
         <Navbar scrollToFeatures={scrollToFeatures} scrollToAbout={scrollToAbout} />
       </div>
+      {isLoading ? (
+        <div className="homePreloader">
+          <img src={logo} alt="Loading..." className="aboutBGImage" />
+        </div>) : null}
 
       <section className='hero'>
         <h1>Ang tipo kong Kwento</h1>
