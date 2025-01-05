@@ -3,14 +3,20 @@ import { FiArrowRightCircle, FiArrowLeftCircle } from "react-icons/fi";
 import Navbar from '../../components/Navbar/Navbar'; 
 import ScrollToTop from '../../components/ScrollToTop/ScrollToTop'; 
 import Footer from '../../components/Footer/Footer'; 
+import {Link, useLocation, useNavigate} from "react-router-dom";
+import './Home.css';  
+
 import heroBG from '../../assets/hero-bg.png';
 import aboutBG from '../../assets/about-books.gif';
 import aboutIMG from '../../assets/about-img.png';
-import featuresCard from '../../assets/features-card.png';
-import bottomBanner from '../../assets/bottomBanner.svg'; 
-import {Link, useLocation } from "react-router-dom";
-import './Home.css'; 
-import { useNavigate } from 'react-router-dom';
+import featCustom from '../../assets/feat-custom.png'; 
+import featBook from '../../assets/feat-book.png'; 
+import featPaperBook from '../../assets/feat-paper-book.png'; 
+import featSave from '../../assets/feat-save.png'; 
+import featDownload from '../../assets/feat-download.png'; 
+
+import bottomBanner from '../../assets/bottomBanner.svg';  
+
 import LoginSignup from '../LoginSignup/LoginSignup';   
 import ForgotPassword from '../ForgotPassword/ForgotPassword';     
 import { DefaultPreloader } from '../../components/Preloader/Preloader';
@@ -55,11 +61,11 @@ const Home = () => {
   };
 
   const features = [
-    { title: "Quick Story Generation", description: "Instantly generate engaging stories with a few clicks." },
-    { title: "Customized Story Generation", description: "Personalize stories by choosing themes, characters, and morals." },
-    { title: "Story Archive", description: "Save and revisit generated stories for future reading." },
-    { title: "Story Archive 2", description: "Save and revisit generated stories for future reading." },
-    { title: "Story Archive 3", description: "Save and revisit generated stories for future reading." }
+    { title: "Quick Story Generation", description: "Instantly generate engaging stories with a few clicks.", image: featBook},
+    { title: "Customized Your Story", description: "Personalize stories by selecting the length, genre, and title.", image: featCustom},
+    { title: "Save & Revisit", description: "Save and revisit generated stories for future reading.", image: featSave},
+    { title: "View in Book or Paper Mode", description: "Save and revisit generated stories for future reading.", image: featPaperBook},
+    { title: "Download Your Story", description: "Download your stories for offline reading and access them anytime, anywhere.", image: featDownload }
   ];
 
   const scrollToFeatures = () => {
@@ -128,7 +134,7 @@ const Home = () => {
                       <p>{feature.description}</p>
                     </>
                   )}
-                  <img src={featuresCard} alt={feature.title} />
+                  <img src={feature.image} alt={feature.title} />
                 </div>
               );
             })}
@@ -146,7 +152,7 @@ const Home = () => {
           <p>Ang Tipo Kong Kwento is an AI-based Tagalog story writer designed to create engaging and culturally relevant narratives for Filipino children. This innovative platform leverages advanced language models to generate personalized stories that foster creativity, language skills, and moral values. By making quality literature accessible, the application aims to enrich early childhood education in the Philippines and promote a lifelong love for reading.</p>
           <Link to="/developers" className='developersBTN'>Developers</Link>
         </div>
-        <img src={aboutIMG} className='aboutIMG' alt="" />  
+        <img src={aboutIMG} className='aboutIMG' alt="" />   
       </section> 
       <ScrollToTop/>
       <Footer />
