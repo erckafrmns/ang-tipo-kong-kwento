@@ -196,9 +196,9 @@
   opacity: 1; 
 }
 
-.close-btn:hover, .new-chat-container:hover { 
+.close-btn:hover, .new-chat-container:hover{ 
   background-color: var(--hoverColor); 
-  z-index:1001;   
+  z-index:1001;    
 }    
 
 .search-container {
@@ -214,10 +214,9 @@
   border-radius: 8px; 
   outline: none; 
   background-color: var(--beige);  
-  font-size: 14px;
   text-transform: lowercase; 
   transition: background-color 0.3s ease, border-color 0.3s ease; 
-}
+} 
 
 .search-icon {
   position: absolute; 
@@ -234,7 +233,8 @@
   background-color: rgba(212, 208, 197, 0.3);  
 } 
 
-.search-bar::placeholder {
+.search-bar::placeholder { 
+  font-size: 16px;
   color: var(--green);  
   font-family: var(--main-font); 
 }     
@@ -245,11 +245,11 @@
   display: flex; 
   align-items: center;  
   transition: background-color 0.3s ease;  
-}
+} 
 
 .new-chat-btn {
   color: var(--beige);  
-  font-size: 14px; 
+  font-size: 16px; 
   border: none;  
   padding: 15px; 
   cursor: pointer; 
@@ -260,26 +260,119 @@
   flex-grow: 1; 
   font-family: var(--main-font); 
   text-transform: lowercase; 
-  transition: background-color 0.3s; 
-} 
+  transition: all ease 0.3s; 
+}  
+
+.new-chat-btn:hover{ 
+  color: var(--green);
+}
 
 .new-chat-icon {
   margin-left: auto; 
   margin-right: 7%;
   font-size: 25px;  
   color: var(--green);
-  cursor: pointer; 
+  cursor: pointer;  
+  transition: transform 0.3s ease;
 }
  
+.new-chat-icon:hover{ 
+  transform: scale(1.1);  
+} 
 
 .logo_small {
   width: 20px;
   height: 20px; 
   margin-left: 10px; 
   border-radius: 50%;
-}   
+}    
 
-/*This Sidebar is placed inside the InsideNavbar*/
+.empty-message{ 
+  color: var(--green); 
+  text-align: center;  
+  align-items: center;  
+  margin-top: 5px;
+}     
+
+.story-container {
+  background-color: transparent;
+  border: 1px solid var(--green);
+  display: flex;
+  align-items: center;
+  transition: background-color 0.3s ease;
+  position: relative; /* For dropdown positioning */
+}
+
+.story-container.active {
+  background-color: rgba(0, 128, 0, 0.1); /* Highlight the active story */
+} 
+
+.story-container:hover{ 
+  background-color: rgba(0, 128, 0, 0.1); /* Highlight the active story */
+}
+
+.story-title {
+  color: var(--green);
+  font-size: 16px;
+  border: none;
+  padding: 15px;
+  cursor: pointer;
+  text-align: left;
+  margin-top: auto;
+  background-color: transparent;
+  flex-grow: 1; 
+  font-family: var(--main-font);
+  text-transform: lowercase; 
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+  display: inline-block; 
+  width: 100%; 
+  max-width: 250px;
+  transition: color 0.3s, background-color 0.3s;
+}
+
+.menu-icon {
+  margin-left: auto;
+  margin-right: 7%;
+  font-size: 22px;
+  color: var(--green);
+  cursor: pointer;
+  opacity: 0; /* Hidden by default */
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.story-container.active .menu-icon,
+.story-container:hover .menu-icon {
+  opacity: 1; /* Show on hover or active */
+}
+
+.menu-icon:hover{ 
+  transform: scale(1.1);  
+}  
+
+.dropdown-menu {
+  right: 0;
+  border: none;
+  z-index: 10;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: #921818;
+  padding: 16px 23px;
+  border: none;
+  cursor: pointer;
+  gap: 10px;
+}
+
+.delete-icon {
+  color: var(--beige);
+  font-size: 17px;
+}
+
 .button-container {
   text-align: center; 
   display: flex;  
@@ -435,4 +528,4 @@
 .confirm-btn:hover, .cancel-btn:hover {
   transform: scale(0.98);
 }
-
+ 

@@ -65,7 +65,7 @@ body {
     text-align: center; 
 }
 
-.story-title {
+.main-title {
     font-size: 40px;
     text-align: center; 
     margin-bottom: 20px;
@@ -120,7 +120,7 @@ body {
     align-items: center;
     justify-content: center;
     position: relative;
-    padding: 20px 600px; 
+    padding: 20px; 
     min-height: 100vh;  
 }
 
@@ -134,13 +134,29 @@ body {
     z-index: -1;
 }
 
-.paper-content {
-    line-height: 1.2;
+.paper-content { 
+    line-height: 1.6;
     font-size: 1.1em;
+    max-width: 700px; 
+    margin: 0 auto; 
+    padding: 50px; 
 }
-.paper-content .story-text p {
-    text-align: justify;
+ 
+.paper-content .story-text p { 
+    width: 100%;
+    text-align: justify; 
     text-indent: 1.5em;
+    margin-bottom: 1em; 
+} 
+
+.girlIMG {
+    position:absolute;
+    bottom: 30px;
+    right: 40px;
+    z-index: 2; 
+    width: 20px; 
+    height: 30px;  
+    filter: brightness(0) saturate(100%)
 }
 
 /* PAPER MODE */

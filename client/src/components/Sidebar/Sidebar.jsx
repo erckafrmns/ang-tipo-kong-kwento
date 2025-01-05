@@ -1,17 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../Sidebar/Sidebar.css';
+import { useNavigate } from "react-router-dom";
+import logo from '../../assets/logo.png';  
+
 import { TbLayoutSidebarInactive } from "react-icons/tb";
 import { MdOutlineHistoryEdu } from "react-icons/md"; 
 import { IoSearch } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
-import logo from '../../assets/logo.png';
+import { PiDotsThreeOutlineDuotone } from "react-icons/pi"; 
+import { RiDeleteBin6Line } from "react-icons/ri";
+
+
 
 const Sidebar = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [stories, setStories] = useState([]);
-    const authToken = localStorage.getItem('authToken'); 
-    const navigate = useNavigate();
+    const authToken = localStorage.getItem('authToken');  
+    const [selectedStoryId, setSelectedStoryId] = useState(null); // Track the selected story ID
+    const [dropdownStates, setDropdownStates] = useState({}); // Track dropdown open/close for each story
+    const navigate = useNavigate(); 
 
     // Function to fetch stories
     const fetchStories = () => {
@@ -64,9 +71,12 @@ const Sidebar = () => {
     }, [authToken]);
 
     // Handle story click for navigation
-    const handleStoryClick = (story_id, title, genre, story) => {
-        const authToken = localStorage.getItem('authToken');
-        const isGuest = !authToken; // Determine guest status based on token
+    const handleStoryClick = (story_id, title, genre, story) => { 
+        setSelectedStoryId(story.story_id);
+
+        const authToken = localStorage.getItem('authToken');  
+        const isGuest = !authToken; // Determine guest status based on token 
+
 
         navigate(`/story/${story_id}`, {
             state: { 
@@ -82,7 +92,7 @@ const Sidebar = () => {
     // Toggle sidebar visibility
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
-    };
+    }; 
 
     // Navigate to new story page
     const handleNewStoryClick = () => {
@@ -91,7 +101,16 @@ const Sidebar = () => {
         } else {
             navigate('/main');
         }
-    };
+    }; 
+
+    // Toggle dropdown visibility for a specific story
+   const toggleDropdown = (e, story_id) => {
+        e.stopPropagation();
+        setDropdownStates((prevState) => ({
+            ...prevState,
+            [story_id]: !prevState[story_id],
+        }));
+    }; 
 
     return (
         <>
@@ -123,22 +142,34 @@ const Sidebar = () => {
                         <MdOutlineHistoryEdu className="new-chat-icon" />
                     </div>
 
-                    {/* Story List */}
+                    {/* Story List*/}
                     <div className="story-list-container">
                         {stories.length > 0 ? (
                             stories.map((story, index) => (
                                 <div 
                                     key={index} 
-                                    className="story-container" 
+                                    className={`story-container ${selectedStoryId === story.story_id ? 'active' : ''}`}
                                     onClick={() => handleStoryClick(story.story_id, story.title, story.genre, story.story)}
                                 >
-                                    <span className="story-title">{story.title}</span>
+                                  <span className="story-title">{story.title}</span> 
+                                  <PiDotsThreeOutlineDuotone
+                                className="menu-icon"
+                                onClick={(e) => toggleDropdown(e, story.story_id)}
+                            /> 
+                                   
+                                    {dropdownStates[story.story_id] && (
+                                        <div className="dropdown-menu">
+                                            <button className="dropdown-item" onClick={(e) => e.stopPropagation()}>
+                                                <RiDeleteBin6Line className="delete-icon" />
+                                            </button>
+                                        </div>
+                                    )}
                                 </div>
                             ))
                         ) : (
                             <p className="empty-message">No stories available. Click "New Story" to create one!</p>
                         )}
-                    </div>
+                    </div> 
                 </div>
             </div>
 

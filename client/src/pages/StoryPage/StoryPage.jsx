@@ -13,7 +13,9 @@ import FrontCover from "../../assets/book-front-cover.png";
 import BackCover from "../../assets/book-back-cover.png";
 import BackCover1 from "../../assets/book-back-cover1.png";
 import LeftPageImg from "../../assets/book-left-page.png";
-import RightPageImg from "../../assets/book-right-page.png"; 
+import RightPageImg from "../../assets/book-right-page.png";  
+import aboutIMG from '../../assets/about-img.png';
+
 
 import { TiDocumentText } from "react-icons/ti"; 
 import { IoMdDownload } from "react-icons/io"; 
@@ -119,10 +121,10 @@ const StoryPage = () => {
         progressBar.value = progressWidth;
     };
     
-    
-
     const handleDownloadPDF = () => {
         const doc = new jsPDF();
+    
+        // Extract and clean the title
         const cleanTitle = title.includes("[SEP]") ? title.split("[SEP]")[1].trim() : title;
     
         // Set the title
@@ -137,45 +139,46 @@ const StoryPage = () => {
         doc.setFont("Helvetica", "normal");
         const storyText = story.includes("[SEP]") ? story.split("[SEP]")[1].trim() : story;
     
-        const marginLeft = 20; 
-        const marginRight = 20; 
+        const marginLeft = 20;
+        const marginRight = 20;
+        const marginTop = 35;
+        const marginBottom = 20;
         const usableWidth = pageWidth - marginLeft - marginRight;
+        const pageHeight = doc.internal.pageSize.height;
     
-        // Split text into lines with justification
-        const lines = doc.splitTextToSize(storyText, usableWidth);
-        let yPosition = 40; 
-        const smallerLineHeight = doc.getLineHeight() * 0.5; 
+        const paragraphs = storyText.split(/\n\s*\n/); 
+        let yPosition = marginTop;
+        const lineHeight = doc.getLineHeight() * 0.6; 
+        const indentWidth = 0; 
     
-        lines.forEach((line, index) => {
-            const isLastLine = index === lines.length - 1;
+        paragraphs.forEach((paragraph) => {
+            // Split paragraph into lines that fit within the usable width
+            const lines = doc.splitTextToSize(paragraph.trim(), usableWidth);
     
-            if (isLastLine || line.trim().length < usableWidth / 3) {
-                // For the last line or short lines, left-align to prevent awkward spacing
-                doc.text(line, marginLeft, yPosition);
-            } else {
-                // Justify the line
-                const words = line.split(" ");
-                const spaceCount = words.length - 1;
-                const textWidth = doc.getTextWidth(line);
-                const extraSpace = (usableWidth - textWidth) / spaceCount;
+            lines.forEach((line, lineIndex) => {
+                if (lineIndex === 0) {
+                    // Apply indentation only to the first line of the paragraph
+                    doc.text(line, marginLeft + indentWidth, yPosition);
+                } else {
+                    // Normal alignment for subsequent lines of the paragraph
+                    doc.text(line, marginLeft, yPosition);
+                }
     
-                let xPosition = marginLeft;
-                words.forEach((word, wordIndex) => {
-                    doc.text(word, xPosition, yPosition);
-                    if (wordIndex < spaceCount) {
-                        xPosition += doc.getTextWidth(word) + extraSpace;
-                    }
-                });
-            }
+                // Move to the next line position
+                yPosition += lineHeight;
     
-            yPosition += smallerLineHeight;
-            if (yPosition > doc.internal.pageSize.height - 20) {
-                // Add new page if content exceeds page height
-                doc.addPage();
-                yPosition = 20;
-            }
+                // Handle page overflow
+                if (yPosition > pageHeight - marginBottom) {
+                    doc.addPage();
+                    yPosition = marginTop;
+                }
+            });
+    
+            // Add a small gap between paragraphs
+            yPosition += lineHeight * 0.5; 
         });
     
+        // Save the PDF
         doc.save(`${cleanTitle}.pdf`);
     };
     
@@ -216,7 +219,7 @@ const StoryPage = () => {
                                     content={
                                         <>
                                             <p className="story-subtitle">Ang tipo kong Kwento</p>
-                                            <h1 className="story-title">"{title.includes("[SEP]") ? title.split("[SEP]")[1].trim() : title}"</h1>
+                                            <h1 className="main-title">"{title.includes("[SEP]") ? title.split("[SEP]")[1].trim() : title}"</h1>
                                         </>
                                     }
                                 />
@@ -237,7 +240,7 @@ const StoryPage = () => {
                                     <img src={Paper} alt="Paper Background" className="paper-image" />
                                     <div className="paper-content">
                                         <p className="story-subtitle">Ang tipo kong Kwento</p>
-                                        <h1 className="story-title">"{title.includes("[SEP]") ? title.split("[SEP]")[1].trim() : title}"</h1>
+                                        <h1 className="main-title">"{title.includes("[SEP]") ? title.split("[SEP]")[1].trim() : title}"</h1>
                                         <div className="story-text">
                                             {(story.includes("[SEP]") ? story.split("[SEP]")[1].trim() : story)
                                                 .split(/(?<=[.!?])\s+/) // Split by sentence boundaries
@@ -245,7 +248,9 @@ const StoryPage = () => {
                                                     <p key={index} style={{ textIndent: "1.5em", marginBottom: "1em" }}>
                                                         {paragraph}
                                                     </p>
-                                                ))}
+                                                ))} 
+                                             <img src={aboutIMG} className='girlIMG' alt="" />  
+                                                
                                         </div>
                                     </div>
                                 </div>
