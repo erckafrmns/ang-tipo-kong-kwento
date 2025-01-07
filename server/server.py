@@ -441,6 +441,27 @@ def delete_account():
         return jsonify({"error": "An error occurred while deleting the account", "details": str(e)}), 500
 
 
+# DELETE SPECIFIC STORY
+@app.route('/delete-story/<string:story_id>', methods=['DELETE'])
+@jwt_required()
+def delete_story(story_id):
+    try:
+        user_id = get_jwt_identity()
+
+        story = Story.query.filter_by(story_id=story_id, user_id=user_id).first()
+
+        if not story:
+            return jsonify({"message": "Story not found or you do not have permission to delete this story."}), 404
+
+        db.session.delete(story)
+        db.session.commit()
+
+        return jsonify({"message": "Story deleted successfully."}), 200
+
+    except Exception as e:
+        return jsonify({"error": f"An error occurred: {str(e)}"}), 500
+
+
 # GENERATE RANDOM STORY API
 @app.route('/generate-random-story', methods=['POST'])
 @jwt_required(optional=True)

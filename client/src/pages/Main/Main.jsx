@@ -36,6 +36,7 @@ const Main = () => {
             title: generatedTitle,
             genre: generatedGenre,
             story: generatedStory,
+            timestamp: new Date().toISOString(),
           };
           sessionStorage.setItem(`guestStory_${story_id}`, JSON.stringify(storyData));
 
