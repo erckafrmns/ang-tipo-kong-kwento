@@ -1,6 +1,6 @@
 .account {
     display: flex;
-    flex-direction: column;
+    flex-direction: column; 
 } 
 
 .account-details {
@@ -43,7 +43,7 @@
 .account-buttons {
     display: flex;
     justify-content: space-between;    
-    margin-top: 20px;  
+    margin-top: 1.5%;  
 } 
 
 .changePass-btn, .delete-btn{ 
@@ -72,7 +72,7 @@
 } 
 
 
-/* Modal Container */
+/* Change Password Modal */
 .account-modal-container {
     position: fixed;
     top: 0;
@@ -146,6 +146,90 @@
   
   .change-password-confirm-btn:hover, .change-password-cancel-btn:hover {
     transform: scale(0.98);
-  } 
-  
-  
+  }  
+
+  /*Delete Account Modal*/  
+.modal-delete-account{ 
+  background: var(--beige); 
+  color: var(--green);
+  padding: 30px 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}  
+
+.modal-delete-account p {
+  max-width: 440px; 
+  margin: 0 auto; 
+  text-align: center; 
+}
+
+.account-modal-buttons{ 
+  display: flex;
+  justify-content: space-around;
+  margin-top: 23px;
+} 
+
+.delete-account-confirm-btn, .delete-account-cancel-btn{ 
+  padding: 10px 30px;
+  font-size: 16px;
+  font-weight: var(--fontweight);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer; 
+  font-family: var(--main-font);  
+  text-transform: lowercase;
+  transition: all 0.3s ease;
+} 
+
+.delete-account-confirm-btn { 
+  color: var(--beige);
+  background-color: #921818; 
+}
+
+.delete-account-cancel-btn { 
+  color: var(--green);
+  background-color: var(--yellow); 
+}
+
+.delete-account-confirm-btn:hover, .delete-account-cancel-btn:hover {
+  transform: scale(0.98);
+}  
+
+/*Checkbox*/
+.checkbox-container {
+  display: flex; 
+  align-items: center;
+  margin: 15px 0; 
+  width: 100%; 
+  text-align: left; 
+}
+
+.checkbox-input {
+  margin-right: 10px; 
+  vertical-align: middle;
+}
+
+.checkbox-container label {
+  font-size: 13px;
+  color: #333; 
+  display: inline-block;
+  white-space: nowrap;
+  margin-right: 100px; 
+  font-family: "Lora", sans-serif;  
+} 
+ 
+.checkbox-container label::first-letter {
+  text-transform: uppercase;
+}
+ 
+.checkbox-label::after{
+  content: "*"; 
+  color: #921818;    
+} 
+
+.account-modal-buttons button.delete-account-confirm-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;  
+  pointer-events: none;
+}
+
