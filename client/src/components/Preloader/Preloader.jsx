@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"; 
 import '../Preloader/Preloader.css';  
-import '../Preloader/Preloader-vv.css'; 
+import '../Preloader/Preloader-vv.css';  
 import logo from '../../assets/logo.png'; // Update path to logo if necessary
 
 const Preloader = ({ message }) => { 

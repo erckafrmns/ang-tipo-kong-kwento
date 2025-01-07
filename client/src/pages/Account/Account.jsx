@@ -20,7 +20,9 @@ const Account = () => {
     const [currentPassword, setCurrentPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const navigate = useNavigate();
+    const navigate = useNavigate(); 
+    const [isChecked, setIsChecked] = useState(false);
+
 
     useEffect(() => {
         const fetchUserInfo = async () => {
@@ -132,8 +134,7 @@ const Account = () => {
             console.error("Error deleting account:", error);
             alert("An error occurred while deleting the account.");
         }
-    };
-
+    };  
 
     return (
         <> 
@@ -168,7 +169,7 @@ const Account = () => {
                     <div className="account-modal-container">
                         <div className="modal-change-password">
                             <h2>Change Password</h2>
-                            <img src={modalLine} alt="Modal Line" className="modal-line" /> {/* Replaced div with an image */}
+                            <img src={modalLine} alt="Modal Line" className="modal-line" /> 
                             <form onSubmit={handlePasswordChange}>
                                 <div className="form-group">
                                     <input type="password" id="currentPassword" placeholder="Current Password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} required className="form-control"/>
@@ -197,12 +198,26 @@ const Account = () => {
 
                 {isDeleteAccountModalOpen && (
                     <div className="account-modal-container">
-                        <div className="modal-delete-account">
-                            <h2>Are you sure you want to delete your account?</h2>
-                            <img src={modalLine} alt="Modal Line" className="modal-line" />
+                        <div className="modal-delete-account"> 
+                            <h2>Delete Account</h2> 
+                            <img src={modalLine} alt="Modal Line" className="modal-line" /> 
+                            <p>Deleting your account will remove all of your information from our database. This cannot be undone.</p> 
+                            <div className="checkbox-container">
+                                <input   
+                                    className="checkbox-input"
+                                    type="checkbox" 
+                                    id="readConfirmation" 
+                                    onChange={(e) => setIsChecked(e.target.checked)} 
+                                />
+                                <label className="checkbox-label" htmlFor="readConfirmation">I have read and understood the above statement.</label>
+                            </div>
                             <div className="account-modal-buttons">
-                                <button onClick={handleDeleteAccount} className="delete-account-confirm-btn">
-                                    Yes, Delete
+                                <button 
+                                    className="delete-account-confirm-btn" 
+                                    onClick={handleDeleteAccount} 
+                                    disabled={!isChecked} 
+                                >
+                                    Delete
                                 </button>
                                 <button onClick={handleCloseDeleteAccountModal} className="delete-account-cancel-btn">
                                     Cancel
