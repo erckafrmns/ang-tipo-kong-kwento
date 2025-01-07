@@ -14,7 +14,6 @@ const Account = () => {
         first_name: "",
         last_name: "",
         email: "",
-        password: "********",
     });
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isDeleteAccountModalOpen, setIsDeleteAccountModalOpen] = useState(false);
@@ -42,7 +41,6 @@ const Account = () => {
                     first_name: response.data.first_name,
                     last_name: response.data.last_name,
                     email: response.data.email,
-                    password: response.data.password.replace(/./g, '*'), // Mask the password
                 });
             } catch (error) {
                 console.error("Error fetching user info:", error);
@@ -155,10 +153,7 @@ const Account = () => {
                         <label>Email</label>
                         <input type="email" value={user.email} disabled className="account-control"/>
                     </div>
-                    <div className="account-group">
-                        <label>Password</label>
-                        <input type="password" value={user.password} disabled className="account-control"/>
-                    </div> 
+            
                     <div className="account-group account-buttons">
                     <button onClick={handleOpenModal} className="changePass-btn">
                         Change Password

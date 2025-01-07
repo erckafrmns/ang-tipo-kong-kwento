@@ -200,7 +200,6 @@ def login():
     if user and check_password_hash(user.password, password):
         access_token = create_access_token(identity=str(user.user_id))
         return jsonify({
-            #"message": "Logged in successfully!",
             "access_token": access_token
         }), 200
     
@@ -242,7 +241,6 @@ def get_user_info():
             "first_name": user.first_name,
             "last_name": user.last_name,
             "email": user.email,
-            "password": user.password
         }
         return jsonify(user_info), 200
         
@@ -326,7 +324,7 @@ def change_password():
             return jsonify({"error": "Current password is incorrect."}), 400
         
         if new_password != confirm_new_password:
-            return jsonify({"error": "New password and confirm password do not match."}), 400
+            return jsonify({"error": "Passwords do not match."}), 400
         
         valPass_error = validate_password(confirm_new_password)
         if valPass_error:
@@ -419,6 +417,7 @@ def reset_password(token):
         logging.error(f"Error resetting password: {str(e)}")
         return jsonify({"error": "An error occurred while resetting the password."}), 500
 
+
 # DELETE ACCOUNT
 @app.route('/delete-account', methods=['DELETE'])
 @jwt_required()
@@ -440,6 +439,7 @@ def delete_account():
 
     except Exception as e:
         return jsonify({"error": "An error occurred while deleting the account", "details": str(e)}), 500
+
 
 # GENERATE RANDOM STORY API
 @app.route('/generate-random-story', methods=['POST'])
@@ -509,7 +509,6 @@ def generate_random_story():
     except Exception as e:
         logging.error(f"ERROR GENERATING RANDOM STORY: {str(e)}")
         return jsonify({"error": str(e)}), 500
-
 
 
 # GENERATE CUSTOM STORY API
