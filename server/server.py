@@ -257,7 +257,7 @@ def get_user_info():
 def retrieve_user_stories():
     try:
         user_id = get_jwt_identity()
-        stories = Story.query.filter_by(user_id=user_id).all()
+        stories = Story.query.filter_by(user_id=user_id).order_by(Story.created_at.desc()).all()
         
         user_stories = [
             {
@@ -465,6 +465,7 @@ def generate_random_story():
                 selected_row = random.choice(rows)
                 title = selected_row['Title']
                 genre = selected_row['Genre']
+                length = selected_row['Length']
         except Exception as csv_error:
             logging.error(f"Failed to read or process titles.csv: {csv_error}")
             return jsonify({"error": "Failed to read titles.csv"}), 500
@@ -472,7 +473,7 @@ def generate_random_story():
         # Request to model service
         response = requests.post(
             f"{MODEL_SERVICE_URL}/model-generate-story",
-            json={"title": title, "genre": genre},
+            json={"title": title, "genre": genre, "length": length},
         )
 
         if response.status_code == 200:
@@ -497,6 +498,7 @@ def generate_random_story():
                 "story_id": story_id,
                 "title": title,
                 "genre": genre,
+                "length": length,
                 "story": story,
             })
             
@@ -525,13 +527,14 @@ def generate_custom_story():
         data = request.get_json()
         title = data.get('title')
         genre = data.get('genre')
+        length = data.get('storyLength')
         start_time = time.time() #TO TRACK GENERATION TIME
-        logging.info(f"RECEIVED REQUEST FOR CUSTOM STORY: '{genre}: {title}'")
+        logging.info(f"RECEIVED REQUEST FOR CUSTOM STORY: '{genre} - {length} - {title}'")
 
         # REQUEST TO MODEL SERVICE
         response = requests.post(
             f"{MODEL_SERVICE_URL}/model-generate-story",
-            json={"title": title, "genre": genre},
+            json={"title": title, "genre": genre, "length": length},
         )
 
         if response.status_code == 200:

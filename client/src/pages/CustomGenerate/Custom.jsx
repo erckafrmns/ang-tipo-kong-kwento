@@ -21,7 +21,7 @@ const Custom = ({ closeModal, isGuest }) => {
       return;
     }
 
-    const storyLength = isShortStory ? 'short' : 'long';
+    const storyLength = isShortStory ? 'Short' : 'Long';
 
     if (isGuest) {
       navigate('/story', { state: { loading: true, isGuest: true } });
