@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Modal from 'react-modal';
 import axios from 'axios';  
+import { useNavigate } from "react-router-dom";
  
 import modalLine from '../../assets/modal-line.svg'; 
 import InsideNavbar from '../../components/Navbar/InsideNavbar';
@@ -17,9 +17,11 @@ const Account = () => {
         password: "********",
     });
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isDeleteAccountModalOpen, setIsDeleteAccountModalOpen] = useState(false);
     const [currentPassword, setCurrentPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchUserInfo = async () => {
@@ -77,7 +79,7 @@ const Account = () => {
                 return;
             }
 
-            const response = await axios.post("http://localhost:5000/change-password",
+            const response = await axios.put("http://localhost:5000/change-password",
                 {
                     current_password: currentPassword,
                     new_password: newPassword,
@@ -99,6 +101,38 @@ const Account = () => {
                 console.error("Error changing password:", error);
                 alert("An error occurred while changing the password.");
             }
+        }
+    };
+
+
+    const handleOpenDeleteAccountModal = () => {
+        setIsDeleteAccountModalOpen(true);
+    };
+
+    const handleCloseDeleteAccountModal = () => {
+        setIsDeleteAccountModalOpen(false);
+    };
+
+    const handleDeleteAccount = async () => {
+        try {
+            const token = localStorage.getItem("authToken");
+            if (!token) {
+                alert("Authentication token not found. Please log in again.");
+                return;
+            }
+
+            await axios.delete("http://localhost:5000/delete-account", {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            alert("Account deleted successfully.");
+            localStorage.removeItem("authToken");
+            navigate("/");
+        } catch (error) {
+            console.error("Error deleting account:", error);
+            alert("An error occurred while deleting the account.");
         }
     };
 
@@ -129,42 +163,60 @@ const Account = () => {
                     <button onClick={handleOpenModal} className="changePass-btn">
                         Change Password
                     </button> 
-                    <button className="delete-btn">
+                    <button className="delete-btn" onClick={handleOpenDeleteAccountModal}>
                         Delete Account
                     </button> 
                     </div>
                 </section>
 
                 {isModalOpen && (
-                        <div className="account-modal-container">
-                            <div className="modal-change-password">
+                    <div className="account-modal-container">
+                        <div className="modal-change-password">
                             <h2>Change Password</h2>
                             <img src={modalLine} alt="Modal Line" className="modal-line" /> {/* Replaced div with an image */}
                             <form onSubmit={handlePasswordChange}>
                                 <div className="form-group">
-                                <input type="password" id="currentPassword" placeholder="Current Password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} required className="form-control"/>
+                                    <input type="password" id="currentPassword" placeholder="Current Password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} required className="form-control"/>
                                 </div>
 
                                 <div className="form-group">
-                                <input type="password" id="newPassword" placeholder="New Password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required className="form-control"/>
+                                    <input type="password" id="newPassword" placeholder="New Password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required className="form-control"/>
                                 </div>
 
                                 <div className="form-group">
-                                <input type="password" id="confirmPassword" placeholder="Confirm New Password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required className="form-control"/>
+                                    <input type="password" id="confirmPassword" placeholder="Confirm New Password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required className="form-control"/>
                                 </div>
 
                                 <div className="account-modal-buttons">
-                                <button type="submit" className="change-password-confirm-btn">
-                                    Submit
-                                </button>
-                                <button type="button" onClick={handleCloseModal} className="change-password-cancel-btn">
-                                    Cancel
-                                </button>
+                                    <button type="submit" className="change-password-confirm-btn">
+                                        Submit
+                                    </button>
+                                    <button type="button" onClick={handleCloseModal} className="change-password-cancel-btn">
+                                        Cancel
+                                    </button>
                                 </div>
                             </form>
+                        </div>
+                    </div>
+                )}
+
+                {isDeleteAccountModalOpen && (
+                    <div className="account-modal-container">
+                        <div className="modal-delete-account">
+                            <h2>Are you sure you want to delete your account?</h2>
+                            <img src={modalLine} alt="Modal Line" className="modal-line" />
+                            <div className="account-modal-buttons">
+                                <button onClick={handleDeleteAccount} className="delete-account-confirm-btn">
+                                    Yes, Delete
+                                </button>
+                                <button onClick={handleCloseDeleteAccountModal} className="delete-account-cancel-btn">
+                                    Cancel
+                                </button>
                             </div>
                         </div>
-                        )}
+                    </div>
+                )}
+
 
             </div> 
             <Footer isAlternative={true} />

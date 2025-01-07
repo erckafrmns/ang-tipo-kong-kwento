@@ -210,10 +210,10 @@ def login():
 # VALIDATE PASSWORD IF IT PASSED THE MIN REQUIREMENT
 def validate_password(password):
     if len(password) < 8:
-        return {"message": "Password must be at least 8 characters long."}, 400
+        return {"error": "Password must be at least 8 characters long."}, 400
     
     if not re.search(r'\d', password): 
-        return {"message": "Password must contain at least one number."}, 400
+        return {"error": "Password must contain at least one number."}, 400
     
     return None
 
@@ -310,7 +310,7 @@ def generate_storyID():
 
 
 # CHANGE PASSWORD API
-@app.route('/change-password', methods=['POST'])
+@app.route('/change-password', methods=['PUT'])
 @jwt_required()
 def change_password():
     try:
@@ -327,6 +327,10 @@ def change_password():
         
         if new_password != confirm_new_password:
             return jsonify({"error": "New password and confirm password do not match."}), 400
+        
+        valPass_error = validate_password(confirm_new_password)
+        if valPass_error:
+            return jsonify(valPass_error[0]), valPass_error[1]
 
         user.password = generate_password_hash(confirm_new_password, method='pbkdf2:sha256')
         db.session.commit()
@@ -347,6 +351,9 @@ def forgot_password():
 
         if not user:
             return jsonify({"error": "User with this email does not exist."}), 404
+        
+        if not user.is_active:
+            return jsonify({"error": "Please verify your email first."}), 405
 
         reset_token = generate_verification_token() 
         user.verification_token = reset_token
@@ -383,7 +390,7 @@ def forgot_password():
 
 
 # RESET PASSWORD API
-@app.route('/reset-password/<token>', methods=['POST'])
+@app.route('/reset-password/<token>', methods=['PUT'])
 def reset_password(token):
     try:
         data = request.get_json()
@@ -397,6 +404,10 @@ def reset_password(token):
         
         if new_password != confirm_new_password:
             return jsonify({"error": "Passwords do not match."}), 400
+        
+        valPass_error = validate_password(confirm_new_password)
+        if valPass_error:
+            return jsonify(valPass_error[0]), valPass_error[1]
 
         user.password = generate_password_hash(confirm_new_password, method='pbkdf2:sha256')
         user.verification_token = None
@@ -408,6 +419,27 @@ def reset_password(token):
         logging.error(f"Error resetting password: {str(e)}")
         return jsonify({"error": "An error occurred while resetting the password."}), 500
 
+# DELETE ACCOUNT
+@app.route('/delete-account', methods=['DELETE'])
+@jwt_required()
+def delete_account():
+    try:
+        current_user_id = get_jwt_identity()
+        
+        # Find the user by ID
+        user = User.query.get(current_user_id)
+
+        if not user:
+            return jsonify({"error": "User not found"}), 404
+
+        # Delete the user from the database
+        db.session.delete(user)
+        db.session.commit()
+
+        return jsonify({"message": "Account successfully deleted"}), 200
+
+    except Exception as e:
+        return jsonify({"error": "An error occurred while deleting the account", "details": str(e)}), 500
 
 # GENERATE RANDOM STORY API
 @app.route('/generate-random-story', methods=['POST'])

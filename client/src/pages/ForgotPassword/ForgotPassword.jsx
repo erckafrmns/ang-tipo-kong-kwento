@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';  
 import './ForgotPassword.css';
 import { ImCross } from "react-icons/im";
 
@@ -16,28 +17,23 @@ const ForgotPassword = ({ closeModal, toggleModal }) => {
     setIsLoading(true); 
 
     try {
-      const response = await fetch('http://localhost:5000/forgot-password', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
-      });
+        const response = await axios.post('http://localhost:5000/forgot-password', {
+            email,
+        });
 
-      if (response.ok) {
-        const data = await response.json();
-        setMessage(data.message);
-      } else {
-        const errorData = await response.json();
-        setError(errorData.error);
-      }
+        setMessage(response.data.message);
     } catch (err) {
-      setError('An unexpected error occurred. Please try again later.');
-      console.error(err);
+        if (err.response && err.response.data && err.response.data.error) {
+            setError(err.response.data.error);
+        } else {
+            setError('An unexpected error occurred. Please try again later.');
+        }
+        console.error(err);
     } finally {
-      setIsLoading(false); 
+        setIsLoading(false); 
     }
-  };
+};
+
 
   return (
     <div className="forgot-password-overlay">

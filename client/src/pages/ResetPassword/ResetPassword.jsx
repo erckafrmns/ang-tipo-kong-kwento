@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';  
 import './ResetPassword.css'; 
 import Navbar from '../../components/Navbar/Navbar'; 
 import { useParams, useNavigate } from 'react-router-dom';
@@ -16,40 +17,35 @@ const ResetPassword = () => {
   const handleResetPassword = async (e) => {
     e.preventDefault();
     setMessage('');
-    setError(''); 
+    setError('');
     setIsLoading(true);
 
     if (newPassword !== confirmNewPassword) {
-      setError('Passwords do not match.'); 
-      setIsLoading(false); 
-      return; 
-      
+        setError('Passwords do not match.');
+        setIsLoading(false);
+        return;
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/reset-password/${token}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ new_password: newPassword, confirm_new_password: confirmNewPassword }),
-      });
+        const response = await axios.put(`http://localhost:5000/reset-password/${token}`, {
+            new_password: newPassword,
+            confirm_new_password: confirmNewPassword,
+        });
 
-      if (response.ok) {
-        const data = await response.json();
-        setMessage(data.message); 
-        setTimeout(() => navigate('/'), 5000);
-      } else {
-        const errorData = await response.json();
-        setError(errorData.error);
-      }
+        setMessage(response.data.message);
+        setTimeout(() => navigate('/'), 2000);
     } catch (err) {
-      setError('An unexpected error occurred. Please try again later.');
-      console.error(err);
+        if (err.response && err.response.data && err.response.data.error) {
+            setError(err.response.data.error);
+        } else {
+            setError('An unexpected error occurred. Please try again later.');
+        }
+        console.error(err);
     } finally {
-      setIsLoading(false); 
+        setIsLoading(false);
     }
-  };
+};
+
 
   return (
     <>

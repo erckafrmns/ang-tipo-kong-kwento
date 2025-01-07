@@ -40,6 +40,7 @@ const Home = () => {
   useEffect(() => {
     // Clear sessionStorage when the Home component renders
     sessionStorage.clear();
+    localStorage.removeItem('authToken'); // Remove authToken cuz this means user forgot to logout
 
     // Check if state indicates to open a modal
     if (location.state?.openModal) {

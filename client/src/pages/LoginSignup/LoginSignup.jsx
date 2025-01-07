@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import manSitting from '../../assets/man-sitting.svg';
 import ladyReading from '../../assets/lady-reading.svg';
 import { ImCross } from "react-icons/im";
@@ -40,66 +41,64 @@ const LoginSignup = ({ closeModal, formType, toggleModal  }) => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setIsLoading(true); 
+    setIsLoading(true);
     try {
-      const response = await fetch('http://localhost:5000/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ login_email, login_password }),
-      });
+        const response = await axios.post('http://localhost:5000/login', {
+            login_email,
+            login_password,
+        });
 
-      const data = await response.json();
-
-      if (response.ok) {
-        localStorage.setItem('authToken', data.access_token); // Store JWT token
+        // Handle success response
+        localStorage.setItem('authToken', response.data.access_token); // Store JWT token
         setLoginEmail('');
         setLoginPassword('');
         setErrorMessage('');
         navigate('/main');
-      } else {
-        setErrorMessage(data.message || 'Incorrect username or password.');
-      }
     } catch (error) {
-      console.error('Error during login:', error);
-      setErrorMessage('Something went wrong, please try again later.');
+        // Handle error response
+        if (error.response && error.response.data) {
+            setErrorMessage(error.response.data.error || error.response.data.message || 'Incorrect username or password.');
+        } else {
+            setErrorMessage('Something went wrong, please try again later.');
+        }
+        console.error('Error during login:', error);
     } finally {
-      setIsLoading(false); 
+        setIsLoading(false);
     }
   };
 
+
   const handleSignup = async (e) => {
     e.preventDefault();
-    setIsLoading(true); 
+    setIsLoading(true);
     try {
-      const response = await fetch('http://localhost:5000/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ first_name: firstName, last_name: lastName, signup_email, signup_password }),
-      });
+        const response = await axios.post('http://localhost:5000/signup', {
+            first_name: firstName,
+            last_name: lastName,
+            signup_email,
+            signup_password,
+        });
 
-      const data = await response.json();
-
-      if (response.ok) {
+        // Handle success response
         navigate('/verify-email', { state: { email: signup_email } });
         setSignupEmail('');
         setSignupPassword('');
         setFirstName('');
         setLastName('');
         setErrorMessage('');
-      } else {
-        setErrorMessage(data.message || 'Signup failed');
-      }
     } catch (error) {
-      console.error('Error during signup:', error);
-      setErrorMessage('Something went wrong, please try again later.');
+        // Handle error response
+        if (error.response && error.response.data) {
+            setErrorMessage(error.response.data.error || error.response.data.message || 'Signup failed');
+        } else {
+            setErrorMessage('Something went wrong, please try again later.');
+        }
+        console.error('Error during signup:', error);
     } finally {
-      setIsLoading(false); // Stop loading
+        setIsLoading(false);
     }
-  };
+};
+
 
   return (
     <>
