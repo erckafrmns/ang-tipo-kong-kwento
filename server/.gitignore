@@ -1,6 +1,0 @@
-# Server-specific ignores
-*.pyc
-__pycache__/
-venv/
-.env
-model/

@@ -1,10 +1,5 @@
 :root {
-  --green: #294122;            /* Primary brown color */
-  --white: #FFFFFF;           /* White color */
-  --hoverColor: rgba(53, 40, 14, 0.2); /* Hover color for buttons */
-  --yellow: #E1A10B;         /* Sidebar background color */
-  --beige: #FFEACF;        /* Light background color for search bar */
-  --placeholderColor: #7A6C4C; /* Placeholder color */
+  --hoverColor: rgba(255, 191, 58, 0.7); /* Hover color for buttons */
   --fontweight: 450; 
   --main-font: "EfcoBrookshire", sans-serif;  
 }  
@@ -37,16 +32,20 @@
 } 
 
 .inside-navbar1 ul{  
-	padding: 20px 460px; 
+	padding: 20px 485px; 
 	list-style: none; 
 	text-align: right;   
-	margin-left: 2%;  
+	margin-left: -0.8%;  
 } 
 
 .inside-navbar1 ul li{ 
-	float: none; 
+	float: none;  
 	display: inline-block;
-} 
+}   
+
+.nav-left.active {
+  color: var(--yellow);
+}
 
 .inside-navbar1 ul li:nth-child(1){ 
 	float: left;
@@ -56,7 +55,7 @@
 	float: left;
 } 
 
-.inside-navbar1 ul li a{ 
+.inside-navbar1 ul li a, .inside-navbar1 button{ 
 	display: block;  
 	padding: 10px 25px;
 }
@@ -77,7 +76,7 @@
 	margin-top: 10px;
 }
 
-.inside-navbar1 a{
+.inside-navbar1 a, .inside-navbar1 button{
 	color: var(--beige);
 	font-size: 14px;
 	text-decoration: none;
@@ -85,7 +84,14 @@
 	transition: all 0.3s ease;
 }
 
-.inside-navbar1 a:hover{
+.inside-navbar1 button{
+  background-color: transparent;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+
+.inside-navbar1 a:hover, .inside-navbar1 button:hover{
 	color: var(--yellow);
 } 
 
@@ -94,15 +100,17 @@
 .sidebar {
   position: absolute;  
   margin-left: 10px;
-  margin-top: 67px; 
-  width: 250px;
-  height: 89%;  
+  margin-top: 3.5%; 
+  width: 18.5%;
+  height: 68%;  
   border-radius: 10px;
-  background-color: var(--yellow);
+  background-color: var(--beige);
   z-index: 1000; 
   display: none; 
   flex-direction: column; 
-  overflow: hidden;
+  overflow: visible; 
+  border: 2px solid var(--green);  
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .sidebar.open {
@@ -112,132 +120,270 @@
 .sidebar-content {
   position: relative; 
   z-index: 3;  
-  padding: 0 5px;
 }
 
-.resizer {
-  width: 5px;
-  background-color: rgba(0, 0, 0, 0.1);
-  cursor: ew-resize;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-} 
-
-.grainy-bg-sidebar {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: -1;  
-}
-
-
-.top-buttons-container {
-  display: flex;  
+.close-btn-container {
+  display: flex;
+  align-items: center;
   justify-content: space-between; 
-  align-items: center;  
-  padding-top: 5px;
-  z-index: 1000; 
-  position: relative;
+  padding: 5px;  
+  margin-bottom: -10px;
+}
+
+.sidebar-title {
+  font-size: 15px;  
+  font-weight: 600;
+  font-family: var(--main-font);
+  margin-left: 10px;
+  color: var(--green);
+  flex-grow: 1;
 }
 
 
-.close-btn, .new-btn { 
+.close-btn { 
   background-color: transparent; 
   color: var(--green); 
   font-size: 25px; 
   border: none;  
-  padding: 10px 10px 5px 10px; 
+  padding: 8px 8px 0 8px; 
   cursor: pointer; 
-  border-radius: 10px; 
-  transition: background-color 0.3s;  
+  border-radius: 8px;    
+  position: relative;
+  transition: background-color 0.3s;   
+
+} 
+
+/* Tooltip bubble for .close-btn */
+.close-btn::after {
+  content: "Close sidebar"; 
+  position: absolute;
+  top: 50%; 
+  left: 100%; 
+  margin-top: 6px;
+  transform: translateX(8px) translateY(-50%); 
+  padding: 8px 12px; 
+  background-color: var(--green); 
+  color: var(--yellow); 
+  font-size: 14px; 
+  border-radius: 5px; 
+  visibility: hidden; 
+  opacity: 0; 
+  transition: opacity 0.3s ease; 
+  white-space: nowrap; 
+  z-index: 1;
 }
 
-.close-btn:hover, .new-btn:hover, .new-chat-container:hover { 
+/* Arrow pointing to the left for .close-btn */
+.close-btn::before {
+  content: ""; 
+  position: absolute;
+  top: 50%;
+  left: 100%; 
+  margin-left: 17px;
+  transform: translateX(-12px) translateY(-50%) rotate(45deg);
+  width: 10px; 
+  height: 10px; 
+  background-color: var(--green); 
+  visibility: hidden; 
+  opacity: 0; 
+  transition: opacity 0.3s ease;  
+}
+
+/* Show tooltip and arrow on hover */
+.close-btn:hover::after, 
+.close-btn:hover::before {
+  visibility: visible; 
+  opacity: 1; 
+}
+
+.close-btn:hover, .new-chat-container:hover{ 
   background-color: var(--hoverColor); 
-  border-radius: 10px;     
-  z-index:1001; 
-}  
+  z-index:1001;    
+}    
 
 .search-container {
-    flex-grow: 1; 
-    margin: 0 10px; 
+  position: relative;
+  flex-grow: 1;
+  margin: 0 10px;
 }
 
 .search-bar {
-  width: 95%; 
-  padding: 12px;
-  margin:5px; 
-  border: 2px solid transparent; 
-  border-radius: 10px; 
+  width: 100%; 
+  padding: 12px 40px 12px 12px;
+  border: 2px solid var(--green);   
+  border-radius: 8px; 
   outline: none; 
-  background-color: var(--beige); 
-  cursor: text;    
+  background-color: var(--beige);  
+  text-transform: lowercase; 
   transition: background-color 0.3s ease, border-color 0.3s ease; 
 } 
+
+.search-icon {
+  position: absolute; 
+  right: 12px; 
+  top: 50%; 
+  transform: translateY(-50%); 
+  font-size: 20px;
+  color: var(--green);
+  cursor: pointer; 
+}
+
  
 .search-bar:hover {
   background-color: rgba(212, 208, 197, 0.3);  
 } 
 
-.search-bar:focus {  
-  border: 2px solid var(--green);
-  background-color: transparent;
-}
-
-
-.search-bar::placeholder {
+.search-bar::placeholder { 
+  font-size: 16px;
   color: var(--green);  
   font-family: var(--main-font); 
 }     
 
+.new-chat-container {
+  background-color: var(--yellow);  
+  border: 1px solid var(--green);
+  display: flex; 
+  align-items: center;  
+  transition: background-color 0.3s ease;  
+} 
+
 .new-chat-btn {
   color: var(--beige);  
-  font-size: 14px; 
+  font-size: 16px; 
   border: none;  
   padding: 15px; 
   cursor: pointer; 
-  transition: background-color 0.3s; 
   text-align: left; 
   margin-top: auto; 
   border-radius: 10px;  
   background-color: transparent;  
   flex-grow: 1; 
-  font-family: var(--main-font);
+  font-family: var(--main-font); 
+  text-transform: lowercase; 
+  transition: all ease 0.3s; 
+}  
+
+.new-chat-btn:hover{ 
+  color: var(--green);
 }
 
-.new-chat-container {
-  width: 100%;  
-  background-color: var(--green); 
-  border-radius: 10px;   
-  margin-top: 10px;   
-  display: flex; 
-  align-items: center;  
-  transition: background-color 0.3s ease;  
-}   
+.new-chat-icon {
+  margin-left: auto; 
+  margin-right: 7%;
+  font-size: 25px;  
+  color: var(--green);
+  cursor: pointer;  
+  transition: transform 0.3s ease;
+}
+ 
+.new-chat-icon:hover{ 
+  transform: scale(1.1);  
+} 
 
 .logo_small {
   width: 20px;
   height: 20px; 
   margin-left: 10px; 
   border-radius: 50%;
-}   
+}    
 
-/*This Sidebar is placed inside the InsideNavbar*/
+.empty-message{ 
+  color: var(--green); 
+  text-align: center;  
+  align-items: center;  
+  margin-top: 5px;
+}     
+
+.story-container {
+  background-color: transparent;
+  border: 1px solid var(--green);
+  display: flex;
+  align-items: center;
+  transition: background-color 0.3s ease;
+  position: relative; /* For dropdown positioning */
+}
+
+.story-container.active {
+  background-color: rgba(0, 128, 0, 0.1); /* Highlight the active story */
+} 
+
+.story-container:hover{ 
+  background-color: rgba(0, 128, 0, 0.1); /* Highlight the active story */
+}
+
+.story-title {
+  color: var(--green);
+  font-size: 16px;
+  border: none;
+  padding: 15px;
+  cursor: pointer;
+  text-align: left;
+  margin-top: auto;
+  background-color: transparent;
+  flex-grow: 1; 
+  font-family: var(--main-font);
+  text-transform: lowercase; 
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+  display: inline-block; 
+  width: 100%; 
+  max-width: 250px;
+  transition: color 0.3s, background-color 0.3s;
+}
+
+.menu-icon {
+  margin-left: auto;
+  margin-right: 7%;
+  font-size: 22px;
+  color: var(--green);
+  cursor: pointer;
+  opacity: 0; /* Hidden by default */
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.story-container.active .menu-icon,
+.story-container:hover .menu-icon {
+  opacity: 1; /* Show on hover or active */
+}
+
+.menu-icon:hover{ 
+  transform: scale(1.1);  
+}  
+
+.dropdown-menu {
+  right: 0;
+  border: none;
+  z-index: 10;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: #921818;
+  padding: 16px 23px;
+  border: none;
+  cursor: pointer;
+  gap: 10px;
+}
+
+.delete-icon {
+  color: var(--beige);
+  font-size: 17px;
+}
+
 .button-container {
   text-align: center; 
   display: flex;  
-  border: 2px solid var(--yellow);   
+  border: 2px solid var(--green);   
   margin-left: 10px;  
   position: absolute; 
-  margin-top: 67px; 
+  margin-top: 3.5%; 
   border-radius: 10px; 
   padding: 3px;    
-  z-index: 1000;
+  z-index: 1000; 
+  background-color: var(--beige);
 }  
 
 .button-container.hidden {
@@ -249,53 +395,137 @@
   opacity: 1;
 }
 
-.open-btn, .outside-new-btn {
+.open-btn { 
   background-color: transparent;
   color: var(--green); 
-  padding: 10px 10px 5px 10px; 
+  padding: 8px 8px 0 8px; 
   border: none; 
-  border-radius: 10px; 
   cursor: pointer;  
-  font-size: 25px; 
+  font-size: 25px;   
+  border-radius: 8px;  
   transition: background-color 0.3s ease;  
+  position: relative; /* Required to position the tooltip relative to this element */
 }   
 
-
-.open-btn:hover, .outside-new-btn:hover {
+.open-btn:hover {
   background-color: var(--hoverColor); 
-  border-radius: 10px;  
-} 
-
-.between-text {
-  font-size: 13px;
-  color: var(--green); 
-  margin: 0 5px; 
-  align-self: center;  
-  font-weight:var(--fontweight); 
-} 
-/*
-.logout-btn-container {
-  position: absolute; 
-  margin-top: 67px; 
-  right: 30px;
-  z-index: 1000; 
-  font-size: 30px; 
 }
 
-.logout-btn {
-  background-color: var(--yellow);
-  color: var(--green); 
-  padding: 12px 17px 12px 17px;
-  border: none;
+/* Tooltip bubble for .open-btn */
+.open-btn::after {
+  content: "Open sidebar"; 
+  position: absolute;
+  top: 100%; 
+  left: 0; 
+  transform: translateY(8px); 
+  padding: 8px 12px; 
+  background-color: var(--green); 
+  color: var(--yellow);
+  font-size: 14px; 
+  border-radius: 5px; 
+  visibility: hidden; 
+  opacity: 0; 
+  transition: opacity 0.3s ease; 
+  white-space: nowrap;
+  margin-top: 5px;
+}
+
+/* Arrow pointing to the upper left for .open-btn */
+.open-btn::before {
+  content: ""; 
+  position: absolute;
+  top: 100%; 
+  left: 10px; 
+  margin-top: 5px;
+  transform: translateY(5px) rotate(45deg); 
+  width: 8px; 
+  height: 8px; 
+  background-color: var(--green); 
+  visibility: hidden; 
+  opacity: 0; 
+  transition: opacity 0.3s ease; 
+  z-index: 10000; 
+}
+
+.open-btn:hover::after, 
+.open-btn:hover::before {
+  visibility: visible; 
+  opacity: 1; 
+}
+
+.open-btn:hover{
+  background-color: var(--hoverColor); 
+}  
+
+/* Modal Container */
+.modal-container {
+  position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1002;
+}
+
+/* Modal Content */ 
+.modal-logout h2{
+  font-family: var(--main-font);
+      color: var(--green);   
+      margin-top: -5px;
+      margin-bottom: 10px; 
+  }    
+
+/* Horizontal Line */
+.modal-line {
+  width: 100%; 
+  max-height: 130px;
+  margin: -55px 0 -40px 0; 
+  object-fit: contain; 
+}
+
+.modal-logout {
+  background: var(--beige); 
+  color: var(--green);
+  padding: 30px 30px;
   border-radius: 10px;
-  cursor: pointer;
-  font-weight:var(--fontweight);  
-  display: flex;                     
-  align-items:center; 
-  text-align: left;
-  transition: background-color 0.3s;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+} 
+
+/* Modal Buttons */ 
+.modal-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 23px;
 }
 
-.logout-btn:hover {
-  background-color: var(--hoverColor);
-}*/
+.confirm-btn, .cancel-btn {
+  padding: 10px 30px;
+  font-size: 16px;
+  font-weight: var(--fontweight);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer; 
+  font-family: var(--main-font);  
+  text-transform: lowercase;
+  transition: all 0.3s ease;
+}
+
+.confirm-btn { 
+  color: var(--beige);
+  background-color: var(--green); /* Red for confirmation */
+}
+
+.cancel-btn { 
+  color: var(--green);
+  background-color: var(--yellow); /* Green for cancellation */
+}
+
+.confirm-btn:hover, .cancel-btn:hover {
+  transform: scale(0.98);
+}
+ 

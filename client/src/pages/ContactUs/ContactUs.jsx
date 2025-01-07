@@ -3,10 +3,13 @@ import { FaPhoneAlt } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6";
 import './ContactUs.css' 
-import Navbar from '../../components/Navbar/Navbar';
+import Navbar from '../../components/Navbar/Navbar'; 
+import InsideNavbar from '../../components/Navbar/InsideNavbar';
 import Footer from '../../components/Footer/Footer';
 
 const ContactUs = () => { 
+    const isLoggedIn = localStorage.getItem('authToken'); 
+
     useEffect(() => {
         window.scrollTo(0, 0); // Scroll to the top of the page
       }, []);
@@ -27,16 +30,34 @@ const ContactUs = () => {
     };
 
     // Handle form submission
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Form submitted:', formData);
-        // You can make an API call to send the form data to your backend here
-    };
+        try {
+            const response = await fetch('http://localhost:5000/send-email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+
+            if (response.ok) {
+                alert('Message sent successfully!');
+                setFormData({ fullname: '', email: '', message: '' }); 
+            } else {
+                const errorData = await response.json();
+                alert(`Failed to send message: ${errorData.error}`);
+            }
+        } catch (error) {
+            console.error('Error sending message:', error);
+            alert('An error occurred while sending your message.');
+        }
+    }; 
 
   return ( 
     <> 
-    <Navbar/>
-        <div className='contactUs'>
+      {isLoggedIn ? <InsideNavbar /> : <Navbar />}
+      <div className='contactUs'>
             
             <div className='contactUs-bot'>
                 <h1>Contact Us</h1>

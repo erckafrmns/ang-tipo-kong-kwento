@@ -2,32 +2,74 @@ import React, { useRef, useState, useEffect } from 'react';
 import { FiArrowRightCircle, FiArrowLeftCircle } from "react-icons/fi";   
 import Navbar from '../../components/Navbar/Navbar'; 
 import ScrollToTop from '../../components/ScrollToTop/ScrollToTop'; 
-import Footer from '../../components/Footer/Footer';
-import heroBG from '../../assets/hero-bg.png';
-import aboutBG from '../../assets/about-bg.png';
-import aboutIMG from '../../assets/about-img.png';
-import featuresCard from '../../assets/features-card.png';
-import bottomBanner from '../../assets/bottomBanner.svg';
-import './Home.css';
-import { Link } from 'react-router-dom';
+import Footer from '../../components/Footer/Footer'; 
+import {Link, useLocation, useNavigate} from "react-router-dom";
+import './Home.css';  
 
-const Home = () => {
+import heroBG from '../../assets/hero-bg.png';
+import aboutBG from '../../assets/about-books.gif';
+import aboutIMG from '../../assets/about-img.png';
+import featCustom from '../../assets/feat-custom.png'; 
+import featBook from '../../assets/feat-book.png'; 
+import featPaperBook from '../../assets/feat-paper-book.png'; 
+import featSave from '../../assets/feat-save.png'; 
+import featDownload from '../../assets/feat-download.png'; 
+
+import bottomBanner from '../../assets/bottomBanner.svg';  
+
+import LoginSignup from '../LoginSignup/LoginSignup';   
+import ForgotPassword from '../ForgotPassword/ForgotPassword';     
+import { DefaultPreloader } from '../../components/Preloader/Preloader';
+
+
+const Home = () => { 
+  const location = useLocation(); // Access state passed via navigation
   const featuresRef = useRef(null);
   const aboutRef = useRef(null);
   const navbarRef = useRef(null); 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [transitionDirection, setTransitionDirection] = useState('');
+  const [showModal, setShowModal] = useState(false);
+  const [modalType, setModalType] = useState('login'); 
 
-  // List of feature objects
+  const navigate = useNavigate();
+
+  const handleGuestAccess = () => {
+    navigate('/main', { state: { isGuest: true } });
+  };
+
+  useEffect(() => {
+    // Clear sessionStorage when the Home component renders
+    sessionStorage.clear();
+    localStorage.removeItem('authToken'); // Remove authToken cuz this means user forgot to logout
+
+    // Check if state indicates to open a modal
+    if (location.state?.openModal) {
+      setModalType(location.state.openModal);
+      setShowModal(true);
+    }
+  }, [location.state]);
+
+  const toggleModal = (type) => {
+    if (!type) {
+      setShowModal(false); 
+      setModalType('');   
+    } else if (type === modalType) {
+      setShowModal(!showModal); 
+    } else {
+      setModalType(type);
+      setShowModal(true);
+    }
+  };
+
   const features = [
-    { title: "Quick Story Generation", description: "Instantly generate engaging stories with a few clicks." },
-    { title: "Customized Story Generation", description: "Personalize stories by choosing themes, characters, and morals." },
-    { title: "Story Archive", description: "Save and revisit generated stories for future reading." },
-    { title: "Story Archive 2", description: "Save and revisit generated stories for future reading." },
-    { title: "Story Archive 3", description: "Save and revisit generated stories for future reading." }
+    { title: "Quick Story Generation", description: "Instantly generate engaging stories with a few clicks.", image: featBook},
+    { title: "Customized Your Story", description: "Personalize stories by selecting the length, genre, and title.", image: featCustom},
+    { title: "Save & Revisit", description: "Save and revisit generated stories for future reading.", image: featSave},
+    { title: "View in Book or Paper Mode", description: "Save and revisit generated stories for future reading.", image: featPaperBook},
+    { title: "Download Your Story", description: "Download your stories for offline reading and access them anytime, anywhere.", image: featDownload }
   ];
 
-  // Scroll functions
   const scrollToFeatures = () => {
     featuresRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -48,19 +90,28 @@ const Home = () => {
     setTimeout(() => setTransitionDirection(''), 500);
   };
 
+  const [isLoading, setIsLoading] = React.useState(true);
+
+    React.useEffect(() => {
+        const timer = setTimeout(() => setIsLoading(false), 3000);
+
+        return () => clearTimeout(timer);
+    }, []);
+
   return (
-    <>
-      <div ref={navbarRef}>
+    <> 
+      <div ref={navbarRef}> 
         <Navbar scrollToFeatures={scrollToFeatures} scrollToAbout={scrollToAbout} />
       </div>
+      {isLoading ? <DefaultPreloader /> : null}
 
       <section className='hero'>
         <h1>Ang tipo kong Kwento</h1>
         <img className="heroBG" src={heroBG} alt="" />
         <div className='heroContainer'>
-          <Link to="/login-signup" className='loginBTN'>LOGIN</Link>
-          <Link to="/login-signup" className='signupBTN'>SIGN UP</Link>
-          <a href="/#" className='guestBTN'>Continue as Guest</a>
+          <button className="loginBTN" onClick={() => toggleModal('login')}>LOGIN</button>
+          <button className="signupBTN" onClick={() => toggleModal('signup')}>SIGN UP</button>
+          <button className="guestBTN" onClick={handleGuestAccess}>Continue as Guest</button>
         </div>
       </section>
 
@@ -106,10 +157,23 @@ const Home = () => {
           <p>Ang Tipo Kong Kwento is an AI-based Tagalog story writer designed to create engaging and culturally relevant narratives for Filipino children. This innovative platform leverages advanced language models to generate personalized stories that foster creativity, language skills, and moral values. By making quality literature accessible, the application aims to enrich early childhood education in the Philippines and promote a lifelong love for reading.</p>
           <Link to="/developers" className='developersBTN'>Developers</Link>
         </div>
-        <img src={aboutIMG} className='aboutIMG' alt="" />  
+        <img src={aboutIMG} className='aboutIMG' alt="" />   
       </section> 
       <ScrollToTop/>
-      <Footer /> 
+      <Footer />
+
+      {showModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            {modalType === 'login' || modalType === 'signup' ? (
+              <LoginSignup closeModal={() => toggleModal('')} formType={modalType} toggleModal={toggleModal}/>
+            ) : modalType === 'forgotpassword' ? (
+              <ForgotPassword closeModal={() => toggleModal('')} toggleModal={toggleModal}/>
+            ) : null}
+          </div>
+        </div>
+      )}
+
     </>
   );
 };

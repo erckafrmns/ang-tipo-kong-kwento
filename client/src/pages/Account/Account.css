@@ -1,0 +1,151 @@
+.account {
+    display: flex;
+    flex-direction: column;
+} 
+
+.account-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    z-index: 999; 
+}
+
+.account h1 {
+    color: var(--green);
+    font-family: var(--main-font);
+    font-size: 50px;
+    padding: 10px; 
+    margin-top: -40px;
+} 
+
+.account label{ 
+    text-transform: lowercase;  
+    font-size: 17px;
+    color: var(--green);
+    font-family: var(--main-font); 
+    display: block;
+}   
+
+.account-group{ 
+    width: 32%;  
+}
+ 
+.account-control{ 
+    background-color: var(--green); 
+    color: var(--beige); 
+    border: none; 
+    padding: 20px;
+} 
+
+/*BUTTONS*/
+.account-buttons {
+    display: flex;
+    justify-content: space-between;    
+    margin-top: 20px;  
+} 
+
+.changePass-btn, .delete-btn{ 
+    border: none; 
+    font-family: var(--main-font); 
+    text-transform: lowercase; 
+    font-size: 24px; 
+    border-radius: 5px;
+    padding: 1.5% 3%; 
+    cursor: pointer;
+    transition: all 0.3s ease;
+} 
+
+.changePass-btn:hover, .delete-btn:hover{ 
+    transform: scale(0.98);
+}
+
+.changePass-btn{  
+    background-color: var(--yellow);  
+    color: var(--green);
+} 
+ 
+.delete-btn{ 
+    background-color: #921818;  
+    color: var(--beige);
+} 
+
+
+/* Modal Container */
+.account-modal-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+  }
+  
+  /* Modal Content */
+  .modal-change-password {
+    background: var(--beige);
+    padding: 25px 30px;
+    border-radius: 10px;
+    width: 340px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  }
+  
+  .modal-change-password h2 {
+    font-family: var(--main-font);
+    color: var(--green);
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+  
+  .modal-change-password .form-group input {
+    width: 100%;
+    padding: 12px 10px;
+    font-size: 14px;
+    border: 2px solid var(--green);
+    border-radius: 5px;
+    box-sizing: border-box;
+    outline: none; 
+    text-transform: lowercase;
+  }
+  
+  /* Buttons */
+  .account-modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+  }
+  
+  .change-password-confirm-btn,
+  .change-password-cancel-btn {
+    padding: 10px 30px;
+    font-size: 16px;
+    font-weight: var(--fontweight);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer; 
+    font-family: var(--main-font);  
+    text-transform: lowercase;
+    transition: all 0.3s ease;
+  }
+  
+  .change-password-confirm-btn {
+    background-color: var(--green);
+    color: var(--beige);
+  } 
+   
+  .change-password-cancel-btn {
+    background-color: var(--yellow);   
+    color: var(--green);
+  }
+  
+  .change-password-confirm-btn:hover, .change-password-cancel-btn:hover {
+    transform: scale(0.98);
+  } 
+  
+  

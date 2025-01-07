@@ -1,0 +1,8 @@
+flask
+Flask-Cors 
+psycopg2-binary
+Flask-SQLAlchemy
+torch
+transformers
+pandas
+transformers[torch]

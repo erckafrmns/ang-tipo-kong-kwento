@@ -5,3 +5,7 @@
 .footer-alt .leftPart h1, .footer-alt .leftPart p, .footer-alt .socialMedia-item, .footer-alt .termsPolicy-item{  
     color: var(--beige);
 }
+
+.leftPart h1{
+    font-weight: 600;
+}

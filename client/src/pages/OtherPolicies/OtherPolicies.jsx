@@ -1,6 +1,7 @@
-import React, {useEffect } from 'react';
+import React, {useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'; 
-import Navbar from '../../components/Navbar/Navbar'; 
+import Navbar from '../../components/Navbar/Navbar';  
+import InsideNavbar from '../../components/Navbar/InsideNavbar';
 import ScrollToTop from '../../components/ScrollToTop/ScrollToTop';    
 import Footer from '../../components/Footer/Footer';
 import '../TermsOfUse/TermsOfUse.css'
@@ -8,10 +9,13 @@ import '../TermsOfUse/TermsOfUse.css'
 const OtherPolicies = () => { 
   useEffect(() => {
     window.scrollTo(0, 0); // Scroll to the top of the page
-  }, []);
+  }, []); 
+
+  const isLoggedIn = localStorage.getItem('authToken'); 
+  
   return (
     <> 
-    <Navbar/>
+      {isLoggedIn ? <InsideNavbar /> : <Navbar />}
       <div className='termsandpolicies'>
             <div className='container-bot'>
                 <h1>Terms and policies</h1>
