@@ -48,7 +48,7 @@ def generate_story():
     outputs = model.generate(
         inputs.input_ids,
         do_sample=True,
-        max_length=500,
+        max_length=700,
         num_return_sequences=1,
         top_k=50,
         top_p=0.95,
@@ -56,8 +56,9 @@ def generate_story():
         pad_token_id=tokenizer.eos_token_id,
     )
 
-    story = tokenizer.decode(outputs[0], skip_special_tokens=True)
+    story = tokenizer.decode(outputs[0], skip_special_tokens=False)
     story = story.split("[SEP]")[-1].strip()  # get part after SEP
+    story = story.split('[END]')[0].strip()
 
     return jsonify({
         "genre": genre,
