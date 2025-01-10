@@ -1,6 +1,8 @@
-h1, h2, p{
+h1,
+h2,
+p {
     cursor: default;
-} 
+}
 
 /* HERO SECTION */
 .hero {
@@ -9,8 +11,8 @@ h1, h2, p{
     height: 89vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; 
-    align-items: center;  
+    justify-content: space-between;
+    align-items: center;
 }
 
 .hero h1 {
@@ -19,15 +21,15 @@ h1, h2, p{
     font-weight: 400;
     letter-spacing: 2px;
     text-align: center;
-    z-index: 2; 
-    margin-top: 30px; 
+    z-index: 2;
+    margin-top: 30px;
     font-family: "EfcoBrookshire", sans-serif;
 }
 
 .heroBG {
     position: absolute;
     bottom: 0;
-    z-index: 1; 
+    z-index: 1;
     width: 100%;
     height: 58%;
 }
@@ -38,10 +40,11 @@ h1, h2, p{
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 65px; 
+    margin-bottom: 65px;
 }
 
-.signupBTN, .loginBTN {
+.signupBTN,
+.loginBTN {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -72,25 +75,26 @@ h1, h2, p{
     transition: all 0.3s ease;
 }
 
-.signupBTN:hover, .loginBTN:hover,
+.signupBTN:hover,
+.loginBTN:hover,
 .guestBTN:hover {
     color: var(--yellow);
 }
 
 /* FEATURES SECTION */
-.features{
+.features {
     height: auto;
     display: flex;
     flex-direction: column;
-    /* padding-top: 100px; */  
+    /* padding-top: 100px; */
 }
 
-.features h1{
+.features h1 {
     font-family: "EfcoBrookshire", sans-serif;
     font-size: 50px;
     font-weight: 400;
     color: var(--yellow);
-    padding: 20px 0 60px 50px; 
+    padding: 20px 0 60px 50px;
     z-index: 2;
 }
 
@@ -98,44 +102,135 @@ h1, h2, p{
     width: 100%;
     padding: 0 20px;
     display: flex;
-    align-items: center; 
-    justify-content: center; 
-    margin-bottom: 50px; 
-    z-index: 5; 
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 50px;
+    z-index: 5;
 }
 
 .features-slider {
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .features-card {
-    width: 30%; 
+    width: 30%;
     background-color: var(--green);
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center; 
+    justify-content: center;
     padding: 25px 20px;
     border-radius: 30px;
     cursor: pointer;
-    transition: transform 0.5s ease, opacity 0.5s ease; 
-    margin: 0 10px;  
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    margin: 0 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-} 
- 
+    z-index: 5;
+}
 
-.features-card.inactive{  
+
+@keyframes slideInFromLeft {
+    0% {
+        transform: translateX(-100%) scale(0.7);
+        opacity: 0.75;
+    }
+
+    100% {
+        transform: translateX(0) scale(1.1);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromRight {
+    0% {
+        transform: translateX(100%) scale(0.7);
+        opacity: 0.75;
+    }
+
+    100% {
+        transform: translateX(0) scale(1.1);
+        opacity: 1;
+    }
+}
+
+.features-slider.prev .features-card.active {
+    animation: slideInFromLeft 0.5s forwards;
+}
+
+.features-slider.next .features-card.active {
+    animation: slideInFromRight 0.5s forwards;
+}
+
+.features-card.active {
+    scale: 1.1;
+}
+
+
+.features-card.inactive {
+    scale: 0.8;
+    opacity: 0.75;
     height: 500px;
-} 
+}
 
-.features-card.inactive img{ 
+.features-card.inactive img {
     height: 100%;
-} 
+}
 
 .features-card:hover {
-    transform: scale(1.1);
+    transform: scale(0.95);
+}
+
+.features-card.exiting {
+    opacity: 0.75;
+}
+
+.features-slider.prev .features-card.exiting {
+    translate: -80%;
+    animation: slideOutRight 0.5s forwards;
+}
+
+.features-slider.next .features-card.exiting {
+    translate: 80%;
+    animation: slideOutLeft 0.5s forwards;
+}
+
+@keyframes slideOutLeft {
+    0% {
+        transform: translateX(0) scale(1.2);
+    }
+
+    100% {
+        transform: translateX(-100%) scale(1);
+    }
+}
+
+@keyframes slideOutRight {
+    0% {
+        transform: translateX(0) scale(1.2);
+    }
+
+    100% {
+        transform: translateX(100%) scale(1);
+    }
+}
+
+.features-card.entering {
+    transition: transform 0.5s ease;
+    transform: scale(1);
+    opacity: 0.75;
+    animation: popIn 0.5s forwards;
+}
+
+@keyframes popIn {
+    0% {
+        transform: scale(0);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
 
 .features-card h2 {
@@ -143,7 +238,7 @@ h1, h2, p{
     color: var(--yellow);
     font-weight: 400;
     font-size: 30px;
-    text-align: center; 
+    text-align: center;
     margin-bottom: 1px;
 }
 
@@ -156,54 +251,56 @@ h1, h2, p{
     padding: 12px 0;
 }
 
-.features-card img { 
+.features-card img {
     height: 350px;
     width: 100%;
     border-radius: 30px;
 }
 
-.leftArrow, .rightArrow {  
-    margin: 0 15px; 
-    font-size: 30px; 
-    z-index: 5; 
-    color: var(--green); 
+.leftArrow,
+.rightArrow {
+    margin: 0 15px;
+    font-size: 30px;
+    z-index: 5;
+    color: var(--green);
     cursor: pointer;
     display: flex;
-    justify-content: center; 
-    align-items: center;   
+    justify-content: center;
+    align-items: center;
     transition: transform 0.3s;
-} 
+}
 
-.leftArrow:hover, .rightArrow:hover{ 
+.leftArrow:hover,
+.rightArrow:hover {
     transform: scale(1.1);
 }
 
-.bottomBanner {  
-    height: 52vw;    
-    width: 100%; 
-    object-fit: cover;    
-    margin-top: -43%; 
+.bottomBanner {
+    height: 52vw;
+    width: 100%;
+    object-fit: cover;
+    margin-top: -43%;
 }
 
 /* ABOUT US SECTION */
-.aboutUs{
+.aboutUs {
     height: auto;
     background-color: var(--green);
     display: flex;
     flex-direction: row;
     padding-top: 60px;
     padding-bottom: 20px;
-    position: relative; 
+    position: relative;
 }
 
-.aboutBG{
+.aboutBG {
     height: 90vh;
     width: 85%;
-    z-index: 2; 
+    z-index: 2;
     margin-left: -280px;
 }
 
-.aboutContainer{
+.aboutContainer {
     position: absolute;
     z-index: 2;
     right: 150px;
@@ -213,7 +310,7 @@ h1, h2, p{
     padding-top: 40px;
 }
 
-.aboutContainer h1{
+.aboutContainer h1 {
     font-family: "EfcoBrookshire", sans-serif;
     font-size: 50px;
     font-weight: 400;
@@ -221,7 +318,7 @@ h1, h2, p{
     padding-bottom: 60px;
 }
 
-.aboutContainer p{
+.aboutContainer p {
     font-family: "Lora", sans-serif;
     font-size: 20px;
     line-height: 1.5;
@@ -229,7 +326,7 @@ h1, h2, p{
     padding-bottom: 40px;
 }
 
-.developersBTN{
+.developersBTN {
     display: inline-block;
     padding: 12px 40px;
     border-radius: 10px;
@@ -243,17 +340,17 @@ h1, h2, p{
 }
 
 .aboutIMG {
-    position:absolute;
+    position: absolute;
     bottom: 30px;
     right: 40px;
-    z-index: 2; 
-    width: 30px; 
-    height: 40px; 
+    z-index: 2;
+    width: 30px;
+    height: 40px;
 }
 
-.developersBTN:hover{
+.developersBTN:hover {
     background-color: var(--yellow);
-}   
+}
 
 .modal-overlay {
     position: fixed;
@@ -266,133 +363,139 @@ h1, h2, p{
     justify-content: center;
     align-items: center;
     z-index: 1000;
-  }
-  
-  .modal-content {
+}
+
+.modal-content {
     border-radius: 10px;
     width: 100%;
     position: relative;
-  }
+}
 
 /* NOT UPDATED */
 @media (max-width: 1380px) {
-    .hero h1{
+    .hero h1 {
         font-size: 55px;
     }
 
-    .signupBTN, .loginBTN{
+    .signupBTN,
+    .loginBTN {
         width: 320px;
     }
 
-    .hero .container{
+    .hero .container {
         margin: -14rem 14rem 0 14rem;
     }
 }
 
 @media (max-width: 1250px) {
-    .hero h1{
+    .hero h1 {
         font-size: 45px;
     }
 
-    .signupBTN, .loginBTN{
+    .signupBTN,
+    .loginBTN {
         width: 60%;
     }
 
-    .hero .container{
+    .hero .container {
         margin: -14rem 12rem 0 12rem;
     }
 }
 
 
 @media (max-width: 1125px) {
-    .hero h1{
+    .hero h1 {
         font-size: 42px;
     }
 
-    .signupBTN, .loginBTN{
+    .signupBTN,
+    .loginBTN {
         width: 50%;
         font-size: 13px;
     }
 
-    .guestBTN{
+    .guestBTN {
         font-size: 13px;
     }
 
-    .hero .container{
+    .hero .container {
         margin: -14rem 7rem 0 7rem;
     }
 }
 
 @media (max-width: 900px) {
-    .hero h1{
+    .hero h1 {
         font-size: 35px;
     }
 
-    .signupBTN, .loginBTN{
+    .signupBTN,
+    .loginBTN {
         width: 80%;
         font-size: 12px;
     }
 
-    .guestBTN{
+    .guestBTN {
         font-size: 12px;
     }
 
-    .hero .container{
+    .hero .container {
         margin: -14rem 5rem 0 5rem;
     }
 }
 
 @media (max-width: 750px) {
 
-    .signupBTN, .loginBTN{
+    .signupBTN,
+    .loginBTN {
         width: 100%;
         font-size: 12px;
     }
 
-    .guestBTN{
+    .guestBTN {
         font-size: 12px;
     }
 
-    .hero .container{
+    .hero .container {
         margin: -14rem 4rem 0 4rem;
     }
 }
 
 @media (max-width: 680px) {
-    .hero h1{
+    .hero h1 {
         font-size: 30px;
     }
 
-    .signupBTN, .loginBTN{
+    .signupBTN,
+    .loginBTN {
         width: 100%;
         font-size: 12px;
     }
 
-    .guestBTN{
+    .guestBTN {
         font-size: 12px;
     }
 
-    .hero .container{
+    .hero .container {
         margin: -14rem 3rem 0 3rem;
     }
 }
 
 @media (max-width: 600px) {
-    .hero h1{
+    .hero h1 {
         font-size: 25px;
     }
 
-    .signupBTN, .loginBTN{
+    .signupBTN,
+    .loginBTN {
         width: 100%;
         font-size: 11px;
     }
 
-    .guestBTN{
+    .guestBTN {
         font-size: 11px;
     }
 
-    .hero .container{
+    .hero .container {
         margin: -14rem 2rem 0 2rem;
     }
-} 
-  
+}

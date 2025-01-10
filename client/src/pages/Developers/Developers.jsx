@@ -76,14 +76,18 @@ const Developers = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [transitionDirection, setTransitionDirection] = useState('');
 
+
+    
     const handlePrevClick = () => {
         setTransitionDirection('prev');
         setCurrentIndex((prevIndex) => (prevIndex === 0 ? developers.length - 1 : prevIndex - 1));
+        setTimeout(() => setTransitionDirection(''), 300);
     };
 
     const handleNextClick = () => {
         setTransitionDirection('next');
         setCurrentIndex((prevIndex) => (prevIndex === developers.length - 1 ? 0 : prevIndex + 1));
+        setTimeout(() => setTransitionDirection(''), 300);
     };
 
     const getVisibleDevelopers = () => {
@@ -109,7 +113,8 @@ const Developers = () => {
                         {visibleDevelopers.map((dev, index) => (
                             <div 
                                 key={dev.id} 
-                                className={`dev-card ${index === 1 ? 'active' : ''}`}
+                                className={`dev-card ${index === 1 ? 'active' : 'inactive'}`}
+                                onClick={index === 0 ? handlePrevClick : index === 2 ? handleNextClick : null}
                             >
                                 <div className='dev-card-top'>
                                     <img src={dev.image} alt={dev.name} className="card-img" />
