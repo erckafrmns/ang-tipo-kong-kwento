@@ -13,8 +13,16 @@ const Custom = ({ closeModal, isGuest }) => {
 
   const handleInputChange = (event) => setTitle(event.target.value);
   const handleGenreChange = (event) => setGenre(event.target.value);
-  const toggleStoryLength = () => setIsShortStory((prev) => !prev);
 
+  const toggleStoryLength = (selectedOption) => {
+    setIsShortStory((prev) => {
+      if ((selectedOption === 'short' && !prev) || (selectedOption === 'long' && prev)) {
+        return !prev;
+      }
+      return prev; 
+    });
+  };
+  
   const handleGenerateClick = useCallback(() => {
     if (!title || !genre) {
       alert('Please enter a title and select a genre');
@@ -97,8 +105,8 @@ const Custom = ({ closeModal, isGuest }) => {
 
           {/* Story Length Toggle */}
           <div className="toggle-container">
-            <span className={`toggle-option ${isShortStory ? 'active' : ''}`} onClick={toggleStoryLength}>Short Story</span>
-            <span className={`toggle-option ${!isShortStory ? 'active' : ''}`} onClick={toggleStoryLength}>Long Story</span>
+            <span className={`toggle-option ${isShortStory ? 'active' : ''}`} onClick={() => toggleStoryLength('short')}>Short Story</span>
+            <span className={`toggle-option ${!isShortStory ? 'active' : ''}`}  onClick={() => toggleStoryLength('long')}>Long Story</span>
           </div>
 
           {/* Genre Dropdown */}

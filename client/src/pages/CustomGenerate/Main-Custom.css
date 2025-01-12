@@ -194,7 +194,7 @@ body {
     margin: 20px 0 30px 0;
 } 
 
-/* Toggle Container */
+/* Short or Long Story Toggle */
 .toggle-container {
     display: flex;
     justify-content: center;
@@ -224,7 +224,7 @@ body {
 }
 
 .toggle-option.active { 
-    background-color: rgba(0, 128, 0, 0.5);
+    background-color: rgba(41, 65, 34, 0.3);
     color: var(--green);
 }
 
