@@ -206,7 +206,7 @@
 .search-container {
   position: relative;
   flex-grow: 1;
-  margin: 0 10px;
+  margin: 0 10px;  
 }
 
 .search-bar {
@@ -297,25 +297,17 @@
   text-align: center;  
   align-items: center;  
   margin-top: 5px;
-}   
+}    
 
-/* DAY CATEGORY */ 
-/* .category-today,  
-.category-7days,  
-.category-30days {
-  display: none; 
+.date-header{ 
+  padding-left: 15px; 
   font-family: var(--main-font); 
   text-transform: lowercase; 
-  padding-left: 15px; 
   color: var(--green); 
-  border: 1px solid var(--green);  
-}
+  border: 1px solid var(--green); 
+  font-weight: 600;
 
-.scrollable-content .category-today,    
-.scrollable-content .category-7days,  
-.scrollable-content .category-30days {
-  display: block;
-}  */
+}
 
 /*  SCROLL */
 .scrollable-content {
