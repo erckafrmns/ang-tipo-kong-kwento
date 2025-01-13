@@ -172,14 +172,11 @@ body {
     width: 85%;
     display: flex;
     justify-content: center;
-    align-items: center;
-    gap: 10px;
+    align-items: center; 
 }
 
-.progress-bar {
-    flex: 1;
+.progress-bar { 
     max-width: 50%;
-    height: 6px;
     background: var(--green); 
     border-radius: 7px; 
     outline: none;
@@ -187,9 +184,34 @@ body {
     cursor: pointer;
     -webkit-appearance: none;
     appearance: none;
-    overflow: hidden;
-} 
+    overflow: hidden; 
+    padding: 6px;
+}  
 
+/* Trail */
+.progress-bar::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0;
+    height: 5px;
+    background: var(--yellow);
+    border-radius: 8px;
+    z-index: 1;
+    margin-left: 10px;
+    width: var(--progress-width, 0);
+    transition: all 0.1s ease; 
+}
+
+/* Thumb */
+.progress-bar::-webkit-slider-thumb {
+    display: none;
+}
+/* PROGRESS BAR */ 
+
+
+/* HOVER AND PAPER-BOOK BTNS */ 
 .paper-icon, .download-btn{ 
     display: flex;
     align-items: center; 
@@ -270,56 +292,4 @@ body {
 .paper-icon:hover, .download-btn:hover{ 
     color: var(--yellow);
 }
-
-/* Trail */
-.progress-bar::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    left: 0;
-    height: 10px;
-    background: var(--yellow);
-    border-radius: 8px;
-    z-index: 1; 
-    margin-left: 10px;
-    width: var(--progress-width, 0);
-    transition: width 0.1s ease; /* Smooth transition */
-}
-
-/* Thumb */
-.progress-bar::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 30px;
-    height: 30px;
-    background-image: url("../../assets/logo-2.svg");
-    background-size: cover;
-    background-position: center;
-    border-radius: 50%;
-    cursor: pointer;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    position: relative;
-    z-index: 2; 
-}
-
-/* Remove offsets */
-.progress-bar::-webkit-slider-thumb {
-    margin-left: 0;
-    margin-right: 0; 
-    margin-left: 10px;
-
-}
-
-.progress-bar::-moz-range-thumb {
-    width: 30px;
-    height: 30px;
-    background-image: url("../../assets/logo-2.svg");
-    background-size: cover;
-    background-position: center;
-    border-radius: 50%;
-    cursor: pointer;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-}
-
-/* PROGRESS BAR */
+/* HOVER AND PAPER-BOOK BTNS */ 
