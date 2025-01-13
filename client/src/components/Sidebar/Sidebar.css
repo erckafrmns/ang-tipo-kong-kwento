@@ -1,5 +1,5 @@
 :root {
-  --hoverColor: rgba(255, 191, 58, 0.7); /* Hover color for buttons */
+  --hoverColor: rgba(41, 65, 34, 0.3);
   --fontweight: 450; 
   --main-font: "EfcoBrookshire", sans-serif;  
 }  
@@ -98,19 +98,20 @@
 
 /*SIDEBAR*/
 .sidebar {
-  position: absolute;  
+  position: fixed;  
   margin-left: 10px;
   margin-top: 3.5%; 
   width: 18.5%;
-  height: 68%;  
+  height: 89%;  
   border-radius: 10px;
   background-color: var(--beige);
-  z-index: 1000; 
+  z-index: 10000; 
   display: none; 
   flex-direction: column; 
   overflow: visible; 
   border: 2px solid var(--green);  
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); 
+  transition: height 0.3s ease, top 0.3s ease;
 }
 
 .sidebar.open {
@@ -127,7 +128,8 @@
   align-items: center;
   justify-content: space-between; 
   padding: 5px;  
-  margin-bottom: -10px;
+  margin-bottom: -10px; 
+  margin-right: 13px;
 }
 
 .sidebar-title {
@@ -220,7 +222,7 @@
 
 .search-icon {
   position: absolute; 
-  right: 12px; 
+  right: 20px; 
   top: 50%; 
   transform: translateY(-50%); 
   font-size: 20px;
@@ -241,7 +243,10 @@
 
 .new-chat-container {
   background-color: var(--yellow);  
-  border: 1px solid var(--green);
+  border-top: 2px solid var(--green); 
+  border-left: 1px solid var(--green); 
+  border-right: 1px solid var(--green);
+  border-bottom: 1px solid var(--green);   
   display: flex; 
   align-items: center;  
   transition: background-color 0.3s ease;  
@@ -292,7 +297,52 @@
   text-align: center;  
   align-items: center;  
   margin-top: 5px;
-}     
+}   
+
+/* DAY CATEGORY */ 
+/* .category-today,  
+.category-7days,  
+.category-30days {
+  display: none; 
+  font-family: var(--main-font); 
+  text-transform: lowercase; 
+  padding-left: 15px; 
+  color: var(--green); 
+  border: 1px solid var(--green);  
+}
+
+.scrollable-content .category-today,    
+.scrollable-content .category-7days,  
+.scrollable-content .category-30days {
+  display: block;
+}  */
+
+/*  SCROLL */
+.scrollable-content {
+  overflow-y: auto;
+  overflow-x: hidden; 
+  box-sizing: border-box; 
+  transition: max-height 0.2s ease-in-out;    
+}
+
+/* Custom Scrollbar Styling*/
+.scrollable-content::-webkit-scrollbar {
+    width: 8px; 
+} 
+
+.scrollable-content::-webkit-scrollbar-track {
+  background-color: var(--hoverColor);  
+  border-radius: 5px;        
+}
+
+.scrollable-content::-webkit-scrollbar-thumb {
+  background-color: var(--green);  
+  border-radius: 5px;        
+}
+
+.scrollable-content::-webkit-scrollbar-thumb:hover {
+  background-color: #073a0b; 
+}
 
 .story-container {
   background-color: transparent;
@@ -300,15 +350,15 @@
   display: flex;
   align-items: center;
   transition: background-color 0.3s ease;
-  position: relative; /* For dropdown positioning */
+  position: relative; 
 }
 
 .story-container.active {
-  background-color: rgba(0, 128, 0, 0.1); /* Highlight the active story */
+  background-color: rgba(0, 128, 0, 0.1);
 } 
 
 .story-container:hover{ 
-  background-color: rgba(0, 128, 0, 0.1); /* Highlight the active story */
+  background-color:  rgba(41, 65, 34, 0.3); 
 }
 
 .story-title {
@@ -378,12 +428,13 @@
   display: flex;  
   border: 2px solid var(--green);   
   margin-left: 10px;  
-  position: absolute; 
+  position: fixed; 
   margin-top: 3.5%; 
   border-radius: 10px; 
   padding: 3px;    
   z-index: 1000; 
-  background-color: var(--beige);
+  background-color: var(--beige); 
+  transition: margin-top 0.3s ease, position 0.3s ease, top 0.3s ease;
 }  
 
 .button-container.hidden {
@@ -404,7 +455,7 @@
   font-size: 25px;   
   border-radius: 8px;  
   transition: background-color 0.3s ease;  
-  position: relative; /* Required to position the tooltip relative to this element */
+  position: relative;
 }   
 
 .open-btn:hover {
