@@ -1,4 +1,5 @@
 /* PRELOADER */
+
 .preloader {
     position: fixed;
     top: 0;
@@ -14,26 +15,99 @@
     text-align: center;
 }
 
-.preloader h1 {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: #333; 
+.messages {
+    font-size: 60px;
+    margin-bottom: 20px; 
+    color: #333;   
+    font-family: var(--main-font); 
+    font-weight: 600;
+    animation: float-message 3s ease-in-out infinite; 
+    transition: opacity 0.5s ease-in-out;
+}  
+ 
+.fade-in {
+    opacity: 1;
 }
 
-.spinner {
-    border: 5px solid #f3f3f3;
-    border-top: 5px solid #333;
+.fade-out {
+    opacity: 0;
+}
+
+@keyframes float-message {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-6px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.magic-loader {
+    position: relative;
+    width: 100px;
+    height: 100px;
+}
+
+.sparkle1 {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: radial-gradient(circle, #d3950e, #033a06); /* Golden sparkle */
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite;
+    animation: float 2s infinite ease-in-out, twinkle 1.5s infinite alternate ease-in-out;
+    opacity: 0.8;
 }
 
-@keyframes spin {
-    from {
-        transform: rotate(0deg);
+/* Individual sparkles floating randomly */
+.sparkle1:nth-child(1) {
+    top: 0;
+    left: 30%;
+    animation-delay: 0s;
+}
+.sparkle1:nth-child(2) {
+    top: 0;
+    left: 70%;
+    animation-delay: 0.5s;
+}
+.sparkle1:nth-child(3) {
+    top: 0;
+    left: 10%;
+    animation-delay: 1s;
+}
+.sparkle1:nth-child(4) {
+    top: 0;
+    left: 50%;
+    animation-delay: 1.5s;
+}
+
+/* Floating animation */
+@keyframes float {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.8;
     }
-    to {
-        transform: rotate(360deg);
+    50% {
+        transform: translateY(-20px) scale(1.2);
+        opacity: 1;
     }
-} 
+    100% {
+        transform: translateY(0) scale(1);
+        opacity: 0.8;
+    }
+}
+
+/* Twinkling animation */
+@keyframes twinkle {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0.8);
+        opacity: 0.5;
+    }
+}
+
