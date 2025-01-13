@@ -11,8 +11,29 @@ const Custom = ({ closeModal, isGuest }) => {
   const [isShortStory, setIsShortStory] = useState(true); 
   const navigate = useNavigate();
 
-  const handleInputChange = (event) => setTitle(event.target.value);
-  const handleGenreChange = (event) => setGenre(event.target.value);
+  // const handleInputChange = (event) => setTitle(event.target.value);
+  const handleGenreChange = (event) => setGenre(event.target.value); 
+
+  const uncapitalizedWords = ["ng", "at", "sa", "ito", "ni", "para", "na", "sa", "kung", "kaya", "ay"];
+
+  const handleInputChange = (event) => {
+    const inputTitle = event.target.value;
+    setTitle(capitalizeTitle(inputTitle)); 
+  };
+
+  const capitalizeTitle = (input) => {
+    return input
+      .split(" ")
+      .map((word, index) => {
+        // Capitalize the first word or any word that isn't in the uncapitalized list
+        if (index === 0 || !uncapitalizedWords.includes(word.toLowerCase())) {
+          return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+        }
+        // For words that shouldn't be capitalized, just return them as is
+        return word.toLowerCase();
+      })
+      .join(" ");
+  };
 
   const toggleStoryLength = (selectedOption) => {
     setIsShortStory((prev) => {
