@@ -28,8 +28,14 @@ body {
     z-index: 1;
 } 
 
-.flipbook {
-    transform: translateX(0);
+.flipbook { 
+    line-height: 1.2;
+    transform: translateX(0); 
+} 
+
+.flipbook p {
+    text-indent: 30px;
+    white-space: pre-line; 
 }
 
 @keyframes glideToLeft {

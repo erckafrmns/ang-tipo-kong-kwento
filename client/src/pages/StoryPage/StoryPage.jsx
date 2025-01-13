@@ -241,8 +241,8 @@ const StoryPage = () => {
                                     <Page
                                         key={index}
                                         image={index % 2 === 0 ? RightPageImg : LeftPageImg}
-                                        content={content}
-                                    />
+                                        content={<p>{content}</p>}
+                                        />
                                 ))}
                                 <Page image={BackCover1} />
                                 <Page image={BackCover} />
