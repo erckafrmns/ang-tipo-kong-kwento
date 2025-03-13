@@ -233,3 +233,45 @@
   pointer-events: none;
 }
 
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .account h1 {
+      font-size: 35px;
+  }
+
+  .account-group {
+      width: 80%;
+  }
+
+  .account-buttons {
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .changePass-btn, .delete-btn {
+      width: 100%;
+      margin-bottom: 10px;
+  }
+
+  .modal-change-password, .modal-delete-account {
+      width: 90%;
+  }
+}
+
+@media (max-width: 480px) {
+  .account h1 {
+      font-size: 25px;
+  }
+
+  .account-group {
+      width: 100%;
+  }
+
+  .changePass-btn, .delete-btn {
+      font-size: 18px;
+  }
+
+  .modal-change-password, .modal-delete-account {
+      width: 100%;
+  }
+}

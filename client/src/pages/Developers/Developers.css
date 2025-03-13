@@ -235,3 +235,151 @@ p {
 .dev-card-slider.next .dev-card {
     animation: nextSlideInOut 0.3s forwards;
 }
+
+/* @media (max-width: 1024px) {
+
+    .dev-slider-container {
+        display: flex;
+        height: auto;
+        width: 100%;
+    }
+
+    .dev-card-slider {
+        flex-direction: column;
+        width: 100%;
+        height: auto;
+        gap: 20px;
+    }
+
+} */
+
+/* Media Query for 1024px */
+@media (max-width: 1024px) {
+    .developersPage {
+        padding: 150px 40px; /* Adjust padding for 1024px screens */
+    }
+
+    .dev-top h1 {
+        margin-bottom: 50px; /* Adjust margin for 1024px screens */
+        font-size: 70px; /* Reduce font size for 1024px screens */
+    }
+
+    .dev-slider-container {
+        width: 100%; /* Adjust container width for 1024px screens */
+        height: auto; /* Allow height to adjust based on content */
+    }
+
+    .dev-card-slider {
+        width: 100%; /* Make slider take full width */
+        height: auto; /* Allow height to adjust based on content */
+        gap: 0; /* Remove gap between cards */
+    }
+
+    .dev-card {
+        /*Hide the other 2 cards on the side*/
+        width: 100%; /* Show 1 card per view on 1024px screens */
+        height: auto; /* Allow height to adjust based on content */
+    }
+
+    .dev-card-top {
+        height: 300px; /* Adjust height for 1024px screens */
+    }
+
+    .dev-card img {
+        width: 50%; /* Adjust image size for 1024px screens */
+        height: auto; /* Allow height to adjust based on width */
+    }
+
+    .dev-card-bot h3 {
+        font-size: 1.5rem; /* Adjust font size for 1024px screens */
+    }
+
+    .dev-card p {
+        font-size: 1rem; /* Adjust font size for 1024px screens */
+    }
+
+    .dev-socials {
+        font-size: 30px; /* Adjust social icons size for 1024px screens */
+    }
+
+    .prev-btn,
+    .next-btn {
+        font-size: 2rem; /* Adjust button size for 1024px screens */
+    }
+}
+
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .developersPage {
+        padding: 20px 30px;
+    }
+
+    .dev-top h1 {
+        font-size: 35px;
+    }
+
+    .dev-slider-container {
+        width: 100%;
+        height: auto;
+    }
+
+    .dev-card-slider {
+        flex-direction: column;
+        width: 100%;
+        height: auto;
+        gap: 20px;
+    }
+
+    .dev-card {
+        width: 100%;
+        height: auto;
+    }
+
+    .dev-card-top {
+        height: 200px;
+    }
+
+    .dev-card img {
+        width: 30%;
+        height: auto;
+    }
+
+    .dev-card-bot h3 {
+        font-size: 1rem;
+    }
+
+    .dev-card p {
+        font-size: 0.85rem;
+    }
+
+    .dev-socials {
+        font-size: 24px;
+    }
+
+    .prev-btn, .next-btn {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .dev-top h1 {
+        font-size: 25px;
+    }
+
+    .dev-card-bot h3 {
+        font-size: 0.85rem;
+    }
+
+    .dev-card p {
+        font-size: 0.75rem;
+    }
+
+    .dev-socials {
+        font-size: 20px;
+    }
+
+    .prev-btn, .next-btn {
+        font-size: 1.25rem;
+    }
+}

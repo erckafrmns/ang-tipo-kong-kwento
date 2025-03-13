@@ -72,4 +72,75 @@ footer{
 .copyright h4{
     padding: 10px 20px;
     cursor: default;
+}/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .footerInfo {
+        flex-direction: column;
+        padding: 20px 10px;
+    }
+
+    .leftPart, .rightPart {
+        width: 100%;
+        text-align: center;
+    }
+
+    .leftPart h1 {
+        font-size: 24px;
+    }
+
+    .leftPart p {
+        font-size: 14px;
+        width: 100%;
+    }
+
+    .socialMedia-item {
+        font-size: 24px;
+        margin-right: 5px;
+    }
+
+    .rightPart img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .termsPolicy {
+        padding: 10px 0;
+    }
+
+    .termsPolicy-item {
+        font-size: 14px;
+        padding: 0 10px;
+    }
+
+    .copyright h4 {
+        font-size: 14px;
+        padding: 5px 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .leftPart h1 {
+        font-size: 20px;
+    }
+
+    .leftPart p {
+        font-size: 12px;
+    }
+
+    .socialMedia-item {
+        font-size: 20px;
+    }
+
+    .rightPart img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .termsPolicy-item {
+        font-size: 12px;
+    }
+
+    .copyright h4 {
+        font-size: 12px;
+    }
 }

@@ -296,3 +296,56 @@ body {
 .generate-button:hover {
     transform: scale(0.98);
 }
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .customization-container {
+        padding: 0 20px;
+    }
+
+    .custom, .without-custom {
+        width: 100%;
+        height: auto;
+        margin-top: 20px;
+    }
+
+    .custom-text, .without-custom-text {
+        font-size: 24px;
+    }
+
+    .custom-modal {
+        width: 80%;
+    }
+
+    .toggle-option {
+        padding: 3px 20px;
+        font-size: 14px;
+    }
+
+    .genre-select, .title-input {
+        width: 100%;
+    }
+
+    .generate-button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .custom-text, .without-custom-text {
+        font-size: 18px;
+    }
+
+    .toggle-option {
+        padding: 3px 10px;
+        font-size: 12px;
+    }
+
+    .genre-select, .title-input {
+        font-size: 14px;
+    }
+
+    .generate-button {
+        font-size: 18px;
+    }
+}

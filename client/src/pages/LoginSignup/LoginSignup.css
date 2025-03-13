@@ -258,7 +258,7 @@ input::placeholder {
   
   
 
-/* Responsive for smaller screens */
+/* Responsive for smaller screens
 @media (max-width: 768px) {
     .form-container {
         flex-direction: column;
@@ -276,7 +276,60 @@ input::placeholder {
         padding: 20px;
     }
 
-} 
+}  */
 
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .form-container {
+        flex-direction: column;
+        height: auto;
+        width: 90%;
+    }
 
+    .form-side {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .form-content {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .loginSignup-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .form-btn, .guest-btn {
+        width: 100%;
+    }
+
+    .side-btn {
+        font-size: 20px;
+        padding: 1% 5%;
+    }
+}
+
+@media (max-width: 480px) {
+    h2 {
+        font-size: 24px;
+    }
+
+    input {
+        font-size: 14px;
+    }
+
+    .form-btn, .guest-btn {
+        font-size: 20px;
+    }
+
+    .forgotPassBtn {
+        font-size: 14px;
+    }
+
+    .side-btn {
+        font-size: 18px;
+    }
+}
  

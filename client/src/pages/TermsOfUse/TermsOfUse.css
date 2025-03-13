@@ -92,3 +92,48 @@ u:hover{
 .termsandpolicies ul li{
     color: var(--beige);
 }
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .termsandpolicies {
+        padding: 20px 30px;
+    }
+
+    .container-bot {
+        padding: 2% 10%;
+    }
+
+    .container-bot h1 {
+        font-size: 35px;
+    }
+
+    .container-bot h4 {
+        font-size: 18px;
+    }
+
+    .container-bot p {
+        font-size: 16px;
+    }
+
+    .termsandpolicies ul {
+        padding-left: 4%;
+    }
+}
+
+@media (max-width: 480px) {
+    .container-bot h1 {
+        font-size: 25px;
+    }
+
+    .container-bot h4 {
+        font-size: 16px;
+    }
+
+    .container-bot p {
+        font-size: 14px;
+    }
+
+    .termsandpolicies ul {
+        padding-left: 2%;
+    }
+}

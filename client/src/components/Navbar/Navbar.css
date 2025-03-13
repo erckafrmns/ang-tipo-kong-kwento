@@ -7,6 +7,10 @@
 	font-family: "Lora", sans-serif;
 }
 
+body {
+	font-family: "Lora", sans-serif;
+}
+
 :root {
 	--white: #FFFFFF;
 	--beige: #FFEACF;
@@ -17,12 +21,12 @@
 
 .inside-navbar{  
 	margin: 0 auto; 
-	width: 1170; 
+	width: 1170px; 
 	z-index: 1000;   
 } 
 
 .inside-navbar ul{  
-	padding: 20px 430px; 
+	padding: 20px 250px; 
 	list-style: none; 
 	text-align: right;   
 	margin-left: 3%;  
@@ -64,12 +68,14 @@
 
 .logo{ 
 	position: absolute; 
-	left: 55.5%; 
+	left: 55.5%;
 	top: 0;  
-	margin-left: -150px;
+	margin-left: -130px;
 	content: "";   
 	z-index: 1; 
 	margin-top: 10px;
+	width: 300px; /* Adjust the width to make it bigger */
+	height: auto; /* Maintain aspect ratio */
 }
 
 .inside-navbar a{
@@ -89,46 +95,105 @@
 }
 
 
-
-/* NOT UPDATED */
-@media only screen and (max-width: 1024px) {
-
-	header .nav-btn {
-		visibility: visible;
-		opacity: 1;
+@media (max-width: 1024px) {
+	.logo {
+		position: absolute; 
+		left: 55.5%;
+		top: 0;  
+		margin-left: -95px;
+		z-index: 1;
+		width: 500px;
+		height: auto;
 	}
 
-	header nav {
-		position: fixed;
-		top: -100vh;
-		left: 0;
-		height: 100%;
-		width: 100%;
+	.inside-navbar ul {
 		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		gap: 1.5rem;
-		background-color: var(--bgColor);
-		transition: 1s;
+		padding: 10px 30px;
+		text-align: left;
+		margin-left: 12%;  
 	}
 
-	header .responsive_nav {
-		transform: translateY(100vh);
+	.inside-navbar ul li {
+		float: none; 
+		display: inline-block; 
+		width: auto;
 	}
 
-    .leftVine, .rightVine {
-        opacity: 80%;
+	.inside-navbar ul li a {
+		display: flex;
+		padding: 10px;
+		font-size: 16px;
+		margin: 0 20px; /*Adjusted margin to lessen space */
+	}
+
+	.banner {
+		height: auto;
+	}
+
+	.logo-image {
+		height: 100px;
+	}
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .inside-navbar {
+        width: 250%;
     }
 
-	nav .nav-close-btn {
-		position: absolute;
-		top: 2rem;
-		right: 2rem;
+    .inside-navbar ul {
+        padding: 10px 20px;
+        text-align: center;
+    }
+
+    .inside-navbar ul li {
+        float: none;
+        display: block;
+        width: 100%;
+    }
+
+    .inside-navbar ul li a {
+        padding: 10px;
+        font-size: 16px;
+    }
+
+    .logo {
+        left: 50%;
+        margin-left: -90px;
+        width: 150px;
+    }
+
+    .banner {
+        height: auto;
+    }
+
+	.logo-image {
+		height: 100px;
+	  }
+}
+
+@media (max-width: 480px) {
+	.inside-navbar ul {
+		padding: 10px 10px;
+		text-align: center;
 	}
 
-	nav a {
-		font-size: 1.5rem;
-        font-weight: 600;
+	.inside-navbar ul li {
+		display: inline-block;
+		float: none;
 	}
-} 
+
+	.inside-navbar ul li a {
+		font-size: 14px;
+	}
+
+	.logo {
+		width: 120px;
+		height: auto;
+		margin-left: -60px;
+	} 
+
+	.banner {
+		height: auto;
+	}
+}

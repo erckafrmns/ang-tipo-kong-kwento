@@ -44,11 +44,23 @@ const Navbar = ({ hideInsideNavbar = false }) => { // Add a prop to control visi
 
     return (
         <>
-            <img src={banner} className="banner" alt="Banner" />
+            <img
+                src={banner}
+                className="banner"
+                srcSet={`${banner} 600w, ${banner} 1024w, ${banner} 1440w`}
+                sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 1440px"
+                alt="Banner"
+            />
             <div id="navbar">
                 <div className="logo">
                     <Link to="/">
-                        <img src={logo} className="logo-image" alt="Logo" />
+                    <img
+                        src={logo}
+                        className="logo-image"
+                        srcSet={`${logo} 100w, ${logo} 200w, ${logo} 300w`}
+                        sizes="(max-width: 480px) 80px, (max-width: 768px) 150px, 150px"
+                        alt="Logo"
+                    />
                     </Link>
                 </div>
                 {!hideInsideNavbar && ( // Conditionally render inside-navbar

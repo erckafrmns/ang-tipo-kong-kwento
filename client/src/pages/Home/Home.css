@@ -4,15 +4,26 @@ p {
     cursor: default;
 }
 
+.mbHomeBG{
+    height: 100vh;
+    width: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+
 /* HERO SECTION */
 .hero {
     position: relative;
-    padding-top: 60px;
+    padding-top: 0px;
     height: 89vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    overflow: hidden;
 }
 
 .hero h1 {
@@ -27,11 +38,23 @@ p {
 }
 
 .heroBG {
-    position: absolute;
+    /* position: absolute;
     bottom: 0;
     z-index: 1;
     width: 100%;
-    height: 58%;
+     height: 58%;
+    height: auto;
+    object-fit: cover; */
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: none;
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
 }
 
 .heroContainer {
@@ -40,7 +63,7 @@ p {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 65px;
+    margin-bottom: 200px;
 }
 
 .signupBTN,
@@ -73,6 +96,8 @@ p {
     outline: none;
     text-decoration: underline;
     transition: all 0.3s ease;
+
+    margin-bottom: 15px
 }
 
 .signupBTN:hover,
@@ -371,7 +396,7 @@ p {
     position: relative;
 }
 
-/* NOT UPDATED */
+/* NOT UPDATED 
 @media (max-width: 1380px) {
     .hero h1 {
         font-size: 55px;
@@ -497,5 +522,286 @@ p {
 
     .hero .container {
         margin: -14rem 2rem 0 2rem;
+    }
+}
+
+*/
+
+
+/* Default styles (for larger screens) */
+.hero h1 {
+    font-size: 100px;
+}
+
+.signupBTN,
+.loginBTN {
+    width: 150px;
+    font-size: 28px;
+}
+
+.features-card {
+    width: 30%;
+}
+
+.features-card img {
+    height: 350px;
+}
+
+.aboutContainer {
+    width: 35rem;
+    right: 150px;
+}
+
+/* Adjustments for medium screens (1024px and below) */
+@media (max-width: 1024px) {
+
+    .hero h1 {
+        font-size: 80px;
+        letter-spacing: 2px;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .signupBTN,
+    .loginBTN {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 120px;
+        font-size: 24px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        background-color: var(--yellow);
+        transition: all 0.3s ease;
+    }
+
+    .guestBTN {
+        font-size: 16px;
+        font-weight: 800;
+        color: var(--yellow);
+        background-color: transparent;
+        border: none;
+        outline: none;
+        text-decoration: underline;
+        transition: all 0.3s ease;
+        margin-bottom: 50px;
+    }
+
+    .signupBTN:hover,
+    .loginBTN:hover,
+    .guestBTN:hover {
+        color: var(--green);
+    }   
+
+    .features h1 {
+        font-size: 75px;
+        padding: 0 40px 80px;
+    }
+
+    .featuresContainer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        z-index: 5;
+    }
+
+    .features-card {
+        width: 70%; /* Increased width to make the features card bigger */
+        margin: auto; /* Center the features card */
+    }
+
+    .features-card img {
+        height: auto; /* Adjust image height to fit the new card size */
+    }
+
+    .features-card.inactive {
+        display: none; /* Hide inactive cards */
+    }
+
+    .aboutContainer {
+        width: 22rem;
+        right: 80px;
+    }
+
+    .aboutBG {
+        height: 50vh;
+        width: 100%;
+        z-index: 2;
+        margin-left: -200px;
+        margin-top: 130px; /* Added margin-top to move it lower */
+    }
+
+
+}
+
+/* Adjustments for tablets (768px and below) */
+@media (max-width: 768px) {
+    .hero {
+        height: auto;
+        padding-top: 40px;
+    }
+
+    .hero h1 {
+        font-size: 60px;
+        margin-top: 20px;
+    }
+
+    .heroBG {
+        height: 40%;
+    }
+
+    .signupBTN,
+    .loginBTN {
+        width: 100px;
+        font-size: 20px;
+    }
+
+    .features h1 {
+        font-size: 40px;
+        padding: 20px 0 40px 20px;
+    }
+
+    .features-card {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    .features-card img {
+        height: 250px;
+    }
+
+    .aboutUs {
+        flex-direction: column;
+        padding-top: 40px;
+    }
+
+    .aboutBG {
+        display: none;
+    }
+
+    .aboutContainer {
+        width: 90%;
+        right: 5%;
+        text-align: center;
+        padding-top: 20px;
+    }
+
+    .aboutContainer h1 {
+        font-size: 35px;
+        padding-bottom: 30px;
+    }
+
+    .aboutContainer p {
+        font-size: 16px;
+        padding-bottom: 20px;
+    }
+
+    .developersBTN {
+        font-size: 20px;
+    }
+}
+
+/* Adjustments for mobile devices (480px and below) */
+@media (max-width: 480px) {
+    .mbHomeBG {
+        height: 100vh;
+    }
+
+    .hero h1 {
+        font-size: 40px;
+    }
+
+    .heroBG {
+        height: 30%;
+    }
+
+    .signupBTN,
+    .loginBTN {
+        width: 80px;
+        font-size: 16px;
+    }
+
+    .features h1 {
+        font-size: 35px;
+        padding: 20px 0 30px 10px;
+    }
+
+    .features-card {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .features-card img {
+        height: 200px;
+    }
+
+    .features-card h2 {
+        font-size: 24px;
+    }
+
+    .features-card p {
+        font-size: 14px;
+    }
+
+    .aboutContainer {
+        width: 100%;
+        right: 0;
+    }
+
+    .aboutContainer h1 {
+        font-size: 25px;
+    }
+
+    .aboutContainer p {
+        font-size: 14px;
+    }
+
+    .developersBTN {
+        font-size: 18px;
+    }
+}
+
+/* Adjustments for very small mobile devices (320px and below) */
+@media (max-width: 320px) {
+    .hero h1 {
+        font-size: 30px;
+    }
+    .heroBG {
+        height: 25%; /* Adjust height for very small screens */
+    }
+
+    .signupBTN,
+    .loginBTN {
+        width: 60px;
+        font-size: 14px;
+    }
+
+    .features h1 {
+        font-size: 30px;
+    }
+
+    .features-card img {
+        height: 150px;
+    }
+
+    .features-card h2 {
+        font-size: 20px;
+    }
+
+    .features-card p {
+        font-size: 12px;
+    }
+
+    .aboutContainer h1 {
+        font-size: 20px;
+    }
+
+    .aboutContainer p {
+        font-size: 12px;
+    }
+
+    .developersBTN {
+        font-size: 16px;
     }
 }

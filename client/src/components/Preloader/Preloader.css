@@ -111,3 +111,36 @@
     }
 }
 
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .messages {
+        font-size: 40px;
+    }
+
+    .magic-loader {
+        width: 80px;
+        height: 80px;
+    }
+
+    .sparkle1 {
+        width: 10px;
+        height: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .messages {
+        font-size: 30px;
+    }
+
+    .magic-loader {
+        width: 60px;
+        height: 60px;
+    }
+
+    .sparkle1 {
+        width: 8px;
+        height: 8px;
+    }
+}
+

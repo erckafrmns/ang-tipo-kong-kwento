@@ -59,5 +59,47 @@
     margin-bottom: 20px;
   } 
 
-  
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .verify-email-container {
+        width: 80%;
+        padding: 20px;
+    }
+
+    .verify-email-container h1 {
+        font-size: 24px;
+    }
+
+    .verify-email-container p {
+        font-size: 14px;
+    }
+
+    .btn-go-to-login {
+        width: 100%;
+        font-size: 20px;
+    }
+
+    .email-image {
+        width: 200px;
+    }
+}
+
+@media (max-width: 480px) {
+    .verify-email-container h1 {
+        font-size: 20px;
+    }
+
+    .verify-email-container p {
+        font-size: 12px;
+    }
+
+    .btn-go-to-login {
+        font-size: 18px;
+    }
+
+    .email-image {
+        width: 150px;
+    }
+}
+
   

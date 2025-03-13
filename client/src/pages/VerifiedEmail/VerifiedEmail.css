@@ -61,5 +61,49 @@
     margin-bottom: 5px;
   } 
 
+  /* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .verified-email-container {
+        width: 80%;
+        padding: 20px;
+    }
+
+    .verified-email-container h1 {
+        font-size: 24px;
+    }
+
+    .verified-email-container p {
+        font-size: 14px;
+        width: 100%;
+    }
+
+    .continueButton {
+        width: 100%;
+        font-size: 20px;
+    }
+
+    .verified-image {
+        width: 200px;
+    }
+}
+
+@media (max-width: 480px) {
+    .verified-email-container h1 {
+        font-size: 20px;
+    }
+
+    .verified-email-container p {
+        font-size: 12px;
+    }
+
+    .continueButton {
+        font-size: 18px;
+    }
+
+    .verified-image {
+        width: 150px;
+    }
+}
+
   
   

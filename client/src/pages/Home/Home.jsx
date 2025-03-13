@@ -15,6 +15,8 @@ import featPaperBook from '../../assets/feat-paper-book.png';
 import featSave from '../../assets/feat-save.png';
 import featDownload from '../../assets/feat-download.png';
 
+import mbHomeBG from '../../assets/mbHomeBG.svg';
+
 import bottomBanner from '../../assets/bottomBanner.svg';
 
 import LoginSignup from '../LoginSignup/LoginSignup';
@@ -107,7 +109,45 @@ const Home = () => {
 
       <section className='hero'>
         <h1>Ang tipo kong Kwento</h1>
-        <img className="heroBG" src={heroBG} alt="" />
+      
+        <picture>
+          {/* Image for mobile view (max-width: 600px) */}
+          <source
+            media="(max-width: 1024px)"
+            srcSet={`${mbHomeBG} 600w`}
+            sizes="300vw"
+          />
+
+          {/* Image for desktop view (default) */}
+          <source
+            srcSet={`${heroBG} 1440w`}
+            sizes="(max-width: 1366px) 100vw, 1440px"
+            />
+
+          {/* Fallback image for desktop */}
+          <img
+            className="heroBG"
+            src={heroBG}
+            alt="Hero Background"
+            />
+
+          {/* Fallback image for mobile */}
+          <img
+            className="mbHomeBG"
+            src={mbHomeBG}
+            alt="Mobile Background"
+            style={{ display: 'none' }} // Hide this fallback by default
+          />
+
+          </picture>
+
+        {/* <img className="heroBG" 
+          src={heroBG} 
+          srcSet={`${heroBG} 600w, ${heroBG} 1024w, ${heroBG} 1440w`}
+          sizes="(max-width: 600px) 100vw, (max-width: 1024px) 100vw, 1440px"
+          alt="desktop background" 
+        /> */}
+
         <div className='heroContainer'>
           <button className="loginBTN" onClick={() => toggleModal('login')}>LOGIN</button>
           <button className="signupBTN" onClick={() => toggleModal('signup')}>SIGN UP</button>
@@ -140,7 +180,13 @@ const Home = () => {
                       <p>{feature.description}</p>
                     </>
                   )}
-                  <img src={feature.image} alt={feature.title} />
+                  <img
+                    key={index}
+                    src={feature.image}
+                    srcSet={`${feature.image} 300w, ${feature.image} 600w, ${feature.image} 900w`}
+                    sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 30vw"
+                    alt={feature.title}
+                  />
                 </div>
               );
             })}
@@ -148,17 +194,35 @@ const Home = () => {
           <div className='rightArrow' onClick={handleNext}><FiArrowRightCircle className="nav-icon" /> </div>
         </div>
 
-        <img src={bottomBanner} className="bottomBanner" alt="" />
+        <img
+          src={bottomBanner}
+          className="bottomBanner"
+          srcSet={`${bottomBanner} 600w, ${bottomBanner} 1024w, ${bottomBanner} 1440w`}
+          sizes="(max-width: 600px) 100vw, (max-width: 1024px) 100vw, 1440px"
+          alt="Bottom Banner"
+/>
       </section>
 
       <section ref={aboutRef} id="about" className='aboutUs'>
-        <img src={aboutBG} className='aboutBG' alt="" />
+        <img
+          src={aboutBG}
+          className="aboutBG"
+          srcSet={`${aboutBG} 600w, ${aboutBG} 1024w, ${aboutBG} 1440w`}
+          sizes="(max-width: 600px) 100vw, (max-width: 1024px) 100vw, 1440px"
+          alt="About GIF"
+        />
         <div className='aboutContainer'>
           <h1>About Us</h1>
           <p>Ang Tipo Kong Kwento is an AI-based Tagalog story writer designed to create engaging and culturally relevant narratives for Filipino children. This innovative platform leverages advanced language models to generate personalized stories that foster creativity, language skills, and moral values. By making quality literature accessible, the application aims to enrich early childhood education in the Philippines and promote a lifelong love for reading.</p>
           <Link to="/developers" className='developersBTN'>Developers</Link>
         </div>
-        <img src={aboutIMG} className='aboutIMG' alt="" />
+        <img
+          src={aboutIMG}
+          className="aboutIMG"
+          srcSet={`${aboutIMG} 300w, ${aboutIMG} 600w, ${aboutIMG} 900w`}
+          sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 30vw"
+          alt="About Image"
+        />
       </section>
       <ScrollToTop />
       <Footer />
