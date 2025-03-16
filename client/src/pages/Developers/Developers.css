@@ -255,56 +255,73 @@ p {
 
 /* Media Query for 1024px */
 @media (max-width: 1024px) {
+    .dev-top h1 {
+        font-size: 50px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
     .developersPage {
-        padding: 150px 40px; /* Adjust padding for 1024px screens */
+        padding: 40px 50px;
     }
 
     .dev-top h1 {
-        margin-bottom: 50px; /* Adjust margin for 1024px screens */
-        font-size: 70px; /* Reduce font size for 1024px screens */
+        font-size: 45px;
     }
 
     .dev-slider-container {
-        width: 100%; /* Adjust container width for 1024px screens */
-        height: auto; /* Allow height to adjust based on content */
+        width: 90%;
+        height: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .dev-card-slider {
-        width: 100%; /* Make slider take full width */
-        height: auto; /* Allow height to adjust based on content */
-        gap: 0; /* Remove gap between cards */
+        width: 100%;
+        height: auto;
+        gap: 10px;
+        display: flex;
+        flex-wrap: wrap; /* Allow cards to wrap to prevent cutting off */
+        justify-content: center;
     }
 
     .dev-card {
-        /*Hide the other 2 cards on the side*/
-        width: 100%; /* Show 1 card per view on 1024px screens */
-        height: auto; /* Allow height to adjust based on content */
+        width: 80%; /* Decreased width */
+        height: auto; /* Allow height to adjust dynamically */
+        margin: 20px auto; /* Add margin to prevent overlap */
     }
 
     .dev-card-top {
-        height: 300px; /* Adjust height for 1024px screens */
+        height: auto; /* Adjust height dynamically */
+        padding: 20px;
+    }
+
+    .dev-card.inactive {
+        display: none; /* Hide inactive cards */
     }
 
     .dev-card img {
-        width: 50%; /* Adjust image size for 1024px screens */
-        height: auto; /* Allow height to adjust based on width */
+        width: 50%;
+        height: auto;
     }
 
     .dev-card-bot h3 {
-        font-size: 1.5rem; /* Adjust font size for 1024px screens */
+        margin-top: 10px;
+        font-size: 1.5rem;
     }
 
     .dev-card p {
-        font-size: 1rem; /* Adjust font size for 1024px screens */
+        font-size: 1.0rem;
     }
 
     .dev-socials {
-        font-size: 30px; /* Adjust social icons size for 1024px screens */
+        font-size: 34px;
     }
 
     .prev-btn,
     .next-btn {
-        font-size: 2rem; /* Adjust button size for 1024px screens */
+        font-size: 1.8rem;
     }
 }
 

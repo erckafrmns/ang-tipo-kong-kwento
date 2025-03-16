@@ -101,16 +101,20 @@ body {
 		left: 55.5%;
 		top: 0;  
 		margin-left: -95px;
-		z-index: 1;
 		width: 500px;
 		height: auto;
 	}
 
+	.inside-navbar {
+		width: 1170px;
+		z-index: 1000;
+	}
+
 	.inside-navbar ul {
-		display: flex;
-		padding: 10px 30px;
-		text-align: left;
-		margin-left: 12%;  
+		padding: 20px 250px;
+		position: center;
+		text-align: right;
+		margin-left: -130px;
 	}
 
 	.inside-navbar ul li {
@@ -119,15 +123,29 @@ body {
 		width: auto;
 	}
 
+	.inside-navbar ul li:nth-child(1),
+	.inside-navbar ul li:nth-child(2) {
+		margin-right: 10px; /* Reduce space between 'Features' and 'About Us' */
+	}
+
+	.inside-navbar ul li:nth-child(3),
+	.inside-navbar ul li:nth-child(4) {
+		margin-left: -200px;
+		margin-right: 200px;
+	}
+
 	.inside-navbar ul li a {
-		display: flex;
-		padding: 10px;
+		display: block;
+		padding: 10px 20px;
 		font-size: 16px;
-		margin: 0 20px; /*Adjusted margin to lessen space */
 	}
 
 	.banner {
+		position: absolute;
+		width: 130%;
 		height: auto;
+		left: 50%;
+		transform: translateX(-50%);
 	}
 
 	.logo-image {
@@ -166,8 +184,7 @@ body {
     .banner {
 		width: 100px;
         height: auto;
-		top: 20px;
-    }
+    } /* DI KO MAADJUST ;( */
 
 	.logo-image {
 		height: 100px;

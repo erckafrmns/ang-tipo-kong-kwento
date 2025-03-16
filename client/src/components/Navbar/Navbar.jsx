@@ -48,8 +48,8 @@ const Navbar = ({ hideInsideNavbar = false }) => { // Add a prop to control visi
                 src={banner}
                 className="banner"
                 srcSet={`${banner} 600w, ${banner} 1024w, ${banner} 1440w`}
-                sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 1440px"
-                alt="Banner"
+                sizes="(max-width: 600px) 100vw, (max-width: 1024px) 100vw, 1440px"
+                alt=""
             />
             <div id="navbar">
                 <div className="logo">
@@ -58,8 +58,8 @@ const Navbar = ({ hideInsideNavbar = false }) => { // Add a prop to control visi
                         src={logo}
                         className="logo-image"
                         srcSet={`${logo} 100w, ${logo} 200w, ${logo} 300w`}
-                        sizes="(max-width: 480px) 80px, (max-width: 768px) 150px, 150px"
-                        alt="Logo"
+                        sizes="(max-width: 480px) 80px, (max-width: 768px) 100px, 150px"
+                        alt=""
                     />
                     </Link>
                 </div>

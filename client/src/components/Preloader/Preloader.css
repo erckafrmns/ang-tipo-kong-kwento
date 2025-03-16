@@ -112,6 +112,23 @@
 }
 
 /* Media Queries for Responsiveness */
+@media (max-width: 1024px) {
+    .messages {
+        font-size: 50px;
+    }
+
+    .magic-loader {
+        width: 90px;
+        height: 90px;
+    }
+
+    .sparkle1 {
+        width: 11px;
+        height: 11px;
+    }
+    
+}
+
 @media (max-width: 768px) {
     .messages {
         font-size: 40px;

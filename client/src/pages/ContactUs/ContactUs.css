@@ -135,6 +135,66 @@ h1, h2, p{
 }
 
 /* Media Queries for Responsiveness */
+
+@media (max-width: 1024px) {
+    .contactUs {
+        padding: 20px 40px; /* Reduced padding */
+    }
+
+    .contactUs h1 {
+        font-size: 40px;
+        margin-top: 20px; /* Reduced margin-top */
+    }
+
+    .contactUs p {
+        font-size: 16px;
+    }
+
+    .contactUs-container {
+        flex-direction: column-reverse;
+        padding: 20px 40px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .contacts {
+        width: 70%;
+        padding: 0;
+        margin-top: 20px;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+    }
+
+    .contactForm {
+        width: 100%;
+        padding: 0;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: -90px;
+        margin-bottom: 100px;
+    }
+
+    .contact-items {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .contactForm input, .contactForm textarea {
+        width: 100%;
+    }
+
+    .contactForm button {
+        width: 100%;
+    }
+
+    .vertical-line {
+        display: none;
+    }
+}
+
 @media (max-width: 768px) {
     .contactUs {
         padding: 20px 30px;
