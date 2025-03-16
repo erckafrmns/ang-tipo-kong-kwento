@@ -297,6 +297,21 @@ body {
     transform: scale(0.98);
 }
 
+/* Media Query for 1024px */
+@media (max-width: 1024px) {
+    .customization-container {
+        display: flex;
+        flex-direction: column; 
+        align-items: center; 
+        margin-bottom: 30px;
+    }
+
+    .custom-modal{
+        width: 50%;
+    }
+
+}
+
 /* Media Queries for Responsiveness */
 @media (max-width: 768px) {
     .customization-container {

@@ -164,7 +164,9 @@ body {
     }
 
     .banner {
+		width: 100px;
         height: auto;
+		top: 20px;
     }
 
 	.logo-image {

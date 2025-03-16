@@ -571,4 +571,14 @@
 .confirm-btn:hover, .cancel-btn:hover {
   transform: scale(0.98);
 }
+
+/* Media Queries */
+
+@media(max-width: 1080px){
+    .sidebar{
+        width: 30%;
+        height: auto;
+        overflow: hidden;
+    }
+}
  
