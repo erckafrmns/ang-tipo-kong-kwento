@@ -705,104 +705,146 @@ p {
 
 /* Adjustments for mobile devices (480px and below) */
 @media (max-width: 480px) {
-    .mbHomeBG {
+    .heroBG {
+        margin-top: 110px;
+    }
+
+    .hero {
         height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        overflow: hidden;
+        padding-top: 20px;
+        padding-bottom: 300px;
     }
 
     .hero h1 {
-        font-size: 40px;
+        font-size: 46px;
+        letter-spacing: 2px;
+        line-height: 45px;
+        text-align: center;
+        margin-top: 20px;
     }
 
-    .heroBG {
-        height: 30%;
+    .heroContainer {
+        margin-bottom: 130px;
     }
 
     .signupBTN,
     .loginBTN {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         width: 80px;
+        height: 40px;
         font-size: 16px;
+        font-weight: 500;
+        margin-bottom: 5px;
+        border-radius: 5px;
+        background-color: var(--yellow);
+        transition: all 0.3s ease;
+    }
+
+    .guestBTN {
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--yellow);
+        background-color: transparent;
+        border: none;
+        outline: none;
+        text-decoration: underline;
+        transition: all 0.3s ease;
+        margin-bottom: 30px;
+    }
+
+
+
+    .signupBTN:hover,
+    .loginBTN:hover,
+    .guestBTN:hover {
+        color: var(--green);
+    }
+
+    /*FEATURES SECTION*/
+    
+    .features {
+        margin-top: -400px; /* Reduce the gap between the features section and hero section */
     }
 
     .features h1 {
-        font-size: 35px;
-        padding: 20px 0 30px 10px;
+        font-size: 45px;
+        padding: 0 40px 40px;
     }
 
-    .features-card {
+    .featuresContainer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         width: 100%;
-        padding: 20px;
-    }
+        z-index: 5;
+        position: relative;
+        }
 
-    .features-card img {
-        height: 200px;
+        .features-card {
+        width: 90%; /* Increased width to make the features card bigger */
+        margin: auto;
+        }
+
+        .features-card img {
+        height: auto;
+        }
+
+    .features-card.inactive {
+        display: none;
     }
 
     .features-card h2 {
-        font-size: 24px;
+        font-size: 20px;
     }
 
     .features-card p {
-        font-size: 14px;
+        font-size: 12px;
     }
+    
 
+    /*ABOUT US SECTION*/
     .aboutContainer {
+        width: 95%;
+        margin: 0 auto;
+        text-align: right;
+        padding-top: 20px;
+    }
+
+    .aboutContainer h1 {
+        font-size: 45px;
+        padding-bottom: 25px;
+    }
+
+    .aboutContainer p {
+        font-size: 12px;
+        line-height: 1.6;
+        padding-bottom: 15px;
+        padding-left: 100px; /* Added padding to increase space on the left */
+    }
+
+    .aboutBG {
+        display: flex;
         width: 100%;
-        right: 0;
+        height: auto;
+        margin-left: -100px;
     }
-
-    .aboutContainer h1 {
-        font-size: 25px;
-    }
-
-    .aboutContainer p {
-        font-size: 14px;
-    }
-
-    .developersBTN {
-        font-size: 18px;
-    }
-}
-
-/* Adjustments for very small mobile devices (320px and below) */
-@media (max-width: 320px) {
-    .hero h1 {
-        font-size: 30px;
-    }
-    .heroBG {
-        height: 25%; /* Adjust height for very small screens */
-    }
-
-    .signupBTN,
-    .loginBTN {
-        width: 60px;
-        font-size: 14px;
-    }
-
-    .features h1 {
-        font-size: 30px;
-    }
-
-    .features-card img {
-        height: 150px;
-    }
-
-    .features-card h2 {
-        font-size: 20px;
-    }
-
-    .features-card p {
-        font-size: 12px;
-    }
-
-    .aboutContainer h1 {
-        font-size: 20px;
-    }
-
-    .aboutContainer p {
-        font-size: 12px;
-    }
-
+    
     .developersBTN {
         font-size: 16px;
+    }
+
+    .aboutIMG {
+        width: 20px;
+        height: 30px;
+        position: absolute;
+        bottom: 5px;
+        right: 20px;
     }
 }

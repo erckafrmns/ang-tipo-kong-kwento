@@ -122,28 +122,51 @@ footer{
 }
 
 @media (max-width: 480px) {
+    .footerInfo {
+        display: flex;
+        padding: 30px 20px 20px 20px;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .leftPart, .rightPart {
+        width: 100%;
+        text-align: center;
+    }
+
     .leftPart h1 {
-        font-size: 20px;
+        font-size: 18px;
     }
 
     .leftPart p {
         font-size: 12px;
+        width: 100%;
     }
 
     .socialMedia-item {
-        font-size: 20px;
+        font-size: 22px;
+        margin-right: 10px;
     }
 
     .rightPart img {
-        width: 80px;
-        height: 80px;
+        width: 90px;
+        height: 90px;
+    }
+
+    .termsPolicy {
+        padding: 10px 0;
+        text-align: center;
     }
 
     .termsPolicy-item {
-        font-size: 12px;
+        font-size: 14px;
+        padding: 0 10px;
     }
 
     .copyright h4 {
         font-size: 12px;
+        padding: 10px;
     }
 }
