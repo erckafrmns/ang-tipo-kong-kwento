@@ -4,26 +4,16 @@ p {
     cursor: default;
 }
 
-.mbHomeBG{
-    height: 100vh;
-    width: 100%;
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 0;
-}
-
 /* HERO SECTION */
 .hero {
     position: relative;
-    padding-top: 0px;
+    padding-top: 60px;
     height: 89vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    overflow: hidden;
+
 }
 
 .hero h1 {
@@ -38,23 +28,14 @@ p {
 }
 
 .heroBG {
-    /* position: absolute;
+    position: absolute;
     bottom: 0;
     z-index: 1;
     width: 100%;
-     height: 58%;
     height: auto;
-    object-fit: cover; */
-
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: none;
-    background-size: cover;
-    background-position: center;
-    z-index: 1;
+    left: 50%;
+    transform: translateX(-50%);
+    object-fit: cover;
 }
 
 .heroContainer {
@@ -63,7 +44,7 @@ p {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 200px;
+    margin-bottom: 65px;
 }
 
 .signupBTN,
@@ -387,7 +368,7 @@ p {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    z-index: 800;
 }
 
 .modal-content {
@@ -396,171 +377,45 @@ p {
     position: relative;
 }
 
-/* NOT UPDATED 
-@media (max-width: 1380px) {
-    .hero h1 {
-        font-size: 55px;
-    }
-
-    .signupBTN,
-    .loginBTN {
-        width: 320px;
-    }
-
-    .hero .container {
-        margin: -14rem 14rem 0 14rem;
-    }
-}
-
-@media (max-width: 1250px) {
-    .hero h1 {
-        font-size: 45px;
-    }
-
-    .signupBTN,
-    .loginBTN {
-        width: 60%;
-    }
-
-    .hero .container {
-        margin: -14rem 12rem 0 12rem;
-    }
-}
-
-
-@media (max-width: 1125px) {
-    .hero h1 {
-        font-size: 42px;
-    }
-
-    .signupBTN,
-    .loginBTN {
-        width: 50%;
-        font-size: 13px;
-    }
-
-    .guestBTN {
-        font-size: 13px;
-    }
-
-    .hero .container {
-        margin: -14rem 7rem 0 7rem;
-    }
-}
-
-@media (max-width: 900px) {
-    .hero h1 {
-        font-size: 35px;
-    }
-
-    .signupBTN,
-    .loginBTN {
-        width: 80%;
-        font-size: 12px;
-    }
-
-    .guestBTN {
-        font-size: 12px;
-    }
-
-    .hero .container {
-        margin: -14rem 5rem 0 5rem;
-    }
-}
-
-@media (max-width: 750px) {
-
-    .signupBTN,
-    .loginBTN {
-        width: 100%;
-        font-size: 12px;
-    }
-
-    .guestBTN {
-        font-size: 12px;
-    }
-
-    .hero .container {
-        margin: -14rem 4rem 0 4rem;
-    }
-}
-
-@media (max-width: 680px) {
-    .hero h1 {
-        font-size: 30px;
-    }
-
-    .signupBTN,
-    .loginBTN {
-        width: 100%;
-        font-size: 12px;
-    }
-
-    .guestBTN {
-        font-size: 12px;
-    }
-
-    .hero .container {
-        margin: -14rem 3rem 0 3rem;
-    }
-}
-
-@media (max-width: 600px) {
-    .hero h1 {
-        font-size: 25px;
-    }
-
-    .signupBTN,
-    .loginBTN {
-        width: 100%;
-        font-size: 11px;
-    }
-
-    .guestBTN {
-        font-size: 11px;
-    }
-
-    .hero .container {
-        margin: -14rem 2rem 0 2rem;
-    }
-}
-
-*/
-
-
-/* Default styles (for larger screens) */
-.hero h1 {
-    font-size: 100px;
-}
-
-.signupBTN,
-.loginBTN {
-    width: 150px;
-    font-size: 28px;
-}
-
-.features-card {
-    width: 30%;
-}
-
-.features-card img {
-    height: 350px;
-}
-
-.aboutContainer {
-    width: 35rem;
-    right: 150px;
-}
-
 /* Adjustments for medium screens (1024px and below) */
-@media (max-width: 1024px) {
+@media (max-width: 768px) {
+
+    .hero {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        overflow: hidden;   
+        padding-bottom: 200px;
+        position: relative;
+    }
 
     .hero h1 {
-        font-size: 80px;
-        letter-spacing: 2px;
+        font-size: 68px;
+        letter-spacing: 1.5px;
         text-align: center;
-        margin-top: 70px;
-        margin-bottom: 30px;
+        margin-top: 50px;
+        margin-bottom: 20px;
+        z-index: 2;
+    }
+
+    .heroContainer {
+        margin-bottom: 100px;
+        z-index: 2;
+    }
+
+    .heroBG {
+        position: absolute;
+        top: 55%;
+        left: 50%;
+        width: 95%;
+        height: auto;
+        object-fit: cover;
+        background-size: cover;
+        background-position: center;
+        transform: translate(-50%, -50%);
+        z-index: 1;
     }
 
     .signupBTN,
@@ -568,30 +423,31 @@ p {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 120px;
-        font-size: 24px;
-        margin-bottom: 10px;
-        border-radius: 5px;
+        width: 140px; 
+        height: 50px; 
+        font-size: 30px; 
+        margin-bottom: 20px;
+        border-radius: 8px;
         background-color: var(--yellow);
         transition: all 0.3s ease;
-    }
-
-    .guestBTN {
-        font-size: 16px;
-        font-weight: 800;
-        color: var(--yellow);
-        background-color: transparent;
-        border: none;
-        outline: none;
-        text-decoration: underline;
-        transition: all 0.3s ease;
-        margin-bottom: 50px;
     }
 
     .signupBTN:hover,
     .loginBTN:hover,
     .guestBTN:hover {
         color: var(--green);
+    }
+
+    .guestBTN {
+        font-size: 18px; 
+        font-weight: 800;
+        color: var(--yellow);
+        background-color: var(--beige);
+        border: 2px var(--green);
+        outline: none;
+        text-decoration: underline;
+        transition: all 0.3s ease;
+        margin-bottom: 0px;
     }   
 
     .features h1 {
@@ -620,231 +476,148 @@ p {
         display: none; /* Hide inactive cards */
     }
 
+    .aboutUs {
+        height: auto;
+        display: flex;
+        padding-top: 60px;
+        padding-bottom: 80px;
+        position: relative;
+    }
+
     .aboutContainer {
         width: 22rem;
-        right: 80px;
+        right: 40px;
+    }
+    
+    .aboutContainer h1 {
+        font-size: 60px;
+        padding-bottom: 20px;
     }
 
     .aboutBG {
         height: 50vh;
         width: 100%;
         z-index: 2;
-        margin-left: -200px;
-        margin-top: 130px; /* Added margin-top to move it lower */
+        margin-left: -25%;
+        margin-top: 10%;
+        object-fit: cover;
+    }
+
+    .aboutIMG {
+        position: absolute;
+        left: 65%;
+        bottom: 55px;
+        transform: translateX(-50%);
     }
 
 
 }
 
-/* Adjustments for tablets (768px and below) */
-@media (max-width: 768px) {
+/* Adjustments for mobile devices (480px and below) */
+/* Adjustments for mobile devices (480px and below) */
+@media (max-width: 480px) {
     .hero {
-        height: auto;
-        padding-top: 40px;
+        height: 100vh;
+        padding-bottom: 200px;
     }
 
     .hero h1 {
-        font-size: 60px;
-        margin-top: 20px;
+        font-size: 42px; /* Slightly larger than before but proportional */
+        margin-top: 30px;
+        margin-bottom: 15px;
+    }
+
+    .heroContainer {
+        margin-bottom: 80px;
     }
 
     .heroBG {
-        height: 40%;
+        margin-top: 0;
+        width: 120%;
     }
 
     .signupBTN,
     .loginBTN {
-        width: 100px;
+        width: 120px; /* More proportional to 768px version */
+        height: 45px;
         font-size: 20px;
+        margin-bottom: 15px;
     }
 
+    .guestBTN {
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+    /* FEATURES SECTION */
     .features h1 {
-        font-size: 40px;
-        padding: 20px 0 40px 20px;
+        font-size: 42px; /* Proportional scaling */
+        padding: 0 20px 40px;
+    }
+
+    .featuresContainer {
+        padding: 0 10px;
     }
 
     .features-card {
-        width: 100%;
-        margin: 10px 0;
+        width: 85%; /* Slightly wider than 768px version proportion */
+        padding: 20px 15px;
     }
 
-    .features-card img {
-        height: 250px;
+    .features-card h2 {
+        font-size: 24px; /* Proportional scaling */
     }
 
+    .features-card p {
+        font-size: 14px; /* Proportional scaling */
+    }
+
+    /* ABOUT US SECTION */
     .aboutUs {
-        flex-direction: column;
         padding-top: 40px;
-    }
-
-    .aboutBG {
-        display: none;
+        padding-bottom: 30px;
     }
 
     .aboutContainer {
-        width: 90%;
-        right: 5%;
+        width: 85%;
+        right: auto;
+        left: 50%;
+        transform: translateX(-50%);
         text-align: center;
         padding-top: 20px;
     }
 
     .aboutContainer h1 {
-        font-size: 35px;
+        font-size: 42px; /* Proportional scaling */
         padding-bottom: 30px;
     }
 
     .aboutContainer p {
-        font-size: 16px;
-        padding-bottom: 20px;
-    }
-
-    .developersBTN {
-        font-size: 20px;
-    }
-}
-
-/* Adjustments for mobile devices (480px and below) */
-@media (max-width: 480px) {
-    .heroBG {
-        margin-top: 110px;
-    }
-
-    .hero {
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: center;
-        overflow: hidden;
-        padding-top: 20px;
-        padding-bottom: 300px;
-    }
-
-    .hero h1 {
-        font-size: 46px;
-        letter-spacing: 2px;
-        line-height: 45px;
+        font-size: 14px; /* Proportional scaling */
+        padding-left: 0;
         text-align: center;
-        margin-top: 20px;
-    }
-
-    .heroContainer {
-        margin-bottom: 130px;
-    }
-
-    .signupBTN,
-    .loginBTN {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 80px;
-        height: 40px;
-        font-size: 16px;
-        font-weight: 500;
-        margin-bottom: 5px;
-        border-radius: 5px;
-        background-color: var(--yellow);
-        transition: all 0.3s ease;
-    }
-
-    .guestBTN {
-        font-size: 12px;
-        font-weight: 500;
-        color: var(--yellow);
-        background-color: transparent;
-        border: none;
-        outline: none;
-        text-decoration: underline;
-        transition: all 0.3s ease;
-        margin-bottom: 30px;
-    }
-
-
-
-    .signupBTN:hover,
-    .loginBTN:hover,
-    .guestBTN:hover {
-        color: var(--green);
-    }
-
-    /*FEATURES SECTION*/
-    
-    .features {
-        margin-top: -400px; /* Reduce the gap between the features section and hero section */
-    }
-
-    .features h1 {
-        font-size: 45px;
-        padding: 0 40px 40px;
-    }
-
-    .featuresContainer {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        z-index: 5;
-        position: relative;
-        }
-
-        .features-card {
-        width: 90%; /* Increased width to make the features card bigger */
-        margin: auto;
-        }
-
-        .features-card img {
-        height: auto;
-        }
-
-    .features-card.inactive {
-        display: none;
-    }
-
-    .features-card h2 {
-        font-size: 20px;
-    }
-
-    .features-card p {
-        font-size: 12px;
-    }
-    
-
-    /*ABOUT US SECTION*/
-    .aboutContainer {
-        width: 95%;
-        margin: 0 auto;
-        text-align: right;
-        padding-top: 20px;
-    }
-
-    .aboutContainer h1 {
-        font-size: 45px;
-        padding-bottom: 25px;
-    }
-
-    .aboutContainer p {
-        font-size: 12px;
-        line-height: 1.6;
-        padding-bottom: 15px;
-        padding-left: 100px; /* Added padding to increase space on the left */
     }
 
     .aboutBG {
-        display: flex;
-        width: 100%;
-        height: auto;
-        margin-left: -100px;
+        width: 150%;
+        margin-left: -25%;
+        margin-top: 90%;
     }
-    
+
     .developersBTN {
-        font-size: 16px;
+        font-size: 20px;
+        padding: 10px 30px;
     }
 
     .aboutIMG {
-        width: 20px;
-        height: 30px;
-        position: absolute;
-        bottom: 5px;
-        right: 20px;
+        left: 90%;
+        bottom: 30px;
+    }
+
+    /* Navigation arrows */
+    .leftArrow,
+    .rightArrow {
+        font-size: 24px;
+        margin: 0 10px;
     }
 }

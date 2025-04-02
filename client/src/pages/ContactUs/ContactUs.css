@@ -136,7 +136,7 @@ h1, h2, p{
 
 /* Media Queries for Responsiveness */
 
-@media (max-width: 1024px) {
+@media (max-width: 768px) {
     .contactUs {
         padding: 20px 40px; /* Reduced padding */
     }
@@ -168,12 +168,9 @@ h1, h2, p{
 
     .contactForm {
         width: 100%;
-        padding: 0;
         flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        margin-top: -90px;
-        margin-bottom: 100px;
+        align-items: column;
+        padding: 0;
     }
 
     .contact-items {
@@ -192,42 +189,6 @@ h1, h2, p{
 
     .vertical-line {
         display: none;
-    }
-}
-
-@media (max-width: 768px) {
-    .contactUs {
-        padding: 20px 30px;
-    }
-
-    .contactUs h1 {
-        font-size: 35px;
-    }
-
-    .contactUs-container {
-        flex-direction: column;
-        padding: 20px 30px;
-    }
-
-    .contacts, .contactForm {
-        width: 100%;
-        padding: 0;
-    }
-
-    .contact-items {
-        width: 100%;
-    }
-
-    .vertical-line {
-        display: none;
-    }
-
-    .contactForm input, .contactForm textarea {
-        width: 100%;
-    }
-
-    .contactForm button {
-        width: 100%;
     }
 }
 

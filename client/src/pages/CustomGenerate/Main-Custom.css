@@ -298,12 +298,13 @@ body {
 }
 
 /* Media Query for 1024px */
-@media (max-width: 1024px) {
+@media (max-width: 768px) {
     .customization-container {
         display: flex;
         flex-direction: column; 
         align-items: center; 
-        margin-bottom: 30px;
+        margin-top: 10%;
+        margin-bottom: 20%;
     }
 
     .custom-modal{
@@ -312,55 +313,78 @@ body {
 
 }
 
-/* Media Queries for Responsiveness */
-@media (max-width: 768px) {
+@media (max-width: 480px) {
     .customization-container {
         padding: 0 20px;
+        margin-top: 20%;
+        margin-bottom: 30%;
     }
 
-    .custom, .without-custom {
-        width: 100%;
-        height: auto;
-        margin-top: 20px;
+    .custom,
+    .without-custom {
+        width: 280px;
+        height: 350px;
+        margin-top: 30px;
+        float: none;
     }
 
-    .custom-text, .without-custom-text {
-        font-size: 24px;
+    .custom-text,
+    .without-custom-text {
+        font-size: 24px; /* Proportional scaling from 768px */
+        padding: 0 15px;
     }
 
+    /* Modal adjustments */
     .custom-modal {
-        width: 80%;
+        width: 85%; /* More appropriate for small screens */
+        max-width: none;
+        padding: 15px;
+    }
+
+    .inputs h1 {
+        font-size: 28px; /* Proportional scaling */
+        margin: 15px 0 20px 0;
+    }
+
+    .toggle-container {
+        flex-wrap: wrap;
     }
 
     .toggle-option {
-        padding: 3px 20px;
-        font-size: 14px;
+        padding: 5px 15px;
+        font-size: 14px; /* Proportional scaling */
+        margin-bottom: 5px;
+        width: 48%; /* Better fit on small screens */
     }
 
-    .genre-select, .title-input {
-        width: 100%;
+    .toggle-option:first-child,
+    .toggle-option:last-child {
+        border-radius: 5px; /* Remove side-specific rounding */
+        border-right: 2px solid var(--green);
     }
 
-    .generate-button {
-        width: 100%;
-    }
-}
-
-@media (max-width: 480px) {
-    .custom-text, .without-custom-text {
-        font-size: 18px;
-    }
-
-    .toggle-option {
-        padding: 3px 10px;
-        font-size: 12px;
-    }
-
-    .genre-select, .title-input {
-        font-size: 14px;
+    .genre-select,
+    .title-input {
+        width: 90%; /* Slightly wider for better usability */
+        font-size: 14px; /* Proportional scaling */
+        padding: 10px 8px;
+        margin-bottom: 15px;
     }
 
     .generate-button {
-        font-size: 18px;
+        width: 60%; /* More touch-friendly */
+        font-size: 20px; /* Proportional scaling */
+        padding: 8px 0;
+    }
+
+    .inputs::before {
+        padding: 60px; /* Proportional scaling */
+        width: 60%; /* Better fit */
+    }
+
+    .close-icon {
+        top: 2%;
+        right: 4%;
+        font-size: 16px;
     }
 }
