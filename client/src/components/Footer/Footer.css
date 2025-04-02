@@ -77,12 +77,22 @@ footer{
 /* Media Queries for Responsiveness */
 
 @media (max-width: 768px) {
+
     .footerInfo {
-        flex-direction: column;
-        padding: 20px 10px;
+        display: flex;  
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+    
+    .leftPart {
+        width: 100%;
+        text-align: left;
+        margin-left: 15%
     }
 
-    .leftPart, .rightPart {
+    .rightPart{
         width: 100%;
         text-align: center;
     }
@@ -101,11 +111,6 @@ footer{
         margin-right: 5px;
     }
 
-    .rightPart img {
-        width: 100px;
-        height: 100px;
-    }
-
     .termsPolicy {
         padding: 10px 0;
     }
@@ -122,51 +127,66 @@ footer{
 }
 
 @media (max-width: 480px) {
-    .footerInfo {
-        display: flex;
-        padding: 30px 20px 20px 20px;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
+    footer {
+        padding: 0; /* Adjusted padding */
     }
 
-    .leftPart, .rightPart {
+    .footerInfo {
+        flex-direction: column; /* Stack vertically on small screens */
+        padding: 20px;
+        gap: 20px; /* Consistent spacing */
+    }
+
+    .leftPart {
         width: 100%;
-        text-align: center;
+        text-align: center; /* Center align for mobile */
+        margin-left: 0; /* Remove left margin */
     }
 
     .leftPart h1 {
-        font-size: 18px;
+        font-size: 22px; /* Slightly larger than before but proportional */
+        margin-bottom: 10px;
+        margin-top: -30px;
     }
 
     .leftPart p {
-        font-size: 12px;
-        width: 100%;
+        font-size: 14px; /* More readable than 12px */
+        width: 90%;
+        margin: 0 auto; /* Center the paragraph */
+        padding: 8px 0 15px 0;
     }
 
     .socialMedia-item {
-        font-size: 22px;
-        margin-right: 10px;
+        font-size: 28px; /* Larger for better touch targets */
+        margin: 0 8px; /* Even spacing */
+    }
+
+    .rightPart {
+        order: -1; /* Move logo to top */
+        margin-bottom: 15px;
     }
 
     .rightPart img {
-        width: 90px;
-        height: 90px;
+        width: 130px; /* Proportional scaling */
+        height: auto;
     }
 
     .termsPolicy {
-        padding: 10px 0;
-        text-align: center;
+        padding: 10px 0 15px 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px; /* Better spacing */
     }
 
     .termsPolicy-item {
         font-size: 14px;
-        padding: 0 10px;
+        padding: 0 8px;
     }
 
     .copyright h4 {
-        font-size: 12px;
-        padding: 10px;
+        font-size: 13px;
+        padding: 8px;
+        text-align: center;
     }
 }

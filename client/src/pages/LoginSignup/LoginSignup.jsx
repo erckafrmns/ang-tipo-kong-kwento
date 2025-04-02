@@ -132,7 +132,7 @@ const LoginSignup = ({ closeModal, formType, toggleModal }) => {
                 </div>
               ) : (
                 <div className="side-content">
-                  <img src={ladyReading} className="side-image" alt="" />
+                  <img src={ladyReading} className="side-imageLI" alt="" />
                   <button className="side-btn side-loginbtn" onClick={toggleForm}>Login</button>
                 </div>
               )}
@@ -162,7 +162,7 @@ const LoginSignup = ({ closeModal, formType, toggleModal }) => {
               ) : (
                 <div className="side-content">
                   <button onClick={closeModal} className='loginSignUp-exIcon'><ImCross /></button>
-                  <img src={manSitting} className="side-image" alt="" />
+                  <img src={manSitting} className="side-imageSU" alt="" />
                   <button className="side-btn side-signbtn" onClick={toggleForm}>Sign up</button>
                 </div>
               )}

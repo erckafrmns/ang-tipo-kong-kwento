@@ -236,37 +236,15 @@ p {
     animation: nextSlideInOut 0.3s forwards;
 }
 
-/* @media (max-width: 1024px) {
-
-    .dev-slider-container {
-        display: flex;
-        height: auto;
-        width: 100%;
-    }
-
-    .dev-card-slider {
-        flex-direction: column;
-        width: 100%;
-        height: auto;
-        gap: 20px;
-    }
-
-} */
-
-/* Media Query for 1024px */
-@media (max-width: 1024px) {
+@media (max-width: 768px) {
     .dev-top h1 {
         font-size: 50px;
-        margin-top: 20px;
+        margin-top: 30%;
         margin-bottom: 20px;
     }
 
     .developersPage {
-        padding: 40px 50px;
-    }
-
-    .dev-top h1 {
-        font-size: 45px;
+        padding: 0px;
     }
 
     .dev-slider-container {
@@ -322,60 +300,6 @@ p {
     .prev-btn,
     .next-btn {
         font-size: 1.8rem;
-    }
-}
-
-
-/* Media Queries for Responsiveness */
-@media (max-width: 768px) {
-    .developersPage {
-        padding: 20px 30px;
-    }
-
-    .dev-top h1 {
-        font-size: 35px;
-    }
-
-    .dev-slider-container {
-        width: 100%;
-        height: auto;
-    }
-
-    .dev-card-slider {
-        flex-direction: column;
-        width: 100%;
-        height: auto;
-        gap: 20px;
-    }
-
-    .dev-card {
-        width: 100%;
-        height: auto;
-    }
-
-    .dev-card-top {
-        height: 200px;
-    }
-
-    .dev-card img {
-        width: 30%;
-        height: auto;
-    }
-
-    .dev-card-bot h3 {
-        font-size: 1rem;
-    }
-
-    .dev-card p {
-        font-size: 0.85rem;
-    }
-
-    .dev-socials {
-        font-size: 24px;
-    }
-
-    .prev-btn, .next-btn {
-        font-size: 1.5rem;
     }
 }
 

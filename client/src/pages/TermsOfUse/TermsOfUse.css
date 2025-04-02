@@ -96,7 +96,7 @@ u:hover{
 /* Media Queries for Responsiveness */
 @media (max-width: 768px) {
     .termsandpolicies {
-        padding: 20px 30px;
+        padding: 90px 5px;
     }
 
     .container-bot {
@@ -113,10 +113,6 @@ u:hover{
 
     .container-bot p {
         font-size: 16px;
-    }
-
-    .termsandpolicies ul {
-        padding-left: 4%;
     }
 }
 
