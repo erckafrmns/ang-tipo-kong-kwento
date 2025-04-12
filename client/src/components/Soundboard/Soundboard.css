@@ -1,0 +1,203 @@
+:root {
+    --hoverColor: rgba(41, 65, 34, 0.3);
+    --fontweight: 450; 
+    --main-font: "EfcoBrookshire", sans-serif;  
+  }   
+   
+ .soundboard-btn{ 
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+    top: 75px;
+    font-size: 24px; 
+    border-radius: 5px;   
+    padding: 1.5px 3.5px;  
+    position: absolute; 
+    right: 10px; 
+    transition: all 0.3s ease;    
+    background-color: var(--beige);
+    color: var(--green);   
+    border: 2px solid var(--green);   
+} 
+ 
+/* Tooltip bubble */
+.soundboard-btn::after{
+    position: absolute;
+    left: -50%;  
+    margin-left: 5px;
+    transform: translateX(-100%); 
+    padding: 8px 12px; 
+    background-color: var(--green);
+    color: var(--yellow);
+    font-size: 14px;
+    border-radius: 5px;
+    visibility: hidden; 
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    white-space: nowrap;    
+    content: "Soundboard";
+} 
+
+/* Arrow pointing to the right */
+.soundboard-btn::before {
+    content: ""; 
+    position: absolute;
+    left: -33%; 
+    top: 50%;  
+    margin-left: 5px;
+    transform: translateX(-100%) translateY(-50%); 
+    width: 0; 
+    height: 0; 
+    border-style: solid;
+    border-width: 7px 0 7px 10px; 
+    border-color: transparent transparent transparent var(--green); 
+    visibility: hidden; 
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}  
+ 
+.soundboard-btn:hover::after, 
+.soundboard-btn:hover::before{
+    visibility: visible;
+    opacity: 1;
+}
+
+.soundboard-btn:hover{ 
+    color: var(--yellow);
+}  
+
+/* Open Soundboard */
+.soundboard-panel {
+    position: absolute;
+    top: 75px;
+    right: 10px;  
+    width: 18.5%;     
+    background-color: var(--beige); 
+    border-radius: 10px;
+    border: 2px solid var(--green);
+    max-height: 76vh;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.soundboard-header { 
+    position: sticky;
+    top: 0;
+    background-color: var(--beige); 
+    border-radius: 10px;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+    padding: 10px 15px 0 15px;
+}  
+
+.soundboard-header h3{    
+    padding-left: 15px;
+    margin-top: 5px;
+    font-size: 16px;  
+    font-weight: 600;
+    font-family: var(--main-font); 
+    color: var(--green);        
+    letter-spacing: 1px
+} 
+ 
+/* SCROLL */
+.soundboard-scrollable {
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: calc(74vh - 50px);
+} 
+
+/* Custom Scrollbar Styling*/
+.soundboard-scrollable::-webkit-scrollbar {
+    width: 8px; 
+} 
+
+.soundboard-scrollable::-webkit-scrollbar-track {
+  background-color: var(--hoverColor);  
+  border-radius: 5px;        
+}
+
+.soundboard-scrollable::-webkit-scrollbar-thumb {
+  background-color: var(--green);  
+  border-radius: 5px;        
+}
+
+.soundboard-scrollable::-webkit-scrollbar-thumb:hover {
+  background-color: #073a0b; 
+}
+
+.soundboard-content {
+    margin-top: 12px;
+}
+
+.soundboardClose-btn {
+    background-color: transparent; 
+    color: var(--green); 
+    font-size: 24px; 
+    border: none;  
+    padding: 15px; 
+    cursor: pointer; 
+    border-radius: 8px;    
+    position: relative; 
+    margin-right: -10px; 
+    margin-top: -10px;
+    transition: color 0.3s;   
+} 
+ 
+.soundboardClose-btn:hover{ 
+    color: var(--yellow); 
+  }     
+ 
+.genre-item {
+    padding: 16px 23px;
+    border-top: 2px solid var(--green);
+    background-color: transparent;
+    color: var(--green);
+    cursor: pointer; 
+    font-family: var(--main-font); 
+    text-transform: lowercase; 
+    font-size: 16px; 
+    transition: background-color 0.3s ease;
+}
+  
+.genre-top-thick {
+    border-top: 2px solid var(--green);
+  }
+  
+.genre-item:hover { 
+    background-color:  rgba(41, 65, 34, 0.3);
+  } 
+ 
+  .genre-item.active {
+    background-color: rgba(41, 65, 34, 0.4);
+  }
+  
+  
+.genre-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 12px 20px;
+  }
+  
+.genre-square {
+    height: 60px; 
+    background-color: var(--green);
+    color: var(--yellow);
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    text-align: center;  
+    font-family: var(--main-font); 
+    text-transform: lowercase;
+    font-size: 15px;
+    cursor: pointer;  
+    transition: all 0.3s ease;
+}
+  
+.genre-square:hover {
+    transform: scale(0.98);
+  }
+  

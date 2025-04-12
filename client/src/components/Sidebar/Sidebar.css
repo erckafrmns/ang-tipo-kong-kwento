@@ -138,7 +138,7 @@
   font-family: var(--main-font);
   margin-left: 10px;
   color: var(--green);
-  flex-grow: 1;
+  flex-grow: 1; 
 }
 
 
@@ -560,12 +560,12 @@
 
 .confirm-btn { 
   color: var(--beige);
-  background-color: var(--green); /* Red for confirmation */
+  background-color: var(--green); 
 }
 
 .cancel-btn { 
   color: var(--green);
-  background-color: var(--yellow); /* Green for cancellation */
+  background-color: var(--yellow); 
 }
 
 .confirm-btn:hover, .cancel-btn:hover {
