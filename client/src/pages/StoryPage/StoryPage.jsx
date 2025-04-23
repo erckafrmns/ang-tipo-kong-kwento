@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import HTMLFlipBook from "react-pageflip";
 import { useLocation } from "react-router-dom";
+import { toast } from 'react-hot-toast';
 import jsPDF from "jspdf"; // Import jsPDF
 import InsideNavbar from '../../components/Navbar/InsideNavbar';  
 import GuestNavbar from '../../components/Navbar/Navbar';
@@ -193,6 +194,7 @@ const StoryPage = () => {
     
         // Save the PDF
         doc.save(`${cleanTitle}.pdf`);
+        toast.success('File was successfully downloaded.')
     };
     
     

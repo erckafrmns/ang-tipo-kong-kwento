@@ -1,0 +1,18 @@
+# Use base Node image
+FROM node:20-alpine
+
+# Set working directory
+WORKDIR /client-app
+
+# Install dependencies
+COPY package.json package-lock.json ./
+RUN npm install
+
+# Copy rest of the app
+COPY . .
+
+# Expose development port
+EXPOSE 3000
+
+# Start app with polling for hot reload
+CMD ["npm", "run", "start-watch"]

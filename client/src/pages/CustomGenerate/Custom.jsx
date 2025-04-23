@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { ImCross } from "react-icons/im";
 import './Main-Custom.css';
+import { toast } from 'react-hot-toast';
 
 const Custom = ({ closeModal, isGuest }) => {
   const [title, setTitle] = useState('');
@@ -46,7 +47,7 @@ const Custom = ({ closeModal, isGuest }) => {
   
   const handleGenerateClick = useCallback(() => {
     if (!title || !genre) {
-      alert('Please enter a title and select a genre');
+      toast.error('Please enter a title and select a genre');
       return;
     }
 
@@ -78,7 +79,7 @@ const Custom = ({ closeModal, isGuest }) => {
         })
         .catch((error) => {
           console.error('Error generating the story for guest!', error);
-          alert('There was an error generating your story. Please try again.');
+          toast.error('There was an error generating your story. Please try again.');
         });
     } else {
       navigate('/story', { state: { loading: true } });
@@ -99,7 +100,7 @@ const Custom = ({ closeModal, isGuest }) => {
         })
         .catch((error) => {
           console.error('Error generating the story!', error);
-          alert('There was an error generating your story. Please try again.');
+          toast.error('There was an error generating your story. Please try again.');
         });
     }
   }, [title, genre, isShortStory, isGuest, navigate, closeModal]);

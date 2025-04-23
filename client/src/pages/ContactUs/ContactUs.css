@@ -133,3 +133,23 @@ h1, h2, p{
 .contactForm button:hover{
     transform: scale(0.98);
 }
+
+.spinner-wrapper {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+  }
+  
+.button-spinner {
+    border: 3px solid var(--beige);
+    border-top: 3px solid var(--yellow); 
+    border-radius: 50%;
+    width: 23px;
+    height: 23px; 
+    animation: spin 1s linear infinite;
+  }
+  
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }

@@ -3,6 +3,7 @@ import axios from 'axios';
 import '../Sidebar/Sidebar.css';
 import { useNavigate } from "react-router-dom";
 import logo from '../../assets/logo.png';
+import { toast } from 'react-hot-toast';
 
 import { TbLayoutSidebarInactive } from "react-icons/tb";
 import { MdOutlineHistoryEdu } from "react-icons/md";
@@ -160,6 +161,7 @@ const Sidebar = () => {
                     },
                 })
                 .then((response) => {
+                    toast.success(response.data.message)
                     console.log(response.data.message);
                     // Update the UI
                     setStories((prevStories) =>
@@ -168,6 +170,7 @@ const Sidebar = () => {
                 })
                 .catch((error) => {
                     console.error('Error deleting story:', error);
+                    toast.error(`Error deleting story: ${error}`);
                 });
         } else { //IF GUEST USER
             const keyToDelete = Object.keys(sessionStorage).find((key) => {
