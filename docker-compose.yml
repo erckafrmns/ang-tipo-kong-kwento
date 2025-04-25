@@ -5,7 +5,7 @@ services:
     build:
       context: ./client
       dockerfile: Dockerfile
-    image: erckafrmns/atkk-client:v1.1
+    image: erckafrmns/atkk-client:v1.0.0
     ports:
       - "3000:80" 
     restart: always
@@ -19,7 +19,7 @@ services:
     build:
       context: ./server
       dockerfile: Dockerfile
-    image: erckafrmns/atkk-server:v1.1
+    image: erckafrmns/atkk-server:v1.0.0
     volumes:
       - ./server:/server-app
     ports:
@@ -40,7 +40,7 @@ services:
     build:
       context: ./model
       dockerfile: Dockerfile
-    image: erckafrmns/atkk-model:v1.1
+    image: erckafrmns/atkk-model:v1.0.0
     volumes:
       - ./model:/model-app
     ports:
