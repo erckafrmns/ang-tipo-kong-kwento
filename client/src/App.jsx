@@ -18,6 +18,7 @@ import Pointer from './components/Pointer/Pointer';
 import { Preloader } from './components/Preloader/Preloader';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; 
 import ProtectedRoute from './components/ProtectedRoute'; 
+import { Toaster } from 'react-hot-toast';
 
 
 const AppContent = () => {
@@ -61,6 +62,10 @@ const App = () => (
   <Router>
     <Pointer>
       <AppContent />
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+      />
     </Pointer>
   </Router>
 );

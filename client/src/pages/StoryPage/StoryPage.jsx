@@ -1,11 +1,13 @@
 import React, { useRef, useState, useEffect } from "react";
 import HTMLFlipBook from "react-pageflip";
 import { useLocation } from "react-router-dom";
+import { toast } from 'react-hot-toast';
 import jsPDF from "jspdf"; // Import jsPDF
 import InsideNavbar from '../../components/Navbar/InsideNavbar';  
 import GuestNavbar from '../../components/Navbar/Navbar';
 import Footer from "../../components/Footer/Footer"; 
-import Sidebar from '../../components/Sidebar/Sidebar'; 
+import Sidebar from '../../components/Sidebar/Sidebar';  
+import Soundboard from '../../components/Soundboard/Soundboard'; 
 import "./StoryPage.css";
 
 import Paper from "../../assets/paper-mode.svg";
@@ -19,7 +21,7 @@ import aboutIMG from '../../assets/about-img.png';
 
 import { TiDocumentText } from "react-icons/ti"; 
 import { IoMdDownload } from "react-icons/io"; 
-import { VscBook } from "react-icons/vsc"; 
+import { VscBook } from "react-icons/vsc";  
  
 const Page = React.forwardRef((props, ref) => ( 
     <div className="page" ref={ref}>
@@ -192,6 +194,7 @@ const StoryPage = () => {
     
         // Save the PDF
         doc.save(`${cleanTitle}.pdf`);
+        toast.success('File was successfully downloaded.')
     };
     
     
@@ -293,6 +296,9 @@ const StoryPage = () => {
 
                                 <div className="download-btn" onClick={handleDownloadPDF}>
                                     <IoMdDownload />
+                                </div> 
+                                <div>  
+                                    <Soundboard/>
                                 </div>
                             </div>
 

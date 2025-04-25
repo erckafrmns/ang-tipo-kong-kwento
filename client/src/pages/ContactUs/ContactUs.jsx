@@ -6,9 +6,12 @@ import './ContactUs.css'
 import Navbar from '../../components/Navbar/Navbar'; 
 import InsideNavbar from '../../components/Navbar/InsideNavbar';
 import Footer from '../../components/Footer/Footer';
+import { toast } from 'react-hot-toast';
 
 const ContactUs = () => { 
     const isLoggedIn = localStorage.getItem('authToken'); 
+    const [isLoading, setIsLoading] = useState(false);
+    
 
     useEffect(() => {
         window.scrollTo(0, 0); // Scroll to the top of the page
@@ -32,6 +35,7 @@ const ContactUs = () => {
     // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsLoading(true);
         try {
             const response = await fetch('http://localhost:5000/send-email', {
                 method: 'POST',
@@ -42,15 +46,18 @@ const ContactUs = () => {
             });
 
             if (response.ok) {
-                alert('Message sent successfully!');
+                setIsLoading(false);
+                toast.success('Message sent successfully!')
                 setFormData({ fullname: '', email: '', message: '' }); 
             } else {
+                setIsLoading(false);
                 const errorData = await response.json();
-                alert(`Failed to send message: ${errorData.error}`);
+                toast.error(`Failed to send message: ${errorData.error}`)
             }
         } catch (error) {
+            setIsLoading(false);
             console.error('Error sending message:', error);
-            alert('An error occurred while sending your message.');
+            toast.error('An error occurred while sending your message.')
         }
     }; 
 
@@ -94,7 +101,14 @@ const ContactUs = () => {
                         <textarea id="message" name="message" placeholder='message' rows="5" value={formData.message} onChange={handleChange} required></textarea>
                     </div>
 
-                    <button type="submit">send</button>
+                    {/* <button type="submit">send</button> */}
+                    <button className="form-btn" type="submit" disabled={isLoading}>
+                      {isLoading ?
+                        <div className="spinner-wrapper">
+                          <div className="button-spinner"></div>
+                        </div>
+                        : 'send'}
+                    </button>
                     </form>
                 </div>
 

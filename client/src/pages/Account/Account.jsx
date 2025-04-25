@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';  
 import { useNavigate } from "react-router-dom";
+import { toast } from 'react-hot-toast';
  
 import modalLine from '../../assets/modal-line.svg'; 
 import InsideNavbar from '../../components/Navbar/InsideNavbar';
@@ -67,15 +68,10 @@ const Account = () => {
     const handlePasswordChange = async (e) => {
         e.preventDefault();
 
-        if (newPassword !== confirmPassword) {
-            alert("New password and confirm password do not match!");
-            return;
-        }
-
         try {
             const token = localStorage.getItem("authToken");
             if (!token) {
-                alert("Authentication token not found. Please log in again.");
+                toast.error('Authentication token not found. Please log in again.');
                 return;
             }
 
@@ -92,14 +88,14 @@ const Account = () => {
                 }
             );
 
-            alert(response.data.message);
+            toast.success(response.data.message);
             handleCloseModal();
         } catch (error) {
             if (error.response && error.response.data && error.response.data.error) {
-                alert(error.response.data.error);
+                toast.error(error.response.data.error);
             } else {
                 console.error("Error changing password:", error);
-                alert("An error occurred while changing the password.");
+                toast.error('An error occurred while changing the password.');
             }
         }
     };
@@ -117,7 +113,7 @@ const Account = () => {
         try {
             const token = localStorage.getItem("authToken");
             if (!token) {
-                alert("Authentication token not found. Please log in again.");
+                toast.error('Authentication token not found. Please log in again.');
                 return;
             }
 
@@ -127,12 +123,12 @@ const Account = () => {
                 },
             });
 
-            alert("Account deleted successfully.");
+            toast.success('Account deleted successfully.');
             localStorage.removeItem("authToken");
             navigate("/");
         } catch (error) {
             console.error("Error deleting account:", error);
-            alert("An error occurred while deleting the account.");
+            toast.error('An error occurred while deleting the account.');
         }
     };  
 
