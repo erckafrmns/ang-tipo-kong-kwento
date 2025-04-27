@@ -119,8 +119,6 @@ const StoryPage = () => {
         progressBar.style.setProperty("--progress-width", `${progressWidth}%`);
     };
     
-
-    
     const handleDownloadPDF = () => {
         const doc = new jsPDF();
         
@@ -197,8 +195,18 @@ const StoryPage = () => {
         toast.success('File was successfully downloaded.')
     };
     
-    
-    const isGuest = location.state?.isGuest || false;
+    const isGuest = location.state?.isGuest || false;  
+
+    // Customizable Paper view Font Size
+    const [fontSize, setFontSize] = useState(18); 
+
+    const increaseFontSize = () => {
+    setFontSize((prev) => Math.min(prev + 2, 36)); 
+    };
+
+    const decreaseFontSize = () => {
+    setFontSize((prev) => Math.max(prev - 2, 12));
+    };
     
     return (
         <>
@@ -253,7 +261,12 @@ const StoryPage = () => {
                         )}
                             {isPaperMode && (
                                 <div className="paper-mode">
-                                    <img src={Paper} alt="Paper Background" className="paper-image" />
+                                    <img src={Paper} alt="Paper Background" className="paper-image" /> 
+                                     {/* FONT SIZE CONTROLS */}
+                                    <div className="font-size-controls"> 
+                                    <button onClick={increaseFontSize} className="font-size-button">A+</button>
+                                        <button onClick={decreaseFontSize} className="font-size-button">A-</button>
+                                    </div>  
                                     <div className="paper-content">
                                         <p className="story-subtitle">Ang tipo kong Kwento</p>
                                         <h1 className="main-title">"{title.includes("[SEP]") ? title.split("[SEP]")[1].trim() : title}"</h1>
@@ -261,7 +274,14 @@ const StoryPage = () => {
                                             {(story.includes("[SEP]") ? story.split("[SEP]")[1].trim() : story)
                                                 .split(/(?<=[.!?])\s+/) // Split by sentence boundaries
                                                 .map((paragraph, index) => (
-                                                    <p key={index} style={{ textIndent: "1.5em", marginBottom: "1em" }}>
+                                                    <p
+                                                        key={index}
+                                                        style={{
+                                                            textIndent: "1.5em",
+                                                            marginBottom: "1em",
+                                                            fontSize: `${fontSize}px` 
+                                                        }}
+                                                        >
                                                         {paragraph}
                                                     </p>
                                                 ))} 
@@ -270,7 +290,7 @@ const StoryPage = () => {
                                         </div>
                                     </div>
                                 </div>
-                            )}
+                            )} 
 
                             <div className="progress-bar-container">
                                 {!isPaperMode && (
