@@ -44,7 +44,7 @@ services:
     volumes:
       - ./model:/model-app
     ports:
-      - "5001:5001"
+      - "8080:8080"
     restart: always
     environment:
       - MODEL_PATH=/model-app/trained_model
@@ -60,17 +60,6 @@ services:
     restart: always 
     ports:
       - "5432:5432"  
-
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: pgadmin
-    environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
-    ports:
-      - "5050:80"
-    depends_on:
-      - db
 
 volumes:
   postgres_data:  

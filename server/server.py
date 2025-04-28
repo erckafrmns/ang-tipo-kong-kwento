@@ -8,8 +8,10 @@ from email.mime.text import MIMEText
 from db_models import db, User, Story
 from config import Config
 import requests, logging, time, random, string, smtplib, os, re, csv, uuid
+import requests
 
 
+HF_SPACE_URL = "https://erckafrmns-ang-tipo-kong-kwento-ai-model.hf.space/run/predict"
 
 logging.basicConfig(level=logging.INFO)
 app = Flask(__name__)
@@ -20,7 +22,7 @@ app.config['JWT_SECRET_KEY'] = Config.JWT_SECRET_KEY
 jwt = JWTManager(app)
 migrate = Migrate(app, db)
 
-MODEL_SERVICE_URL = "http://model:5001"
+MODEL_SERVICE_URL = "http://model:8080"
 
 # CREATE TABLES
 with app.app_context():
@@ -496,6 +498,12 @@ def generate_random_story():
             f"{MODEL_SERVICE_URL}/model-generate-story",
             json={"title": title, "genre": genre, "length": length},
         )
+        
+        # Request to Hugging Face Space model
+        # data = {
+        #     "data": [title, genre, length]
+        # }
+        # response = requests.post(HF_SPACE_URL, json=data)
 
         if response.status_code == 200:
             story = response.json().get("story", "No story generated.")
@@ -556,6 +564,12 @@ def generate_custom_story():
             f"{MODEL_SERVICE_URL}/model-generate-story",
             json={"title": title, "genre": genre, "length": length},
         )
+
+        # Request to Hugging Face Space model
+        # data = {
+        #     "data": [title, genre, length]
+        # }
+        # response = requests.post(HF_SPACE_URL, json=data)
 
         if response.status_code == 200:
             story = response.json().get("story", "No story generated.")
