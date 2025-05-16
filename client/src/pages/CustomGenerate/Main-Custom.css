@@ -230,39 +230,97 @@ body {
 
 .toggle-option:hover {
     background-color: rgba(41, 65, 34, 0.3);     
-}
-
-
-/* Genre dropdown */
-.genre-select {
-    width: 80%; 
-    padding: 12px 10px; 
-    margin-bottom: 10px; 
-    border: 2px solid var(--green);
-    border-radius: 5px; 
-    outline: none;
-    font-size: 16px; 
-    color: var(--green); 
-    background-color: transparent;   
-    font-family: var(--main-font);  
-    text-transform: lowercase;
-    transition: border-color 0.3s;
 } 
 
-
-.genre-select option[value=""] { 
-    font-style: italic;  
+/* Genre & Theme dropdown */
+.genre-dropdown, .theme-dropdown{
+  width: 80%;
+  position: relative;
+  font-family: var(--main-font);
+  margin: 0 auto;
+  text-align: left;
 }
 
-.genre-select option {
-    color: var(--green);
-    background-color: var(--beige);   
-    font-family: var(--main-font);      
+.genre-dropdown{
+    margin-bottom: 10px;
+}
+
+.genre-selected, .theme-selected {
+  justify-content: space-between;
+  padding: 12px 10px;
+  border: 2px solid var(--green);
+  border-radius: 5px;
+  background-color: transparent;
+  color: var(--green);
+  cursor: pointer;
+  text-transform: lowercase;
+  font-family: var(--main-font);
+}
+
+.genre-arrow, .theme-arrow {  
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 10px;
+  color: var(--green);
+  pointer-events: none;
+}
+
+.genre-options, .theme-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: var(--beige);
+  border: 1px solid var(--green);
+  border-radius: 5px;
+  max-height: 150px;
+  overflow-y: auto;
+  z-index: 999;
+}
+
+.theme-options{
+  overflow-x:auto;
+  white-space: nowrap;   
+}
+
+/* Custom Scrollbar Styling*/
+.theme-options::-webkit-scrollbar {
+    width: 8px; 
 } 
 
-.genre-select option:checked {
+.theme-options::-webkit-scrollbar-track {
+  background-color: var(--hoverColor);  
+  border-radius: 5px;        
+}
+
+.theme-options::-webkit-scrollbar-thumb {
+  background-color: var(--green);  
+  border-radius: 5px;        
+}
+
+.theme-options::-webkit-scrollbar-thumb:hover {
+  background-color: #073a0b; 
+}
+
+.genre-option, .theme-option {
+  font-family: var(--main-font);
+  color: var(--green);
+  text-transform: lowercase;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.genre-option.selected, .theme-option.selected {
     background-color: rgba(255, 191, 58, 0.5);    
 }  
+
+
+.genre-option:hover, .theme-option:hover {
+  background-color: rgba(255, 191, 58, 0.5);
+}
 
 /* Title input */
 .title-input {

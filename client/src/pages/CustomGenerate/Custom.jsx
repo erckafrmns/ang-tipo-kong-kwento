@@ -8,12 +8,12 @@ import { toast } from 'react-hot-toast';
 const Custom = ({ closeModal, isGuest }) => {
   const [title, setTitle] = useState('');
   const [genre, setGenre] = useState('');
+  const [showGenreOptions, setShowGenreOptions] = useState(false);
+  const [theme, setTheme] = useState('');
+  const [showThemeOptions, setShowThemeOptions] = useState(false);
   const authToken = localStorage.getItem('authToken');
   const [isShortStory, setIsShortStory] = useState(true); 
   const navigate = useNavigate();
-
-  // const handleInputChange = (event) => setTitle(event.target.value);
-  const handleGenreChange = (event) => setGenre(event.target.value); 
 
   const uncapitalizedWords = ["ng", "at", "sa", "ito", "ni", "para", "na", "sa", "kung", "kaya", "ay"];
 
@@ -46,8 +46,8 @@ const Custom = ({ closeModal, isGuest }) => {
   };
   
   const handleGenerateClick = useCallback(() => {
-    if (!title || !genre) {
-      toast.error('Please enter a title and select a genre');
+    if (!title || !genre || !theme) {
+      toast.error('Please enter a title and select a genre & theme');
       return;
     }
 
@@ -56,7 +56,7 @@ const Custom = ({ closeModal, isGuest }) => {
     if (isGuest) {
       navigate('/story', { state: { loading: true, isGuest: true } });
       axios
-        .post('http://localhost:5000/generate-custom-story', { title, genre, storyLength })
+        .post('http://localhost:5000/generate-custom-story', { title, genre, theme, storyLength })
         .then((response) => {
           const story_id = response.data.story_id;
           const generatedStory = response.data.story;
@@ -66,6 +66,7 @@ const Custom = ({ closeModal, isGuest }) => {
             story_id,
             title,
             genre,
+            theme,
             story: generatedStory,
             timestamp: new Date().toISOString(),
           };
@@ -85,7 +86,7 @@ const Custom = ({ closeModal, isGuest }) => {
       navigate('/story', { state: { loading: true } });
       axios
         .post('http://localhost:5000/generate-custom-story', 
-          { title, genre, storyLength }, 
+          { title, genre, theme, storyLength}, 
           {
             headers: {
               'Authorization': `Bearer ${authToken}`,
@@ -95,7 +96,7 @@ const Custom = ({ closeModal, isGuest }) => {
         .then((response) => {
           const story_id = response.data.story_id;
           const generatedStory = response.data.story;
-          navigate(`/story/${story_id}`, { state: { title, genre, story: generatedStory } });
+          navigate(`/story/${story_id}`, { state: { title, genre, theme, story: generatedStory } });
           closeModal();
         })
         .catch((error) => {
@@ -103,7 +104,7 @@ const Custom = ({ closeModal, isGuest }) => {
           toast.error('There was an error generating your story. Please try again.');
         });
     }
-  }, [title, genre, isShortStory, isGuest, navigate, closeModal]);
+  }, [title, genre, theme, isShortStory, isGuest, navigate, closeModal]);
 
 
   const handleKeyPress = useCallback((event) => {
@@ -131,13 +132,60 @@ const Custom = ({ closeModal, isGuest }) => {
             <span className={`toggle-option ${!isShortStory ? 'active' : ''}`}  onClick={() => toggleStoryLength('long')}>Long Story</span>
           </div>
 
-          {/* Genre Dropdown */}
-          <select value={genre} onChange={handleGenreChange} className="genre-select">
-            <option value="">- select genre -</option>
-            <option value="Alamat">Alamat</option>
-            <option value="Kwentong Bayan">Kwentong Bayan</option>
-            <option value="Pabula">Pabula</option>
-          </select>
+          {/* Genre Dropdown  */}
+          <div className="genre-dropdown">
+            <div className="genre-selected" onClick={() => {
+              setShowGenreOptions((prev) => !prev);
+              setShowThemeOptions(false);
+            }}>
+              {genre || '- select genre -'}
+              <span className="genre-arrow">▼</span>
+            </div>
+            {showGenreOptions && (
+              <ul className="genre-options">
+                {['Alamat', 'Kwentong Bayan', 'Pabula'].map((option) => (
+                  <li
+                    key={option}
+                    className={`genre-option ${genre === option ? 'selected' : ''}`}
+                    onClick={() => {
+                      setGenre(option);
+                      setShowGenreOptions(false);
+                    }}
+                  >
+                    {option}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+
+        {/* Theme Dropdown  */}
+          <div className="theme-dropdown">
+            <div className="theme-selected" onClick={() => {
+              setShowThemeOptions((prev) => !prev);
+              setShowGenreOptions(false); 
+            }}>
+              {theme || '- select theme -'}
+              <span className="theme-arrow">▼</span>
+            </div>
+
+            {showThemeOptions && (
+              <ul className="theme-options">
+                {['Kasipagan', 'Matulungin', 'Pagkakaibigan', 'Katapatan', 'Kabayanihan'].map((option) => (
+                  <li
+                    key={option}
+                    className={`theme-option ${theme === option ? 'selected' : ''}`}
+                    onClick={() => {
+                      setTheme(option);
+                      setShowThemeOptions(false);
+                    }}
+                  >
+                    {option}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
 
           {/* Story Title Input */}
           <input

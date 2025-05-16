@@ -206,7 +206,7 @@ const StoryPage = () => {
 
     const decreaseFontSize = () => {
     setFontSize((prev) => Math.max(prev - 2, 12));
-    };
+    }; 
     
     return (
         <>
@@ -247,16 +247,19 @@ const StoryPage = () => {
                                         </>
                                     }
                                 />
-                                <Page image={LeftPageImg} content={storyPages[0]} />
+                                 <Page image={LeftPageImg} content={storyPages[0]} />
                                 {storyPages.slice(1).map((content, index) => (
                                     <Page
                                         key={index}
                                         image={index % 2 === 0 ? RightPageImg : LeftPageImg}
                                         content={<p>{content}</p>}
                                         />
-                                ))}
+                                ))} 
+
+
                                 <Page image={BackCover1} />
                                 <Page image={BackCover} />
+
                             </HTMLFlipBook>  
                         )}
                             {isPaperMode && (
@@ -279,10 +282,15 @@ const StoryPage = () => {
                                                         style={{
                                                             textIndent: "1.5em",
                                                             marginBottom: "1em",
-                                                            fontSize: `${fontSize}px` 
+                                                            fontSize: `${fontSize}px`,
+                                                            whiteSpace: "pre-wrap"
                                                         }}
                                                         >
-                                                        {paragraph}
+                                                         {paragraph.split(" ").map((word, wordIndex) => (
+                                                            <span className="hover-word" key={wordIndex}>
+                                                                {word}
+                                                            </span>
+                                                            )).reduce((acc, curr) => acc.concat(curr, " "), [])}
                                                     </p>
                                                 ))} 
                                              <img src={aboutIMG} className='girlIMG' alt="" />  
